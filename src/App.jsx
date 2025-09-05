@@ -1,7 +1,8 @@
 function App() {
   return (
     <>
-      <h1>Studease</h1>
+      <h1 className="title">Studease</h1>
+      <p className="description">Доброго вечора, ми з України!</p>
     </>
   )
 }
