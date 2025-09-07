@@ -1,0 +1,27 @@
+.menu-item {
+  display: inline-flex;
+  align-items: center;
+  column-gap: 10px;
+  padding: 18px 21px;
+  border-radius: var(--border-radius-large);
+  font-weight: 600;
+  transition: border .2s ease;
+
+  @include hover {
+    background-color: #232323;
+    color: var(--color-blue);
+  }
+
+  &__icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  &--active {
+    border: 1px solid #333333;
+    background-color: #232323;
+    color: var(--color-blue);
+    pointer-events: none;
+    cursor: none;
+  }
+}

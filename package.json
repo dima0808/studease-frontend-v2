@@ -11,8 +11,10 @@
   },
   "dependencies": {
     "@a1rth/css-normalize": "^1.2.1",
+    "classnames": "^2.5.1",
     "react": "^19.1.1",
-    "react-dom": "^19.1.1"
+    "react-dom": "^19.1.1",
+    "react-router-dom": "^7.8.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.33.0",

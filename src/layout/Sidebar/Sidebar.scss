@@ -1,0 +1,115 @@
+.sidebar {
+  --border: 1px solid #323232;
+
+  position: relative;
+  max-width: 333px;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: var(--color-black);
+  color: var(--color-white-light);
+  padding: 72px 26px 67px 26px;
+  border-radius: 0 var(--border-radius-large) var(--border-radius-large) 0;
+  transition: max-width 0.3s ease, padding 0.3s ease;
+
+  &__title {
+    text-align: center;
+    font-size: 48px;
+    font-weight: 700;
+    background: linear-gradient(270deg, #2D96FF 4.4%, #00E2A6 92.9%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: opacity 0.3s ease;
+  }
+
+  &__nav {
+
+    margin-bottom: auto;
+
+    &-main {
+      margin-top: 69px;
+      padding-block: 29px;
+      border-top: var(--border);
+      border-bottom: var(--border);
+      display: flex;
+      flex-direction: column;
+      row-gap: 15px;
+    }
+
+    &-secondary {
+      padding-block: 29px;
+      display: flex;
+      flex-direction: column;
+      row-gap: 15px;
+    }
+  }
+
+  &__button {
+    border: none;
+    display: inline-flex;
+    column-gap: 10px;
+    align-items: center;
+    justify-content: start;
+    background-color: transparent;
+    color: var(--color-white-light);
+    font-weight: 500;
+
+    @include hover {
+      color: var(--color-blue);
+    }
+
+    .sidebar--collapsed & {
+      justify-content: center;
+    }
+  }
+
+  &__actions {
+    margin-top: 20px;
+    border-top: var(--border);
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  &__toggle {
+    position: absolute;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    top: 15px;
+    right: 15px;
+    width: 35px;
+    height: 35px;
+    background: #232323;
+    border: 1px solid #333;
+    color: var(--color-white-light);
+    border-radius: var(--border-radius-small);
+    cursor: pointer;
+
+    img {
+      transition: all ease-in var(--transition-duration);
+    }
+
+    &--right {
+      transform: rotate(180deg);
+    }
+  }
+
+  &--collapsed {
+    max-width: 80px;
+    padding: 20px 10px;
+
+    .sidebar__title {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .menu-item__title {
+      display: none;
+    }
+  }
+}

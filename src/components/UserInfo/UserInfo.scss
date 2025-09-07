@@ -1,0 +1,24 @@
+.user-info {
+  display: flex;
+  column-gap: 15px;
+  align-items: center;
+  background-color: #232323;
+  padding: 15px;
+  border: 1px solid #333333;
+  border-radius: var(--border-radius-large);
+  margin-bottom: 20px;
+
+  &__img {
+    padding: 13px;
+    background-color: #151515;
+    border-radius: 8px;
+  }
+
+  &__name {
+    font-weight: 500;
+  }
+
+  &__group {
+    font-size: 12px;
+  }
+}
