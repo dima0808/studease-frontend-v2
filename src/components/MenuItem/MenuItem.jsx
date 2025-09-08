@@ -10,6 +10,7 @@ const MenuItem = (props) => {
   return (
     <NavLink
       to={href}
+      title={title}
       className={({ isActive }) =>
         classNames('menu-item', className, { 'menu-item--active': isActive })
       }

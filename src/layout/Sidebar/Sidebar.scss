@@ -90,6 +90,10 @@
     border-radius: var(--border-radius-small);
     cursor: pointer;
 
+    @include hover {
+      opacity: 0.8;
+    }
+
     img {
       transition: all ease-in var(--transition-duration);
     }
@@ -101,7 +105,7 @@
 
   &--collapsed {
     max-width: 80px;
-    padding: 20px 10px;
+    padding: 40px 10px;
 
     .sidebar__title {
       opacity: 0;
