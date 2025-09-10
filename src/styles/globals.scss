@@ -82,3 +82,10 @@ input:-webkit-autofill:active {
     background-position: 0 50%;
   }
 }
+
+.flex {
+  margin-top: 100px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}

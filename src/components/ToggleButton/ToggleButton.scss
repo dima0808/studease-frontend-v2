@@ -1,0 +1,39 @@
+.toggle-button {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  gap: 2px;
+  padding: 2px;
+  border: var(--border);
+  border-radius: var(--border-radius-small);
+
+  &__option {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 35px;
+    height: 100%;
+    border-radius: var(--border-radius-small);
+    border: var(--border);
+    background-color: var(--color-white-dark);
+    color: #5C5C5C;
+    font-size: 16px;
+    font-weight: 500;
+
+    @include hover {
+      background-color: var(--color-green-light);
+    }
+
+    &--text {
+      padding-inline: 35px;
+    }
+
+    &--active {
+      background-color: var(--color-blue);
+      color: var(--color-white);
+      border: none;
+      cursor: none;
+      pointer-events: none;
+    }
+  }
+}
