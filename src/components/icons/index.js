@@ -4,6 +4,8 @@ import DashboardIcon from "@/components/icons/DashboardIcon";
 import FaqIcon from "@/components/icons/FaqIcon";
 import GridIcon from "@/components/icons/GridIcon";
 import TableIcon from "@/components/icons/TableIcon";
+import CreateIcon from "@/components/icons/CreateIcon";
+import ImportIcon from "@/components/icons/ImportIcon";
 
 export const icons = {
   CollectionIcon,
@@ -12,4 +14,6 @@ export const icons = {
   FaqIcon,
   GridIcon,
   TableIcon,
+  CreateIcon,
+  ImportIcon
 }

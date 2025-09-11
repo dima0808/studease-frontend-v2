@@ -9,6 +9,7 @@ import { ACTION_OPTIONS, VIEW_OPTIONS } from "@/constants/toggleOptions";
 import SearchInput from "@/components/SearchInput";
 import TabsFilter from "@/components/TabsFilter";
 import { TAB_FILTERS } from "@/constants/tabFilters";
+import Button from "@/components/Button";
 
 function App() {
   return (
@@ -24,10 +25,12 @@ function App() {
           <div className="container">
             <h1>Tests page</h1>
             <div className="flex">
+              <TabsFilter options={TAB_FILTERS}/>
               <ToggleButton options={VIEW_OPTIONS}/>
               <ToggleButton options={ACTION_OPTIONS}/>
+              <Button text="Import" iconName="ImportIcon"/>
+              <Button theme="dark" text="Create a test" iconName="CreateIcon"/>
               <SearchInput placeholder="Search" />
-              <TabsFilter options={TAB_FILTERS}/>
             </div>
             <div className="grid">
               <TestCard title="Системи управлінням мережами" wide/>
