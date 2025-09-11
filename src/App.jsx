@@ -6,6 +6,7 @@ import RegisterForm from "@/components/AuthForm/RegisterForm";
 import TestCard from "@/components/TestCard";
 import ToggleButton from "@/components/ToggleButton";
 import { ACTION_OPTIONS, VIEW_OPTIONS } from "@/constants/toggleOptions";
+import SearchInput from "@/components/SearchInput";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             <div className="flex">
               <ToggleButton options={VIEW_OPTIONS}/>
               <ToggleButton options={ACTION_OPTIONS}/>
+              <SearchInput placeholder="Search" />
             </div>
             <div className="grid">
               <TestCard title="Системи управлінням мережами" wide/>
