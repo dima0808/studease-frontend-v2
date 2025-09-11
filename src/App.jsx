@@ -7,6 +7,8 @@ import TestCard from "@/components/TestCard";
 import ToggleButton from "@/components/ToggleButton";
 import { ACTION_OPTIONS, VIEW_OPTIONS } from "@/constants/toggleOptions";
 import SearchInput from "@/components/SearchInput";
+import TabsFilter from "@/components/TabsFilter";
+import { TAB_FILTERS } from "@/constants/tabFilters";
 
 function App() {
   return (
@@ -25,6 +27,7 @@ function App() {
               <ToggleButton options={VIEW_OPTIONS}/>
               <ToggleButton options={ACTION_OPTIONS}/>
               <SearchInput placeholder="Search" />
+              <TabsFilter options={TAB_FILTERS}/>
             </div>
             <div className="grid">
               <TestCard title="Системи управлінням мережами" wide/>
