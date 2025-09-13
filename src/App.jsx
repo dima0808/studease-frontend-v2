@@ -3,13 +3,7 @@ import MainLayout from "@/layout/MainLayout";
 import AuthLayout from "@/layout/AuthLayout";
 import LoginForm from "@/components/AuthForm/LoginForm";
 import RegisterForm from "@/components/AuthForm/RegisterForm";
-import TestCard from "@/components/TestCard";
-import ToggleButton from "@/components/ToggleButton";
-import { ACTION_OPTIONS, VIEW_OPTIONS } from "@/constants/toggleOptions";
-import SearchInput from "@/components/SearchInput";
-import TabsFilter from "@/components/TabsFilter";
-import { TAB_FILTERS } from "@/constants/tabFilters";
-import Button from "@/components/Button";
+import TestPage from "@/pages/TestPage";
 
 function App() {
   return (
@@ -21,34 +15,7 @@ function App() {
 
       <Route path="/" element={<MainLayout />}>
         <Route
-          path="tests" element={
-          <div className="container">
-            <h1>Tests page</h1>
-            <div className="flex">
-              <TabsFilter options={TAB_FILTERS}/>
-              <ToggleButton options={VIEW_OPTIONS}/>
-              <ToggleButton options={ACTION_OPTIONS}/>
-              <Button text="Import" iconName="ImportIcon"/>
-              <Button theme="dark" text="Create a test" iconName="CreateIcon"/>
-              <SearchInput placeholder="Search" />
-            </div>
-            <div className="grid">
-              <TestCard title="Системи управлінням мережами" wide/>
-              <TestCard isActive title="Основи програмування" wide/>
-              <TestCard title="Веб-програмування" wide/>
-              <TestCard isActive title="Комп'ютерні мережі" wide/>
-            </div>
-            <div className="grid--4">
-              <TestCard title="Системи управлінням мережами"/>
-              <TestCard isActive title="Основи програмування"/>
-              <TestCard title="Веб-програмування"/>
-              <TestCard isActive title="Комп'ютерні мережі"/>
-              <TestCard title="Системи управлінням мережами"/>
-              <TestCard isActive title="Основи програмування"/>
-              <TestCard title="Веб-програмування"/>
-              <TestCard isActive title="Комп'ютерні мережі"/>
-            </div>
-          </div>}
+          path="tests" element={<TestPage />}
         />
         <Route path="collections" element={<h1>Collections page</h1>} />
         <Route path="dashboard" element={<h1>Dashboard page</h1>} />

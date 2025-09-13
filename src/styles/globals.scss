@@ -36,10 +36,6 @@ a {
   }
 }
 
-:focus-visible {
-  @include focus-visible;
-}
-
 :has(.swiper) {
   min-width: 0;
 }
@@ -82,31 +78,3 @@ input:-webkit-autofill:active {
     background-position: 0 50%;
   }
 }
-
-.flex {
-  margin-top: 10px;
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-
-.container {
-  max-width: 1600px;
-  width: 100%;
-  margin: 0 auto;
-  padding: 0 20px;
-}
-
-.grid--4 {
-  margin-top: 10px;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
-}
-
-.grid {
-  margin-top: 10px;
-  display: grid;
-  gap: 10px;
-}
-

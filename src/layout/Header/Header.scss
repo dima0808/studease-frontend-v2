@@ -1,0 +1,23 @@
+.header {
+  display: grid;
+  row-gap: 37px;
+  margin-top: 50px;
+
+  &__title {
+    font-size: 40px;
+    color: #292929;
+    font-weight: 700;
+  }
+
+  &__wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__view {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+}

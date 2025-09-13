@@ -1,6 +1,6 @@
 export const VIEW_OPTIONS = [
-  { value: "grid", iconName: "GridIcon", dataTitle: "Grid view" },
-  { value: "table", iconName: "TableIcon", dataTitle: "Table view" }
+  { value: "table", iconName: "TableIcon", dataTitle: "Table view" },
+  { value: "grid", iconName: "GridIcon", dataTitle: "Grid view" }
 ];
 
 export const ACTION_OPTIONS = [

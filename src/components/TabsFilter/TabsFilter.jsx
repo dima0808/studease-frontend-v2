@@ -1,21 +1,23 @@
 import './TabsFilter.scss'
-import { useState } from "react";
 import classNames from "classnames";
+import { useActions } from "@/hooks/useActions";
+import { useSelector } from "react-redux";
 
 const TabsFilter = (props) => {
   const {
     options = [],
+    activeIndex,
+    handelActiveIndex
   } = props
 
-  const [activeIndex, setActiveIndex] = useState(0);
   return (
     <div className="tabs-filter">
       {options.map((option, index) => (
         <button
           key={option.value ?? index}
           title={option.dataTitle}
-          className={classNames("tabs-filter__option", { "tabs-filter__option--active": index === activeIndex })}
-          onClick={() => setActiveIndex(index)}
+          className={classNames("tabs-filter__option", { "tabs-filter__option--active": option.value === activeIndex })}
+          onClick={() => handelActiveIndex(option.value)}
         >
           {option.content}
         </button>

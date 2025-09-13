@@ -6,6 +6,10 @@ import GridIcon from "@/components/icons/GridIcon";
 import TableIcon from "@/components/icons/TableIcon";
 import CreateIcon from "@/components/icons/CreateIcon";
 import ImportIcon from "@/components/icons/ImportIcon";
+import RemoveIcon from "@/components/icons/RemoveIcon";
+import CloneIcon from "@/components/icons/CloneIcon";
+import InfoIcon from "@/components/icons/InfoIcon";
+import ExportIcon from "@/components/icons/ExportIcon";
 
 export const icons = {
   CollectionIcon,
@@ -15,5 +19,9 @@ export const icons = {
   GridIcon,
   TableIcon,
   CreateIcon,
-  ImportIcon
+  ImportIcon,
+  RemoveIcon,
+  CloneIcon,
+  InfoIcon,
+  ExportIcon,
 }

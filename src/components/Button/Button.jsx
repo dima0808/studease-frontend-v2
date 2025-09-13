@@ -9,16 +9,18 @@ const Button = (props) => {
     iconName,
     text = 'Button',
     /*
-    * theme: 'default' | 'dark'
+    * theme: 'default' | 'dark' | 'primary'
      */
     theme = 'default',
+    onClick,
+    hidden = false,
   } = props
 
   const IconComponent = icons[iconName];
   return (
-    <button title={text} type={type} className={classNames("button", className, `button--${theme}`)}>
+    <button onClick={onClick} title={text} type={type} className={classNames("button", className, `button--${theme}`)}>
       {IconComponent && <IconComponent className="button__icon" />}
-      {text}
+      {hidden ? null : text}
     </button>
   )
 }

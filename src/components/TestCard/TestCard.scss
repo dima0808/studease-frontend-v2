@@ -3,7 +3,6 @@
   border: var(--border);
   padding: 28px;
   min-width: 354px;
-  max-width: 354px;
   border-radius: 24px;
 
   &--wide {
@@ -25,7 +24,7 @@
         display: flex;
         align-items: center;
         column-gap: 99px;
-        padding-inline: 99px;
+        padding-inline: 66px;
       }
 
       &__status-wrapper {
@@ -43,6 +42,16 @@
 
       &__info {
         column-gap: 2px;
+
+        &--taking-now {
+          .test-card__info-description p {
+            width: 30px;
+          }
+        }
+
+        p {
+          width: 114px;
+        }
       }
 
       &__info:last-child .test-card__info-description {
@@ -57,24 +66,85 @@
     width: 100%;
   }
 
+  &--selected {
+    border: 1px solid var(--color-blue);
+    background-color: var(--color-light-blue);
+  }
+
+  &__checkbox {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    width: 27px;
+    height: 27px;
+    border: var(--border);
+    border-radius: 20px;
+    background-color: var(--color-white);
+    cursor: pointer;
+    transition: all 0.25s ease;
+    position: relative;
+
+    @include hover {
+      border-color: var(--color-blue);
+    }
+
+    &:checked {
+      background-color: var(--color-blue);
+      border-color: var(--color-blue);
+
+      &::after {
+        content: "";
+        position: absolute;
+        inset: 5px;
+        border-radius: 50%;
+        background: var(--color-white);
+      }
+    }
+  }
+
   &__actions {
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     row-gap: 5px;
     align-items: end;
+
+    &--wide {
+      display: flex;
+      align-items: center;
+      column-gap: 6px;
+    }
+  }
+
+  &__dropdown {
+    position: absolute;
+    top: calc(100% + 5px);
+    width: 170px;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    background: var(--color-white);
+    border: 1px solid #F1F1F1;
+    border-radius: 12px;
+    padding: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    z-index: 10;
   }
 
   &__wrapper {
     display: flex;
     justify-content: space-between;
-    column-gap: 5px;
+    column-gap: 10px;
   }
 
   &__body {
     display: flex;
     flex-direction: column;
     row-gap: 22px;
+    min-width: 0;
   }
 
   &__icon {
@@ -145,7 +215,7 @@
     color: var(--color-text-black);
     font-size: 20px;
     font-weight: 600;
-    width: 185px;
+    max-width: 100%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

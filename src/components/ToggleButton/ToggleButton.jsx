@@ -1,12 +1,9 @@
-import { useState } from "react";
 import classNames from "classnames";
 import { isString } from "@/utils/isString";
 import { icons } from "@/components/icons";
 import './ToggleButton.scss'
 
-const ToggleButton = ({ options = [] }) => {
-  const [active, setActive] = useState(1)
-
+const ToggleButton = ({ options = [], mode, setMode }) => {
   return (
     <div className="toggle-button">
       {options.map((option, index) => {
@@ -17,12 +14,12 @@ const ToggleButton = ({ options = [] }) => {
             key={option.value ?? index}
             title={option.dataTitle}
             className={classNames("toggle-button__option", {
-              "toggle-button__option--active": active === index
+              "toggle-button__option--active": mode === option.value,
             }, {
               "toggle-button__option--text": isString(option.content),
             })}
             type="button"
-            onClick={() => setActive(index)}
+            onClick={() => setMode(option.value)}
           >
             {IconComponent ? <IconComponent/> : option.content}
           </button>
