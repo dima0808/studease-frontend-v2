@@ -6,11 +6,14 @@ import Info from "@/components/TestCard/components/Info";
 import Status from "@/components/TestCard/components/Status";
 import CardActions from "@/components/TestCard/components/CardActions";
 import { memo, useMemo } from "react";
+import { motion as Motion } from "framer-motion";
+import { cardVariants } from "@/utils/cardMotionVariants";
 import './TestCard.scss'
 
 const TestCard = (props) => {
   const {
     id,
+    index,
     isActive,
     title,
     wide,
@@ -22,7 +25,11 @@ const TestCard = (props) => {
   const isSelected = useMemo(() => selectedIds.includes(id), [selectedIds, id]);
 
   return (
-    <div
+    <Motion.div
+      custom={index}
+      initial="hidden"
+      animate="visible"
+      variants={cardVariants}
       className={classNames("test-card", { "test-card--wide": wide },
         { "test-card--selected": isSelected })}
     >
@@ -53,7 +60,7 @@ const TestCard = (props) => {
           <CardActions isSelected={isSelected} wide={wide} id={id}/>
         </div>
       </div>
-    </div>
+    </Motion.div>
   )
 }
 
