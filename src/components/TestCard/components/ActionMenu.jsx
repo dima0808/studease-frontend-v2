@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import ActionIcon from "@/components/icons/ActionIcon";
 import Button from "@/components/Button";
+import { motion as Motion, AnimatePresence } from "framer-motion";
+import { dropdownVariants } from "@/constants/motionVariants";
 
 const ActionMenu = () => {
   const [open, setOpen] = useState(false);
@@ -21,12 +23,18 @@ const ActionMenu = () => {
       }
     };
 
+    const handleScroll = () => {
+      setOpen(false);
+    };
+
     document.addEventListener("mousedown", handleClickOutside);
     document.addEventListener("keydown", handleEsc);
+    window.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
       document.removeEventListener("keydown", handleEsc);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
@@ -64,22 +72,28 @@ const ActionMenu = () => {
         <ActionIcon />
       </button>
 
-      {open && (
-        <div
-          ref={menuRef}
-          className="test-card__dropdown"
-          style={{
-            position: "fixed",
-            top: `${position.top}px`,
-            left: `${position.left}px`,
-          }}
-        >
-          <Button text="Info" iconName="InfoIcon" />
-          <Button text="Clone" iconName="CloneIcon" />
-          <Button text="Export" iconName="ExportIcon" />
-          <Button text="Delete" iconName="RemoveIcon" />
-        </div>
-      )}
+      <AnimatePresence>
+        {open && (
+          <Motion.div
+            ref={menuRef}
+            className="test-card__dropdown"
+            style={{
+              position: "fixed",
+              top: `${position.top}px`,
+              left: `${position.left}px`,
+            }}
+            variants={dropdownVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+          >
+            <Button text="Info" iconName="InfoIcon" />
+            <Button text="Clone" iconName="CloneIcon" />
+            <Button text="Export" iconName="ExportIcon" />
+            <Button text="Delete" iconName="RemoveIcon" />
+          </Motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

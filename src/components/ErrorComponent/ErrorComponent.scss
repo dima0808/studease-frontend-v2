@@ -1,4 +1,4 @@
-.empty-tests {
+.error-component {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -13,8 +13,8 @@
   padding: 60px 20px;
 
   &__icon {
-    color: #3b82f6;
-    background: #eff6ff;
+    color: #ef4444;
+    background: #fee2e2;
     padding: 30px;
     border-radius: 50%;
 
@@ -40,7 +40,7 @@
     font-size: 20px;
     color: #475569;
     line-height: 1.6;
-    max-width: 400px;
+    max-width: 600px;
   }
 
   &__btn {

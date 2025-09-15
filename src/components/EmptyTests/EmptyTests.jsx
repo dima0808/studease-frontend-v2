@@ -10,7 +10,7 @@ const EmptyTests = () => {
       </div>
       <h2 className="empty-tests__title">No tests found</h2>
       <p className="empty-tests__text">
-        Try adjusting your filters or <br />
+        Try adjusting your filters or
         create a new test right now 🚀
       </p>
       <Button iconName="CreateIcon" text="Create a test" theme="primary" className="empty-tests__btn"/>

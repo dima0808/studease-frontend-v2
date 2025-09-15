@@ -5,8 +5,10 @@ import { filterTests } from "@/utils/filterTests";
 import EmptyTests from "@/components/EmptyTests";
 import { useEffect } from "react";
 import Loading from "@/components/Loading";
-import './TestPage.scss'
 import { useActions } from "@/hooks/useActions";
+import ErrorComponent from "@/components/ErrorComponent";
+import './TestPage.scss'
+
 
 const TestPage = () => {
   const { viewMode, sortBy, search } = useSelector(state => state.filter)
@@ -22,7 +24,7 @@ const TestPage = () => {
 
   if (isLoading) return <Loading text="tests"/>
 
-  if (error) return <div className="error">{error}</div>
+  if (error) return <ErrorComponent description={error} onRetry={() => getAllTests()}/>
 
   if (filteredTests.length === 0) return <EmptyTests />
 

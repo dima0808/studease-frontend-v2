@@ -132,10 +132,15 @@ const tests = [
 ]
 
 const fetchAllTests = () => {
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     setTimeout(() => {
-      resolve(tests)
-    }, 2000)
+      const shouldFail = Math.random() < 0.5
+      if (shouldFail) {
+        reject(new Error("Server error: unable to load tests"))
+      } else {
+        resolve(tests)
+      }
+    }, 1000)
   })
 }
 

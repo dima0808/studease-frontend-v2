@@ -7,8 +7,8 @@ import Status from "@/components/TestCard/components/Status";
 import CardActions from "@/components/TestCard/components/CardActions";
 import { memo, useMemo } from "react";
 import { motion as Motion } from "framer-motion";
-import { cardVariants } from "@/utils/cardMotionVariants";
 import './TestCard.scss'
+import { cardVariants } from "@/constants/motionVariants";
 
 const TestCard = (props) => {
   const {
