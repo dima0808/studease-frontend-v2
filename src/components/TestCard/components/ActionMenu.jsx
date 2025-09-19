@@ -3,10 +3,13 @@ import ActionIcon from "@/components/icons/ActionIcon";
 import Button from "@/components/Button";
 import { motion as Motion, AnimatePresence } from "framer-motion";
 import { dropdownVariants } from "@/constants/motionVariants";
+import { useActions } from "@/hooks/useActions";
 
-const ActionMenu = () => {
+const ActionMenu = (props) => {
+  const { id } = props;
   const [open, setOpen] = useState(false);
   const [position, setPosition] = useState({ top: "100%", right: 0 });
+  const { deleteTestById } = useActions();
   const menuRef = useRef(null);
   const buttonRef = useRef(null);
 
@@ -90,7 +93,7 @@ const ActionMenu = () => {
             <Button text="Info" iconName="InfoIcon" />
             <Button text="Clone" iconName="CloneIcon" />
             <Button text="Export" iconName="ExportIcon" />
-            <Button text="Delete" iconName="RemoveIcon" />
+            <Button onClick={() => deleteTestById(id)} text="Delete" iconName="RemoveIcon" />
           </Motion.div>
         )}
       </AnimatePresence>

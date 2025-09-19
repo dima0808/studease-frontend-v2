@@ -12,8 +12,10 @@
   "dependencies": {
     "@a1rth/css-normalize": "^1.2.1",
     "@reduxjs/toolkit": "^2.9.0",
+    "axios": "^1.12.2",
     "classnames": "^2.5.1",
     "framer-motion": "^12.23.12",
+    "js-cookie": "^3.0.5",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-hook-form": "^7.62.0",

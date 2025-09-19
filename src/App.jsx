@@ -4,23 +4,24 @@ import AuthLayout from "@/layout/AuthLayout";
 import LoginForm from "@/components/AuthForm/LoginForm";
 import RegisterForm from "@/components/AuthForm/RegisterForm";
 import TestPage from "@/pages/TestPage";
+import { ROUTES } from "@/constants/routes";
 
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<AuthLayout />}>
+      <Route path={ROUTES.DEFAULT} element={<AuthLayout />}>
         <Route index element={<LoginForm />} />
-        <Route path="register" element={<RegisterForm />} />
+        <Route path={ROUTES.REGISTER} element={<RegisterForm />} />
       </Route>
 
-      <Route path="/" element={<MainLayout />}>
+      <Route path={ROUTES.DEFAULT} element={<MainLayout />}>
         <Route
-          path="tests" element={<TestPage />}
+          path={ROUTES.TESTS} element={<TestPage />}
         />
-        <Route path="collections" element={<h1>Collections page</h1>} />
-        <Route path="dashboard" element={<h1>Dashboard page</h1>} />
-        <Route path="faq" element={<h1>FAQ page</h1>} />
+        <Route path={ROUTES.COLLECTIONS} element={<h1>Collections page</h1>} />
+        <Route path={ROUTES.DASHBOARD} element={<h1>Dashboard page</h1>} />
       </Route>
+      <Route path={ROUTES.FAQ} element={<h1>FAQ page</h1>} />
     </Routes>
   )
 }

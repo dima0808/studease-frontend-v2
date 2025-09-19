@@ -1,24 +1,21 @@
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import AuthInput from "@/components/AuthForm/AuthInput";
 import AuthButton from "@/components/AuthForm/AuthButton";
-import { useState } from "react";
+import { useSelector } from "react-redux";
+import { useActions } from "@/hooks/useActions";
 import "../AuthForm.scss";
 
 const LoginForm = () => {
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
   const navigate = useNavigate();
+  const { isLoading, error } = useSelector((state) => state.auth)
+  const { loginUser } = useActions()
+  const { handleShowSplash } = useOutletContext();
 
-  const [isLoading, setIsLoading] = useState(false);
-
-  const handleLogin = (data) => {
-    console.log(data);
-    setIsLoading(true);
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-      clearTimeout(timer);
-      navigate("/dashboard");
-    }, 5000);
+  const handleLogin = async (data) => {
+    await loginUser(data).unwrap();
+    handleShowSplash(() => navigate("/dashboard"));
   };
 
   return (
@@ -49,6 +46,7 @@ const LoginForm = () => {
         required
       />
       <AuthButton isLoading={isLoading} title="Sign in"/>
+      {error && <p className="auth-form__error-description">{error}</p>}
     </form>
   );
 };

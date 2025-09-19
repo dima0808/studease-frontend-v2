@@ -7,7 +7,6 @@ export const filterTests = (tests, { sortBy, search }) => {
       return true
     })
     .filter(test => {
-      // фільтр по пошуку
       if (!search?.trim()) return true
       return test.title.toLowerCase().includes(search.toLowerCase())
     })

@@ -8,12 +8,16 @@ import SearchInput from "@/components/SearchInput";
 import { useSelector } from "react-redux";
 import { useActions } from "@/hooks/useActions";
 import { filterTests } from "@/utils/filterTests";
+import { useLocation } from "react-router-dom";
+import { ROUTES_NAV } from "@/constants/routes";
 
 const Header = () => {
   const { viewMode, sortBy, search } = useSelector(state => state.filter)
   const { actionMode, selectedIds } = useSelector(state => state.selection)
   const { tests } = useSelector(state => state.tests)
   const { setViewMode, setActionMode, selectAll, clearSelection, setSortBy } = useActions()
+
+  const { pathname } = useLocation()
 
   const filteredTests = filterTests(tests, { sortBy, search })
 
@@ -29,14 +33,16 @@ const Header = () => {
   return (
     <div className="header">
       <div className="header__wrapper">
-        <h1 className="header__title">Your tests</h1>
+        <h1 className="header__title">Your {ROUTES_NAV[pathname.toUpperCase().replace("/", "")].title.toLowerCase()}</h1>
         <div className="header__view">
           <ToggleButton mode={viewMode} setMode={setViewMode} options={VIEW_OPTIONS} />
           <ToggleButton mode={actionMode} setMode={setActionMode} options={ACTION_OPTIONS} />
         </div>
       </div>
       <div className="header__wrapper">
-        <TabsFilter activeIndex={sortBy} handelActiveIndex={handelActiveIndex} options={TAB_FILTERS} />
+        {pathname !== ROUTES_NAV.COLLECTIONS.href ? (
+          <TabsFilter activeIndex={sortBy} handelActiveIndex={handelActiveIndex} options={TAB_FILTERS} />
+        ): <div></div>}
         <div className="header__view">
           {actionMode === 'select' ? (
             <>

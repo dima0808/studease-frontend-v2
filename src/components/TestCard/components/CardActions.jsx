@@ -11,7 +11,7 @@ const CardActions = (props) => {
   } = props;
 
   const { actionMode } = useSelector(state => state.selection)
-  const { toggleItem } = useActions()
+  const { toggleItem, deleteTestById } = useActions()
 
   return (
     actionMode === 'select' ? (
@@ -28,10 +28,10 @@ const CardActions = (props) => {
         <Button text="Info" theme="action" hidden={true} iconName="InfoIcon" />
         <Button text="Clone" theme="action" hidden={true} iconName="CloneIcon" />
         <Button text="Export" theme="action" hidden={true} iconName="ExportIcon" />
-        <Button text="Delete" theme="action" hidden={true} iconName="RemoveIcon" />
+        <Button text="Delete" onClick={() => deleteTestById(id)} theme="action" hidden={true} iconName="RemoveIcon" />
       </div>
     ) : (
-      <ActionMenu />
+      <ActionMenu id={id}/>
     )
   )
 }

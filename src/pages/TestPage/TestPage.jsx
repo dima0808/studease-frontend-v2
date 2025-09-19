@@ -8,6 +8,7 @@ import Loading from "@/components/Loading";
 import { useActions } from "@/hooks/useActions";
 import ErrorComponent from "@/components/ErrorComponent";
 import './TestPage.scss'
+import { API_URL } from "@/constants/config";
 
 
 const TestPage = () => {
@@ -17,6 +18,8 @@ const TestPage = () => {
   const { getAllTests } = useActions()
 
   const filteredTests = filterTests(tests, { sortBy, search })
+
+  console.log(API_URL)
 
   useEffect(() => {
     getAllTests()

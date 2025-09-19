@@ -1,4 +1,12 @@
 export const ROUTES = {
+  DEFAULT: '/',
+  REGISTER: 'register',
+  TESTS: 'tests',
+  COLLECTIONS: 'collections',
+  DASHBOARD: 'dashboard',
+  FAQ: 'faq',
+}
+export const ROUTES_NAV = {
   DASHBOARD: {
     href: '/dashboard',
     title: 'Dashboard',
@@ -16,7 +24,7 @@ export const ROUTES = {
   },
 }
 
-export const ROUTES_SECONDARY = {
+export const ROUTES_NAV_SECONDARY = {
   FAQ: {
     href: '/faq',
     title: 'FAQ',

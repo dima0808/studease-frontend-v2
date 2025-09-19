@@ -10,6 +10,12 @@ const initialState = {
 const testsSlice = createSlice({
   name: "tests",
   initialState,
+  reducers: {
+    deleteTestById(state, action) {
+      console.log("Deleting test with ID:", action.payload);
+      state.tests = state.tests.filter(test => test.id !== action.payload)
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getAllTests.pending, (state) => {

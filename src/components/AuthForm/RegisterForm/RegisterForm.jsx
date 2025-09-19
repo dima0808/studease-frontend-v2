@@ -1,9 +1,10 @@
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import AuthButton from "@/components/AuthForm/AuthButton";
 import AuthInput from "@/components/AuthForm/AuthInput";
+import { useSelector } from "react-redux";
+import { useActions } from "@/hooks/useActions";
 import "../AuthForm.scss";
-import { useState } from "react";
 
 const RegisterForm = () => {
   const {
@@ -12,18 +13,17 @@ const RegisterForm = () => {
     watch,
     formState: { errors },
   } = useForm();
+
+  const { registerUser } = useActions();
   const navigate = useNavigate();
 
-  const [isLoading, setIsLoading] = useState(false);
+  const { isLoading, error} = useSelector((state) => state.auth)
 
-  const handleRegister = (data) => {
-    console.log(data);
-    setIsLoading(true);
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-      clearTimeout(timer);
-      navigate("/dashboard");
-    }, 2000);
+  const { handleShowSplash } = useOutletContext()
+
+  const handleRegister = async (data) => {
+    await registerUser(data).unwrap();
+    handleShowSplash(() => navigate("/dashboard"));
   };
 
   return (
@@ -94,6 +94,7 @@ const RegisterForm = () => {
       />
 
       <AuthButton isLoading={isLoading} title="Sign up" />
+      {error && <p className="auth-form__error-description">{error}</p>}
     </form>
   );
 };
