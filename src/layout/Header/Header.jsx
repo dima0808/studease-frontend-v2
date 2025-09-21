@@ -10,24 +10,31 @@ import { useActions } from "@/hooks/useActions";
 import { filterTests } from "@/utils/filterTests";
 import { useLocation } from "react-router-dom";
 import { ROUTES_NAV } from "@/constants/routes";
+import { useState } from "react";
+import ConfirmDeleteModal from "@/components/ConfirmDeleteModal";
 
 const Header = () => {
   const { viewMode, sortBy, search } = useSelector(state => state.filter)
-  const { actionMode, selectedIds } = useSelector(state => state.selection)
+  const { actionMode, selectedItems } = useSelector(state => state.selection)
   const { tests } = useSelector(state => state.tests)
-  const { setViewMode, setActionMode, selectAll, clearSelection, setSortBy } = useActions()
+  const { setViewMode, setActionMode, selectAll, clearSelection, setSortBy, deleteTestsByIds } = useActions()
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { pathname } = useLocation()
 
   const filteredTests = filterTests(tests, { sortBy, search })
 
-  const filteredIds = filteredTests.map(test => test.id)
-
   const handelActiveIndex = (value) => {
     setSortBy(value)
-    if (selectedIds.length > 1) {
+    if (selectedItems.length > 1) {
       clearSelection()
     }
+  }
+
+  const handleDeleteSelected = () => {
+    deleteTestsByIds(selectedItems)
+    clearSelection()
+    setIsModalOpen(false)
   }
 
   return (
@@ -46,24 +53,30 @@ const Header = () => {
         <div className="header__view">
           {actionMode === 'select' ? (
             <>
-              <Button text={selectedIds.length > 0 ? "Unselect All" : "Select All"} onClick={
+              <Button text={selectedItems.length > 0 ? "Unselect All" : "Select All"} onClick={
                 () => {
-                  if (selectedIds.length > 0) {
+                  if (selectedItems.length > 0) {
                     clearSelection()
                   } else {
-                    selectAll(filteredIds)
+                    selectAll(filteredTests)
                   }
               }} />
-              <Button text="Export" iconName="ExportIcon" />
-              <Button text="Delete" iconName="RemoveIcon" />
+              <Button disabled={true} text="Export" iconName="ExportIcon" />
+              <Button disabled={selectedItems.length === 0} onClick={() => setIsModalOpen(true)} text="Delete" iconName="RemoveIcon" />
             </>
           ) : (<>
-            <Button text="Import" iconName="ImportIcon" />
+            <Button disabled={true} text="Import" iconName="ImportIcon" />
             <Button theme="primary" text="Create a test" iconName="CreateIcon" />
           </>)}
           <SearchInput placeholder="Search" />
         </div>
       </div>
+      <ConfirmDeleteModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onConfirm={handleDeleteSelected}
+        tests={selectedItems}
+      />
     </div>
   )
 }

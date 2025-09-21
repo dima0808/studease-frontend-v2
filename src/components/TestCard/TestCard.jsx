@@ -15,31 +15,33 @@ const TestCard = (props) => {
     id,
     index,
     isActive,
-    title,
+    name,
     wide,
-    start,
+    openDate,
     deadline,
-    takingNow,
-    selectedIds,
+    startedSessions,
+    selectedItems,
   } = props;
-  const isSelected = useMemo(() => selectedIds.includes(id), [selectedIds, id]);
+  const isSelected = useMemo(() => selectedItems.some(item => item.id === id), [selectedItems, id]);
 
   return (
     <Motion.div
       custom={index}
       initial="hidden"
       animate="visible"
+      exit="exit"
+      layout
       variants={cardVariants}
       className={classNames("test-card", { "test-card--wide": wide },
         { "test-card--selected": isSelected })}
     >
       <div className="test-card__wrapper">
         <div className="test-card__body">
-          <h2 title={title} className="test-card__title">{title}</h2>
+          <h2 title={name} className="test-card__title">{name}</h2>
           <div className="test-card__description">
             <Info
               title="Start"
-              description={start}
+              description={openDate}
               icon={StartIcon}
             />
             <Info
@@ -50,14 +52,14 @@ const TestCard = (props) => {
             <Info
               className="test-card__info--taking-now"
               title="Taking right now"
-              description={takingNow}
+              description={startedSessions}
               icon={GroupIcon}
             />
           </div>
         </div>
         <div className="test-card__actions">
           <Status isActive={isActive} />
-          <CardActions isSelected={isSelected} wide={wide} id={id}/>
+          <CardActions isSelected={isSelected} name={name} wide={wide} id={id}/>
         </div>
       </div>
     </Motion.div>

@@ -8,6 +8,6 @@ export const filterTests = (tests, { sortBy, search }) => {
     })
     .filter(test => {
       if (!search?.trim()) return true
-      return test.title.toLowerCase().includes(search.toLowerCase())
+      return test.name.toLowerCase().includes(search.toLowerCase())
     })
 }

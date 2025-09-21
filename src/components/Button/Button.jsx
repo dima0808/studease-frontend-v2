@@ -14,11 +14,12 @@ const Button = (props) => {
     theme = 'default',
     onClick,
     hidden = false,
+    disabled = false,
   } = props
 
   const IconComponent = icons[iconName];
   return (
-    <button onClick={onClick} title={text} type={type} className={classNames("button", className, `button--${theme}`)}>
+    <button disabled={disabled} onClick={onClick} title={text} type={type} className={classNames("button", className, `button--${theme}`)}>
       {IconComponent && <IconComponent className="button__icon" />}
       {hidden ? null : text}
     </button>

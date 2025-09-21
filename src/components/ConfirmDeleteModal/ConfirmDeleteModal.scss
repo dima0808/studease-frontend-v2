@@ -1,0 +1,82 @@
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.modal-test-name {
+  font-weight: bold;
+  color: var(--color-blue);
+}
+
+.modal-list {
+  margin: 16px 0;
+  padding-left: 20px;
+  max-height: 200px;
+  overflow-y: auto;
+  list-style: disc;
+
+  &__item {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color-blue);
+    margin-bottom: 6px;
+  }
+}
+
+.modal-content {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 1rem;
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.modal-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.modal-text {
+  font-size: 1rem;
+  color: #555;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+
+  .btn {
+    padding: 0.6rem 1.2rem;
+    border-radius: 0.6rem;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background 0.2s ease;
+
+    &.cancel {
+      background: #e5e7eb;
+      color: #111;
+      &:hover {
+        background: #d1d5db;
+      }
+    }
+
+    &.delete {
+      background: #dc2626;
+      color: #fff;
+
+      @include hover {
+        background: #b91c1c;
+      }
+    }
+  }
+}

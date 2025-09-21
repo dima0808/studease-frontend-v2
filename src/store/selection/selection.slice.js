@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   actionMode: "view",
-  selectedIds: [],
+  selectedItems: [],
 };
 
 const selectionSlice = createSlice({
@@ -11,21 +11,21 @@ const selectionSlice = createSlice({
   reducers: {
     setActionMode(state, action) {
       state.actionMode = action.payload;
-      state.selectedIds = [];
+      state.selectedItems = [];
     },
     toggleItem(state, action) {
-      const itemId = action.payload;
-      if (state.selectedIds.includes(itemId)) {
-        state.selectedIds = state.selectedIds.filter(id => id !== itemId);
+      const newItem = action.payload;
+      if (state.selectedItems.includes(newItem)) {
+        state.selectedItems = state.selectedItems.filter(item => item.id !== newItem.id);
       } else {
-        state.selectedIds.push(itemId);
+        state.selectedItems.push(newItem);
       }
     },
     selectAll(state, action) {
-      state.selectedIds = action.payload;
+      state.selectedItems = action.payload;
     },
     clearSelection(state) {
-      state.selectedIds = [];
+      state.selectedItems = [];
     },
   },
 })

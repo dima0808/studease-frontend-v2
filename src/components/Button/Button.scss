@@ -12,6 +12,15 @@
   border: var(--border);
   transition: background 0.2s ease;
 
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+
+    @include hover {
+      background-color: var(--color-white);
+    }
+  }
+
   @include hover {
     background-color: var(--color-light-blue);
   }

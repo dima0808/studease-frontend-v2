@@ -7,19 +7,16 @@ import { useEffect } from "react";
 import Loading from "@/components/Loading";
 import { useActions } from "@/hooks/useActions";
 import ErrorComponent from "@/components/ErrorComponent";
+import { AnimatePresence } from "framer-motion";
 import './TestPage.scss'
-import { API_URL } from "@/constants/config";
-
 
 const TestPage = () => {
   const { viewMode, sortBy, search } = useSelector(state => state.filter)
   const { tests, isLoading, error } = useSelector(state => state.tests)
-  const { selectedIds } = useSelector(state => state.selection)
+  const { selectedItems } = useSelector(state => state.selection)
   const { getAllTests } = useActions()
 
   const filteredTests = filterTests(tests, { sortBy, search })
-
-  console.log(API_URL)
 
   useEffect(() => {
     getAllTests()
@@ -39,15 +36,17 @@ const TestPage = () => {
         "test-page__table": viewMode === "table",
       })}
     >
-      {filteredTests.map((test, index) =>
-        <TestCard
-          key={test.id}
-          index={index}
-          wide={viewMode === "table"}
-          selectedIds={selectedIds}
-          {...test}
-        />
-      )}
+      <AnimatePresence>
+        {filteredTests.map((test, index) =>
+          <TestCard
+            key={test.id}
+            index={index}
+            wide={viewMode === "table"}
+            selectedItems={selectedItems}
+            {...test}
+          />
+        )}
+      </AnimatePresence>
     </div>
   )
 }

@@ -1,5 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getAllTests } from "@/store/tests/tests.actions";
+import {
+  deleteTestById,
+  deleteTestsByIds,
+  getAllTests
+} from "@/store/tests/tests.actions";
 
 const initialState = {
   tests: [],
@@ -12,8 +16,10 @@ const testsSlice = createSlice({
   initialState,
   reducers: {
     deleteTestById(state, action) {
-      console.log("Deleting test with ID:", action.payload);
       state.tests = state.tests.filter(test => test.id !== action.payload)
+    },
+    deleteTestsByIds(state, action) {
+      state.tests = state.tests.filter(test => !action.payload.some(item => item.id === test.id))
     }
   },
   extraReducers: (builder) => {
@@ -28,8 +34,14 @@ const testsSlice = createSlice({
       })
       .addCase(getAllTests.rejected, (state, action) => {
         state.isLoading = false
-        state.error = action.error.message
+        state.error = action.payload
         state.tests = []
+      })
+      .addCase(deleteTestById.fulfilled, (state, action) => {
+        state.tests = state.tests.filter(test => test.id !== action.payload)
+      })
+      .addCase(deleteTestsByIds.fulfilled, (state, action) => {
+        state.tests = state.tests.filter(test => !action.payload.some(item => item.id === test.id))
       })
   },
 })
