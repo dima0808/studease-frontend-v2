@@ -15,7 +15,7 @@ const selectionSlice = createSlice({
     },
     toggleItem(state, action) {
       const newItem = action.payload;
-      if (state.selectedItems.includes(newItem)) {
+      if (state.selectedItems.some(item => item.id === newItem.id)) {
         state.selectedItems = state.selectedItems.filter(item => item.id !== newItem.id);
       } else {
         state.selectedItems.push(newItem);

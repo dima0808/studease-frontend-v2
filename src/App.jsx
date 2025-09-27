@@ -5,6 +5,7 @@ import LoginForm from "@/components/AuthForm/LoginForm";
 import RegisterForm from "@/components/AuthForm/RegisterForm";
 import TestPage from "@/pages/TestPage";
 import { ROUTES } from "@/constants/routes";
+import FaqPage from "@/pages/FaqPage";
 
 function App() {
   return (
@@ -21,7 +22,7 @@ function App() {
         <Route path={ROUTES.COLLECTIONS} element={<h1>Collections page</h1>} />
         <Route path={ROUTES.DASHBOARD} element={<h1>Dashboard page</h1>} />
       </Route>
-      <Route path={ROUTES.FAQ} element={<h1>FAQ page</h1>} />
+      <Route path={ROUTES.FAQ} element={<FaqPage />} />
     </Routes>
   )
 }

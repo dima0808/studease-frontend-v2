@@ -136,7 +136,7 @@ const fetchAllTests = () => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(tests)
-    }, 1000)
+    }, 2000)
   })
 }
 

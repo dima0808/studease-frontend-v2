@@ -7,7 +7,7 @@ import Button from "@/components/Button";
 import SearchInput from "@/components/SearchInput";
 import { useSelector } from "react-redux";
 import { useActions } from "@/hooks/useActions";
-import { filterTests } from "@/utils/filterTests";
+import { filterArr } from "@/utils/filterArr";
 import { useLocation } from "react-router-dom";
 import { ROUTES_NAV } from "@/constants/routes";
 import { useState } from "react";
@@ -22,7 +22,7 @@ const Header = () => {
 
   const { pathname } = useLocation()
 
-  const filteredTests = filterTests(tests, { sortBy, search })
+  const filteredTests = filterArr(tests, { sortBy, search })
 
   const handelActiveIndex = (value) => {
     setSortBy(value)

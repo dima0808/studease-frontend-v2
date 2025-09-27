@@ -1,4 +1,4 @@
-export const filterTests = (tests, { sortBy, search }) => {
+export const filterArr = (tests, { sortBy, search }) => {
   return tests
     .filter(test => {
       if (sortBy === "all") return true

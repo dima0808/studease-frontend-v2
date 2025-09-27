@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import TestCard from "@/components/TestCard";
 import { useSelector } from "react-redux";
-import { filterTests } from "@/utils/filterTests";
+import { filterArr } from "@/utils/filterArr";
 import EmptyTests from "@/components/EmptyTests";
 import { useEffect } from "react";
 import Loading from "@/components/Loading";
@@ -16,7 +16,7 @@ const TestPage = () => {
   const { selectedItems } = useSelector(state => state.selection)
   const { getAllTests } = useActions()
 
-  const filteredTests = filterTests(tests, { sortBy, search })
+  const filteredTests = filterArr(tests, { sortBy, search })
 
   useEffect(() => {
     getAllTests()
