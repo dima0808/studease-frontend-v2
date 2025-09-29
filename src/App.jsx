@@ -3,9 +3,10 @@ import MainLayout from "@/layout/MainLayout";
 import AuthLayout from "@/layout/AuthLayout";
 import LoginForm from "@/components/AuthForm/LoginForm";
 import RegisterForm from "@/components/AuthForm/RegisterForm";
-import TestPage from "@/pages/TestPage";
+import TestsPage from "@/pages/TestsPage";
 import { ROUTES } from "@/constants/routes";
 import FaqPage from "@/pages/FaqPage";
+import CollectionsPage from "@/pages/CollectionsPage";
 
 function App() {
   return (
@@ -17,9 +18,9 @@ function App() {
 
       <Route path={ROUTES.DEFAULT} element={<MainLayout />}>
         <Route
-          path={ROUTES.TESTS} element={<TestPage />}
+          path={ROUTES.TESTS} element={<TestsPage />}
         />
-        <Route path={ROUTES.COLLECTIONS} element={<h1>Collections page</h1>} />
+        <Route path={ROUTES.COLLECTIONS} element={<CollectionsPage />} />
         <Route path={ROUTES.DASHBOARD} element={<h1>Dashboard page</h1>} />
       </Route>
       <Route path={ROUTES.FAQ} element={<FaqPage />} />

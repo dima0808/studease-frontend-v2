@@ -2,7 +2,7 @@ import './Header.scss'
 import ToggleButton from "@/components/ToggleButton";
 import { ACTION_OPTIONS, VIEW_OPTIONS } from "@/constants/toggleOptions";
 import TabsFilter from "@/components/TabsFilter";
-import { TAB_FILTERS } from "@/constants/tabFilters";
+import { COLLECTIONS_TAB_FILTERS, TAB_FILTERS } from "@/constants/tabFilters";
 import Button from "@/components/Button";
 import SearchInput from "@/components/SearchInput";
 import { useSelector } from "react-redux";
@@ -10,19 +10,28 @@ import { useActions } from "@/hooks/useActions";
 import { filterArr } from "@/utils/filterArr";
 import { useLocation } from "react-router-dom";
 import { ROUTES_NAV } from "@/constants/routes";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ConfirmDeleteModal from "@/components/ConfirmDeleteModal";
 
 const Header = () => {
   const { viewMode, sortBy, search } = useSelector(state => state.filter)
   const { actionMode, selectedItems } = useSelector(state => state.selection)
   const { tests } = useSelector(state => state.tests)
-  const { setViewMode, setActionMode, selectAll, clearSelection, setSortBy, deleteTestsByIds } = useActions()
+  const { collections } = useSelector(state => state.collections)
+  const { setViewMode, setActionMode, selectAll, clearSelection, setSortBy, deleteTestsByIds, deleteCollectionsByNames } = useActions()
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { pathname } = useLocation()
 
-  const filteredTests = filterArr(tests, { sortBy, search })
+  useEffect(() => {
+    clearSelection()
+    setSortBy('all')
+  }, [pathname, clearSelection, setSortBy])
+
+  const data = pathname === ROUTES_NAV.COLLECTIONS.href ? collections : tests
+  const deleteData = pathname === ROUTES_NAV.COLLECTIONS.href ? deleteCollectionsByNames : deleteTestsByIds
+
+  const filteredData = filterArr(data, { sortBy, search })
 
   const handelActiveIndex = (value) => {
     setSortBy(value)
@@ -32,7 +41,7 @@ const Header = () => {
   }
 
   const handleDeleteSelected = () => {
-    deleteTestsByIds(selectedItems)
+    deleteData(selectedItems)
     clearSelection()
     setIsModalOpen(false)
   }
@@ -49,7 +58,7 @@ const Header = () => {
       <div className="header__wrapper">
         {pathname !== ROUTES_NAV.COLLECTIONS.href ? (
           <TabsFilter activeIndex={sortBy} handelActiveIndex={handelActiveIndex} options={TAB_FILTERS} />
-        ): <div></div>}
+        ): <TabsFilter activeIndex={sortBy} handelActiveIndex={handelActiveIndex} options={COLLECTIONS_TAB_FILTERS} />}
         <div className="header__view">
           {actionMode === 'select' ? (
             <>
@@ -58,7 +67,7 @@ const Header = () => {
                   if (selectedItems.length > 0) {
                     clearSelection()
                   } else {
-                    selectAll(filteredTests)
+                    selectAll(filteredData)
                   }
               }} />
               <Button disabled={true} text="Export" iconName="ExportIcon" />
@@ -73,9 +82,10 @@ const Header = () => {
       </div>
       <ConfirmDeleteModal
         isOpen={isModalOpen}
+        title={pathname === ROUTES_NAV.COLLECTIONS.href ? "collections" : "tests"}
         onClose={() => setIsModalOpen(false)}
         onConfirm={handleDeleteSelected}
-        tests={selectedItems}
+        data={selectedItems}
       />
     </div>
   )

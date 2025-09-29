@@ -36,7 +36,7 @@ const authSlice = createSlice({
       .addMatcher(isFulfilled(loginUser, registerUser), (state, action) => {
         state.isLoading = false;
         state.error = null;
-        Cookies.set("token", action.payload);
+        Cookies.set("token", action.payload, { expires: 1 / 24 });
       })
       .addMatcher(isRejected(loginUser, registerUser), (state, action) => {
         state.isLoading = false;

@@ -5,6 +5,7 @@ import { filterActions } from "@/store/filter/filter.slice";
 import { selectionActions } from "@/store/selection/selection.slice";
 import { testsActions } from "@/store/tests/tests.slice";
 import * as testsAsyncActions from "@/store/tests/tests.actions";
+import * as collectionsAsyncActions from "@/store/collections/collections.actions";
 import * as authAsyncActions from "@/store/auth/auth.actions";
 import { authActions } from "@/store/auth/auth.slice";
 
@@ -15,6 +16,7 @@ const rootActions = {
   ...testsActions,
   ...authAsyncActions,
   ...testsAsyncActions,
+  ...collectionsAsyncActions
 }
 
 export const useActions = () => {

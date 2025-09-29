@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSelector, createSlice } from "@reduxjs/toolkit";
 import {
   deleteTestById,
   deleteTestsByIds,
@@ -38,6 +38,19 @@ const testsSlice = createSlice({
       })
   },
 })
+
+
+export const selectTests = createSelector(
+  state => state.tests.tests,
+  state => state.tests.isLoading,
+  state => state.tests.error,
+  (tests, isLoading, error) => ({
+    data: tests,
+    isLoading,
+    error,
+  })
+);
+
 
 export const { actions: testsActions } = testsSlice
 export default testsSlice.reducer

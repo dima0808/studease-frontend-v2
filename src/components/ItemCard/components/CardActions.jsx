@@ -1,23 +1,29 @@
 import Button from "@/components/Button";
-import ActionMenu from "@/components/TestCard/components/ActionMenu";
+import ActionMenu from "@/components/ItemCard/components/ActionMenu";
 import { useSelector } from "react-redux";
 import { useActions } from "@/hooks/useActions";
 import { useState } from "react";
 import ConfirmDeleteModal from "@/components/ConfirmDeleteModal";
+import { useLocation } from "react-router-dom";
+import { ROUTES_NAV } from "@/constants/routes";
 
 const CardActions = (props) => {
   const { id, name, isSelected, wide } = props;
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { actionMode } = useSelector((state) => state.selection);
-  const { toggleItem, deleteTestById } = useActions();
+  const { toggleItem, deleteTestById, deleteCollectionByName } = useActions();
+  const { pathname } = useLocation();
+
+  const deleteData = pathname === ROUTES_NAV.COLLECTIONS.href ? deleteCollectionByName : deleteTestById;
+  const param = pathname === ROUTES_NAV.COLLECTIONS.href ? name : id;
 
   const handleDelete = () => {
     setIsModalOpen(true);
   };
 
   const confirmDelete = () => {
-    deleteTestById(id);
+    deleteData(param);
     setIsModalOpen(false);
   };
 
@@ -26,15 +32,15 @@ const CardActions = (props) => {
       {actionMode === "select" ? (
         <input
           type="checkbox"
-          className="test-card__checkbox"
+          className="item-card__checkbox"
           checked={isSelected}
           onChange={() => toggleItem({ id, name })}
         />
       ) : wide ? (
-        <div className="test-card__actions--wide">
+        <div className="item-card__actions--wide">
           <Button text="Info" theme="action" hidden={true} iconName="InfoIcon" />
           <Button text="Clone" theme="action" hidden={true} iconName="CloneIcon" />
-          <Button text="Export" theme="action" hidden={true} iconName="ExportIcon" />
+          <Button disabled text="Export" theme="action" hidden={true} iconName="ExportIcon" />
           <Button
             text="Delete"
             onClick={handleDelete}
@@ -49,9 +55,10 @@ const CardActions = (props) => {
 
       <ConfirmDeleteModal
         isOpen={isModalOpen}
+        title={pathname === ROUTES_NAV.COLLECTIONS.href ? "collections" : "tests"}
         onClose={() => setIsModalOpen(false)}
         onConfirm={confirmDelete}
-        tests={[{ id, name }]}
+        data={[{ id, name }]}
       />
     </>
   );

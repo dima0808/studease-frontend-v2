@@ -64,11 +64,11 @@ const ActionMenu = (props) => {
   }, [open]);
 
   return (
-    <div className="test-card__actions">
+    <div className="item-card__actions">
       <button
         ref={buttonRef}
         title="Open actions"
-        className="test-card__button"
+        className="item-card__button"
         type="button"
         onClick={() => setOpen((prev) => !prev)}
       >
@@ -79,7 +79,7 @@ const ActionMenu = (props) => {
         {open && (
           <Motion.div
             ref={menuRef}
-            className="test-card__dropdown"
+            className="item-card__dropdown"
             style={{
               position: "fixed",
               top: `${position.top}px`,
@@ -92,7 +92,7 @@ const ActionMenu = (props) => {
           >
             <Button text="Info" iconName="InfoIcon" />
             <Button text="Clone" iconName="CloneIcon" />
-            <Button text="Export" iconName="ExportIcon" />
+            <Button disabled text="Export" iconName="ExportIcon" />
             <Button onClick={handleDelete} text="Delete" iconName="RemoveIcon" />
           </Motion.div>
         )}

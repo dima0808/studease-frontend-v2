@@ -9,11 +9,11 @@ const Info = (props) => {
   } = props
 
   return (
-    <div className={classNames("test-card__info", className)}>
-      <div className="test-card__icon">
+    <div className={classNames("item-card__info", className)}>
+      <div className="item-card__icon">
         <Icon />
       </div>
-      <div className="test-card__info-description">
+      <div className="item-card__info-description">
         <span>{title}: </span>
         <p>{description}</p>
       </div>

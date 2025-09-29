@@ -3,7 +3,7 @@ import { createPortal } from "react-dom";
 import { useEffect } from "react";
 import "./ConfirmDeleteModal.scss";
 
-const ConfirmDeleteModal = ({ isOpen, onClose, onConfirm, tests }) => {
+const ConfirmDeleteModal = ({ isOpen, onClose, onConfirm, title, data }) => {
   useEffect(() => {
     if (!isOpen) return;
 
@@ -48,14 +48,14 @@ const ConfirmDeleteModal = ({ isOpen, onClose, onConfirm, tests }) => {
             onClick={(e) => e.stopPropagation()}
           >
             <h2 className="modal-title">
-              Are you sure you want to delete {tests.length > 1 ? "these tests" : "this test"}?
+              Are you sure you want to delete {data.length > 1 ? `these ${title}` : `this ${title.slice(0, -1)}`}?
             </h2>
             <p className="modal-text">This action cannot be undone.</p>
 
             <ul className="modal-list">
-              {tests.map((test) => (
-                <li key={test.id} className="modal-list__item">
-                  {test.name}
+              {data.map((item) => (
+                <li key={item.id} className="modal-list__item">
+                  {item.name}
                 </li>
               ))}
             </ul>
