@@ -82,7 +82,7 @@ const Header = () => {
                   }
               }} />
               <Button disabled={true} text="Export" iconName="ExportIcon" />
-              <Button disabled={selectedItems.length === 0} onClick={() => setIsModalOpen(true)} text="Delete" iconName="RemoveIcon" />
+              <Button theme="red" disabled={selectedItems.length === 0} onClick={() => setIsModalOpen(true)} text="Delete" iconName="RemoveIcon" />
             </>
           ) : (<>
             <Button disabled={true} text="Import" iconName="ImportIcon" />

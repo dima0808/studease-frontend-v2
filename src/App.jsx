@@ -22,7 +22,7 @@ function App() {
           path={ROUTES.TESTS} element={<TestsPage />}
         />
         <Route path={ROUTES.COLLECTIONS} element={<CollectionsPage />} />
-        <Route path={ROUTES.DASHBOARD} element={<h1>Dashboard page</h1>} />
+        <Route path={ROUTES.COURSEBOARDS} element={<h1>Courseboards page</h1>} />
       </Route>
       <Route path={`${ROUTES.CREATE_TEST}/:cloneId?`} element={<CreateTestForm />} />
       <Route path={ROUTES.CREATE_COLLECTION} element={<h1>Create Collection</h1>} />

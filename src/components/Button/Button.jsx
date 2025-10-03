@@ -9,7 +9,7 @@ const Button = (props) => {
     iconName,
     text = 'Button',
     /*
-    * theme: 'default' | 'dark' | 'primary'
+    * theme: 'default' | 'dark' | 'primary' | 'red'
      */
     theme = 'default',
     onClick,

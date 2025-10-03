@@ -3,15 +3,15 @@ export const ROUTES = {
   REGISTER: 'register',
   TESTS: 'tests',
   COLLECTIONS: 'collections',
-  DASHBOARD: 'dashboard',
+  COURSEBOARDS: 'courseboards',
   FAQ: 'faq',
   CREATE_TEST: 'create-test',
   CREATE_COLLECTION: 'create-collection',
 }
 export const ROUTES_NAV = {
-  DASHBOARD: {
-    href: '/dashboard',
-    title: 'Dashboard',
+  COURSEBOARDS: {
+    href: '/courseboards',
+    title: 'Courseboards',
     iconName: "DashboardIcon",
   },
   TESTS: {
