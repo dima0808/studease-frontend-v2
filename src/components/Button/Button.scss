@@ -9,7 +9,7 @@
   border-radius: 12px;
   height: 40px;
   background-color: var(--color-white);
-  border: var(--border);
+  border: var(--border-strong);
   transition: background 0.2s ease;
 
   &:disabled {
@@ -35,6 +35,7 @@
   &--primary {
     background: var(--color-blue);
     color: var(--color-white);
+    border: none;
 
     @include hover {
       background: #2563eb;

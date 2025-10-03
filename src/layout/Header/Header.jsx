@@ -8,8 +8,8 @@ import SearchInput from "@/components/SearchInput";
 import { useSelector } from "react-redux";
 import { useActions } from "@/hooks/useActions";
 import { filterArr } from "@/utils/filterArr";
-import { useLocation } from "react-router-dom";
-import { ROUTES_NAV } from "@/constants/routes";
+import { useLocation, useNavigate } from "react-router-dom";
+import { ROUTES, ROUTES_NAV } from "@/constants/routes";
 import { useEffect, useState } from "react";
 import ConfirmDeleteModal from "@/components/ConfirmDeleteModal";
 
@@ -18,8 +18,18 @@ const Header = () => {
   const { actionMode, selectedItems } = useSelector(state => state.selection)
   const { tests } = useSelector(state => state.tests)
   const { collections } = useSelector(state => state.collections)
-  const { setViewMode, setActionMode, selectAll, clearSelection, setSortBy, deleteTestsByIds, deleteCollectionsByNames } = useActions()
+  const {
+    setViewMode,
+    setActionMode,
+    selectAll,
+    clearSelection,
+    setSortBy,
+    deleteTestsByIds,
+    deleteCollectionsByNames
+  } = useActions()
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const navigate = useNavigate()
 
   const { pathname } = useLocation()
 
@@ -28,8 +38,9 @@ const Header = () => {
     setSortBy('all')
   }, [pathname, clearSelection, setSortBy])
 
-  const data = pathname === ROUTES_NAV.COLLECTIONS.href ? collections : tests
-  const deleteData = pathname === ROUTES_NAV.COLLECTIONS.href ? deleteCollectionsByNames : deleteTestsByIds
+  const isCollectionsPage = pathname === ROUTES_NAV.COLLECTIONS.href
+  const data = pathname === isCollectionsPage ? collections : tests
+  const deleteData = pathname === isCollectionsPage ? deleteCollectionsByNames : deleteTestsByIds
 
   const filteredData = filterArr(data, { sortBy, search })
 
@@ -75,14 +86,14 @@ const Header = () => {
             </>
           ) : (<>
             <Button disabled={true} text="Import" iconName="ImportIcon" />
-            <Button theme="primary" text="Create a test" iconName="CreateIcon" />
+            <Button onClick={() => navigate(`/${isCollectionsPage ? ROUTES.CREATE_COLLECTION : ROUTES.CREATE_TEST}`)} theme="primary" text={`Create a ${isCollectionsPage ? "collection" : "test"}`} iconName="CreateIcon" />
           </>)}
           <SearchInput placeholder="Search" />
         </div>
       </div>
       <ConfirmDeleteModal
         isOpen={isModalOpen}
-        title={pathname === ROUTES_NAV.COLLECTIONS.href ? "collections" : "tests"}
+        title={pathname === isCollectionsPage ? "collections" : "tests"}
         onClose={() => setIsModalOpen(false)}
         onConfirm={handleDeleteSelected}
         data={selectedItems}

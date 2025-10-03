@@ -24,6 +24,23 @@ export const getAllTests = createAsyncThunk(
   }
 );
 
+export const getTestById = createAsyncThunk("tests/getTestById", async (testId, {rejectWithValue}) => {
+  try {
+    const { data } = await api.get('/admin/tests/' + testId)
+    return data
+  } catch {
+    return rejectWithValue("Failed to fetch test")
+  }
+})
+
+export const createTest = createAsyncThunk("tests/createTest", async (testData, {rejectWithValue}) => {
+  try {
+    const { data } = await api.post('/admin/tests', testData)
+    return data
+  } catch {
+    return rejectWithValue("Failed to create test")
+  }
+})
 
 export const deleteTestById = createAsyncThunk("tests/deleteTestById", async (testId, {rejectWithValue}) => {
   try {

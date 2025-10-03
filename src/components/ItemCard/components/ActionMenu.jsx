@@ -7,6 +7,7 @@ import { dropdownVariants } from "@/constants/motionVariants";
 const ActionMenu = (props) => {
   const {
     handleDelete,
+    navigateToClone,
   } = props;
   const [open, setOpen] = useState(false);
   const [position, setPosition] = useState({ top: "100%", right: 0 });
@@ -91,7 +92,13 @@ const ActionMenu = (props) => {
             exit="exit"
           >
             <Button text="Info" iconName="InfoIcon" />
-            <Button text="Clone" iconName="CloneIcon" />
+            <Button
+              text="Clone"
+              onClick={() => {
+                navigateToClone();
+                setOpen(false);
+              }}
+              iconName="CloneIcon" />
             <Button disabled text="Export" iconName="ExportIcon" />
             <Button onClick={handleDelete} text="Delete" iconName="RemoveIcon" />
           </Motion.div>

@@ -21,12 +21,16 @@
   --color-blue-light: #c3cafa;
 
   --color-border: #EBE6E6;
+  --color-border-medium: #BEBEBE;
+  --color-border-strong: #B2B2B2;
 
   --border-radius-large: 20px;
   --border-radius-medium: 15px;
   --border-radius-small: 8px;
 
   --border: 1px solid var(--color-border);
+  --border-medium: 1px solid var(--color-border-medium);
+  --border-strong: 1px solid var(--color-border-strong);
 
   --font-family-base: 'Manrope', sans-serif;
   --container-width: #{fluid-to-laptop(

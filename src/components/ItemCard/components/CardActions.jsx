@@ -4,8 +4,8 @@ import { useSelector } from "react-redux";
 import { useActions } from "@/hooks/useActions";
 import { useState } from "react";
 import ConfirmDeleteModal from "@/components/ConfirmDeleteModal";
-import { useLocation } from "react-router-dom";
-import { ROUTES_NAV } from "@/constants/routes";
+import { useLocation, useNavigate } from "react-router-dom";
+import { ROUTES, ROUTES_NAV } from "@/constants/routes";
 
 const CardActions = (props) => {
   const { id, name, isSelected, wide } = props;
@@ -14,9 +14,15 @@ const CardActions = (props) => {
   const { actionMode } = useSelector((state) => state.selection);
   const { toggleItem, deleteTestById, deleteCollectionByName } = useActions();
   const { pathname } = useLocation();
+  const navigate = useNavigate();
+  const isCollectionsPage = pathname === ROUTES_NAV.COLLECTIONS.href;
 
-  const deleteData = pathname === ROUTES_NAV.COLLECTIONS.href ? deleteCollectionByName : deleteTestById;
-  const param = pathname === ROUTES_NAV.COLLECTIONS.href ? name : id;
+  const deleteData = isCollectionsPage ? deleteCollectionByName : deleteTestById;
+  const param = isCollectionsPage ? name : id;
+
+  const navigateToClone = () => {
+    navigate(`/${isCollectionsPage ? `${ROUTES.CREATE_COLLECTION}?cloneId=${id}` : `${ROUTES.CREATE_TEST}?cloneId=${id}`}`);
+  }
 
   const handleDelete = () => {
     setIsModalOpen(true);
@@ -39,7 +45,13 @@ const CardActions = (props) => {
       ) : wide ? (
         <div className="item-card__actions--wide">
           <Button text="Info" theme="action" hidden={true} iconName="InfoIcon" />
-          <Button text="Clone" theme="action" hidden={true} iconName="CloneIcon" />
+          <Button
+            text="Clone"
+            onClick={() => navigateToClone()}
+            theme="action"
+            hidden={true}
+            iconName="CloneIcon"
+          />
           <Button disabled text="Export" theme="action" hidden={true} iconName="ExportIcon" />
           <Button
             text="Delete"
@@ -50,12 +62,12 @@ const CardActions = (props) => {
           />
         </div>
       ) : (
-        <ActionMenu handleDelete={handleDelete} confirmDelete={confirmDelete} id={id} />
+        <ActionMenu navigateToClone={navigateToClone} handleDelete={handleDelete} confirmDelete={confirmDelete} id={id} />
       )}
 
       <ConfirmDeleteModal
         isOpen={isModalOpen}
-        title={pathname === ROUTES_NAV.COLLECTIONS.href ? "collections" : "tests"}
+        title={isCollectionsPage ? "collections" : "tests"}
         onClose={() => setIsModalOpen(false)}
         onConfirm={confirmDelete}
         data={[{ id, name }]}

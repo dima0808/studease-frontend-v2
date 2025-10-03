@@ -5,6 +5,8 @@ export const ROUTES = {
   COLLECTIONS: 'collections',
   DASHBOARD: 'dashboard',
   FAQ: 'faq',
+  CREATE_TEST: 'create-test',
+  CREATE_COLLECTION: 'create-collection',
 }
 export const ROUTES_NAV = {
   DASHBOARD: {
