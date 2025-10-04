@@ -1,18 +1,19 @@
 import React, { useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useForm, useFieldArray } from "react-hook-form";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useActions } from "@/hooks/useActions";
 import { ROUTES } from "@/constants/routes";
+import BackButton from "@/components/BackButton";
+import FormInput from "@/components/FormInput";
+import QuestionBlock from "@/components/QuestionBlock";
+import SidebarCreation from "@/components/SidebarCreation";
 
 const defaultQuestion = {
-  id: 1,
-  content: "Що виведе System.out.println(2 + 2 * 2)?",
-  points: 2,
+  id: Date.now(),
+  content: "",
+  points: 1,
   type: "single_choice",
-  answers: [
-    { id: 1, content: "8", isCorrect: false, leftOption: null, rightOption: null },
-    { id: 2, content: "6", isCorrect: true, leftOption: null, rightOption: null },
-  ],
+  answers: [],
 };
 
 const defaultValues = {
@@ -20,37 +21,38 @@ const defaultValues = {
   openDate: "",
   deadline: "",
   minutesToComplete: "",
-  questions: [defaultQuestion],
+  questions: [],
+  samples: [],
 };
 
 const CreateTestForm = () => {
-  const [params] = useSearchParams()
+  const [params] = useSearchParams();
   const cloneId = params.get("cloneId");
-  const { getTestById, createTest } = useActions()
-  const navigate = useNavigate()
-
-  console.log('Cloning test with ID:', cloneId);
+  const { getFullTestById, createTest } = useActions();
+  const navigate = useNavigate();
 
   const {
     register,
     handleSubmit,
     reset,
+    control,
+    watch,
+    setValue,
     formState: { errors },
   } = useForm({
-    defaultValues: {
-      name: "",
-      openDate: "",
-      deadline: "",
-      minutesToComplete: "",
-      questions: [defaultQuestion],
-    },
+    defaultValues,
+  });
+
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "questions",
   });
 
   useEffect(() => {
     if (cloneId) {
       (async () => {
         try {
-          const data = await getTestById(cloneId).unwrap();
+          const data = await getFullTestById(cloneId).unwrap();
 
           const filteredData = Object.keys(defaultValues).reduce((acc, key) => {
             if (data[key] !== undefined) {
@@ -59,81 +61,129 @@ const CreateTestForm = () => {
             return acc;
           }, {});
 
-          reset({
+          if (Array.isArray(filteredData.questions)) {
+            filteredData.questions = filteredData.questions.map((q) => {
+              if (q.type === "matching" && Array.isArray(q.answers)) {
+                return {
+                  ...q,
+                  answers: q.answers
+                    .filter((a) => a.isCorrect === true)
+                    .map(({ leftOption, rightOption }) => ({
+                      leftOption,
+                      rightOption,
+                    })),
+                };
+              }
+              return q;
+            });
+          }
+
+          const newData = {
             ...defaultValues,
             ...filteredData,
             name: (filteredData.name || "") + " (Copy)",
-          });
+          };
+
+          reset(newData);
         } catch (err) {
           console.error("Failed to fetch test:", err);
         }
       })();
     }
-  }, [cloneId, getTestById, reset]);
+  }, [cloneId, getFullTestById, reset]);
 
   const onSubmit = (data) => {
     console.log("Form submitted:", data);
     createTest(data);
-    reset();
-    navigate(`/${ROUTES.TESTS}`);
+    // reset();
+    // navigate(`/${ROUTES.TESTS}`);
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} style={{ maxWidth: 400, margin: "0 auto" }}>
-      <div>
-        <label>Test Name</label>
-        <input
+    <>
+      <SidebarCreation
+        addQuestion={() => append({ ...defaultQuestion, id: Date.now() })}
+      />
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        style={{ maxWidth: 800, margin: "0 auto" }}
+      >
+        <FormInput
+          label="Test Name"
+          name="name"
+          type="text"
           placeholder="Java Basics Test 9"
-          {...register("name", { required: "Name is required" })}
+          register={register}
+          errors={errors}
+          rules={{ required: "Name is required" }}
         />
-        {errors.name && <p style={{ color: "red" }}>{errors.name.message}</p>}
-      </div>
 
-      <div>
-        <label>Open Date</label>
-        <input
+        <FormInput
+          label="Open Date"
+          name="openDate"
+          type="text"
           placeholder="20.09.2025 12:00"
-          {...register("openDate", {
+          register={register}
+          errors={errors}
+          rules={{
             required: "Open date is required",
             pattern: {
               value: /^\d{2}\.\d{2}\.\d{4} \d{2}:\d{2}$/,
               message: "Date must be in format DD.MM.YYYY HH:mm",
             },
-          })}
+          }}
         />
-        {errors.openDate && <p style={{ color: "red" }}>{errors.openDate.message}</p>}
-      </div>
 
-      <div>
-        <label>Deadline</label>
-        <input
+        <FormInput
+          label="Deadline"
+          name="deadline"
+          type="text"
           placeholder="30.09.2025 12:00"
-          {...register("deadline", {
+          register={register}
+          errors={errors}
+          rules={{
             required: "Deadline is required",
             pattern: {
               value: /^\d{2}\.\d{2}\.\d{4} \d{2}:\d{2}$/,
               message: "Date must be in format DD.MM.YYYY HH:mm",
             },
-          })}
+          }}
         />
-        {errors.deadline && <p style={{ color: "red" }}>{errors.deadline.message}</p>}
-      </div>
 
-      <div>
-        <label>Minutes to Complete</label>
-        <input
+        <FormInput
+          label="Minutes to Complete"
+          name="minutesToComplete"
           type="number"
           placeholder="30"
-          {...register("minutesToComplete", {
+          register={register}
+          errors={errors}
+          rules={{
             required: "Minutes to complete is required",
             min: { value: 1, message: "Must be at least 1 minute" },
-          })}
+            valueAsNumber: true,
+          }}
         />
-        {errors.minutesToComplete && <p style={{ color: "red" }}>{errors.minutesToComplete.message}</p>}
-      </div>
 
-      <button type="submit">Create Test</button>
-    </form>
+        <h3>Questions</h3>
+        {fields.length === 0 && <p>No questions added yet.</p>}
+        {fields.map((q, index) => (
+          <QuestionBlock
+            key={q.id}
+            q={q}
+            index={index}
+            control={control}
+            register={register}
+            errors={errors}
+            watch={watch}
+            remove={remove}
+            setValue={setValue}
+          />
+        ))}
+
+        <br />
+        <button type="submit">Create Test</button>
+      </form>
+    </>
   );
 };
 

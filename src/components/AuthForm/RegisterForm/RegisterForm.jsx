@@ -5,6 +5,7 @@ import AuthInput from "@/components/AuthForm/AuthInput";
 import { useSelector } from "react-redux";
 import { useActions } from "@/hooks/useActions";
 import "../AuthForm.scss";
+import { ROUTES } from "@/constants/routes";
 
 const RegisterForm = () => {
   const {
@@ -23,7 +24,7 @@ const RegisterForm = () => {
 
   const handleRegister = async (data) => {
     await registerUser(data).unwrap();
-    handleShowSplash(() => navigate("/dashboard"));
+    handleShowSplash(() => navigate(`/${ROUTES.TESTS}`));
   };
 
   return (

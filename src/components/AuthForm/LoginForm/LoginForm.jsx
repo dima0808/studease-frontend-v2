@@ -5,6 +5,7 @@ import AuthButton from "@/components/AuthForm/AuthButton";
 import { useSelector } from "react-redux";
 import { useActions } from "@/hooks/useActions";
 import "../AuthForm.scss";
+import { ROUTES } from "@/constants/routes";
 
 const LoginForm = () => {
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
@@ -15,7 +16,7 @@ const LoginForm = () => {
 
   const handleLogin = async (data) => {
     await loginUser(data).unwrap();
-    handleShowSplash(() => navigate("/dashboard"));
+    handleShowSplash(() => navigate(`/${ROUTES.TESTS}`));
   };
 
   return (

@@ -4,6 +4,7 @@ import SplashScreen from "@/components/SplashScreen";
 import Cookies from "js-cookie";
 import { useActions } from "@/hooks/useActions";
 import "./AuthLayout.scss";
+import { ROUTES } from "@/constants/routes";
 
 const AuthLayout = () => {
   const { pathname } = useLocation();
@@ -18,7 +19,7 @@ const AuthLayout = () => {
       setShowSplash(true);
       const timer = setTimeout(() => {
         setShowSplash(false);
-        navigate("/dashboard");
+        navigate(`/${ROUTES.TESTS}`);
         clearTimeout(timer);
       }, 3000);
     }

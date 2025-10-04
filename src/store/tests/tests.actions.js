@@ -33,6 +33,40 @@ export const getTestById = createAsyncThunk("tests/getTestById", async (testId, 
   }
 })
 
+export const getQuestionsByTestId = createAsyncThunk("tests/getQuestionsByTestId", async (testId, {rejectWithValue}) => {
+  try {
+    const { data } = await api.get('/admin/tests/' + testId + '/questions')
+    return data
+  } catch {
+    return rejectWithValue("Failed to fetch questions")
+  }
+})
+
+export const getSamplesByTestId = createAsyncThunk("tests/getSamplesByTestId", async (testId, {rejectWithValue}) => {
+  try {
+    const { data } = await api.get('/admin/tests/' + testId + '/samples')
+    return data
+  } catch {
+    return rejectWithValue("Failed to fetch samples")
+  }
+})
+
+export const getFullTestById = createAsyncThunk("tests/getFullTestById", async (testId, {dispatch, rejectWithValue}) => {
+  try {
+    const test = await dispatch(getTestById(testId)).unwrap()
+    const questions = await dispatch(getQuestionsByTestId(testId)).unwrap()
+    const samples = await dispatch(getSamplesByTestId(testId)).unwrap()
+
+    return {
+      ...test,
+      ...questions,
+      ...samples
+    }
+  } catch {
+    return rejectWithValue("Failed to fetch full test")
+  }
+})
+
 export const createTest = createAsyncThunk("tests/createTest", async (testData, {rejectWithValue}) => {
   try {
     const { data } = await api.post('/admin/tests', testData)
