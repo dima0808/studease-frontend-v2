@@ -8,6 +8,7 @@ const ActionMenu = (props) => {
   const {
     handleDelete,
     navigateToClone,
+    navigateToInfo
   } = props;
   const [open, setOpen] = useState(false);
   const [position, setPosition] = useState({ top: "100%", right: 0 });
@@ -91,14 +92,22 @@ const ActionMenu = (props) => {
             animate="visible"
             exit="exit"
           >
-            <Button text="Info" iconName="InfoIcon" />
+            <Button
+              text="Info"
+              onClick={() => {
+                navigateToInfo()
+                setOpen(false)
+              }}
+              iconName="InfoIcon"
+            />
             <Button
               text="Clone"
               onClick={() => {
                 navigateToClone();
                 setOpen(false);
               }}
-              iconName="CloneIcon" />
+              iconName="CloneIcon"
+            />
             <Button disabled text="Export" iconName="ExportIcon" />
             <Button onClick={handleDelete} text="Delete" iconName="RemoveIcon" />
           </Motion.div>

@@ -24,6 +24,12 @@ const CardActions = (props) => {
     navigate(`/${isCollectionsPage ? `${ROUTES.CREATE_COLLECTION}?cloneName=${name}` : `${ROUTES.CREATE_TEST}?cloneId=${id}`}`);
   }
 
+  const navigateToInfo = () => {
+    if (!isCollectionsPage) {
+      navigate(`/${ROUTES.TESTS}/${id}`);
+    }
+  }
+
   const handleDelete = () => {
     setIsModalOpen(true);
   };
@@ -44,7 +50,13 @@ const CardActions = (props) => {
         />
       ) : wide ? (
         <div className="item-card__actions--wide">
-          <Button text="Info" theme="action" hidden={true} iconName="InfoIcon" />
+          <Button
+            text="Info"
+            onClick={navigateToInfo}
+            theme="action"
+            hidden={true}
+            iconName="InfoIcon"
+          />
           <Button
             text="Clone"
             onClick={() => navigateToClone()}
@@ -62,7 +74,13 @@ const CardActions = (props) => {
           />
         </div>
       ) : (
-        <ActionMenu navigateToClone={navigateToClone} handleDelete={handleDelete} confirmDelete={confirmDelete} id={id} />
+        <ActionMenu
+          navigateToInfo={navigateToInfo}
+          navigateToClone={navigateToClone}
+          handleDelete={handleDelete}
+          confirmDelete={confirmDelete}
+          id={id}
+        />
       )}
 
       <ConfirmDeleteModal

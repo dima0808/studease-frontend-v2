@@ -10,6 +10,7 @@ import CollectionsPage from "@/pages/CollectionsPage";
 import CreateTestForm from "@/components/CreateTestForm";
 import CreateCollectionForm
   from "@/components/CreateCollectionForm/CreateCollectionForm";
+import TestInfoPage from "@/pages/TestInfoPage";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path={ROUTES.COLLECTIONS} element={<CollectionsPage />} />
         <Route path={ROUTES.COURSEBOARDS} element={<h1>Courseboards page</h1>} />
       </Route>
+      <Route path={`${ROUTES.TESTS}/:testId`} element={<TestInfoPage />}/>
       <Route path={`${ROUTES.CREATE_TEST}/:cloneId?`} element={<CreateTestForm />} />
       <Route path={ROUTES.CREATE_COLLECTION} element={<CreateCollectionForm />} />
       <Route path={ROUTES.FAQ} element={<FaqPage />} />

@@ -51,6 +51,15 @@ export const getSamplesByTestId = createAsyncThunk("tests/getSamplesByTestId", a
   }
 })
 
+export const getFinishedSessionsByTestId = createAsyncThunk("tests/getFinishedSessionsByTestId", async (testId, {rejectWithValue}) => {
+  try {
+    const { data } = await api.get('/admin/tests/' + testId + '/finishedSessions')
+    return data
+  } catch {
+    return rejectWithValue("Failed to fetch finished sessions")
+  }
+})
+
 export const getFullTestById = createAsyncThunk("tests/getFullTestById", async (testId, {dispatch, rejectWithValue}) => {
   try {
     const test = await dispatch(getTestById(testId)).unwrap()
