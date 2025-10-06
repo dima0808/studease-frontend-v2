@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useActions } from "@/hooks/useActions";
@@ -7,6 +7,8 @@ import BackButton from "@/components/BackButton";
 import FormInput from "@/components/FormInput";
 import QuestionBlock from "@/components/QuestionBlock";
 import SidebarCreation from "@/components/SidebarCreation";
+import CollectionBlock from "@/components/CollectionBlock";
+import AIGeneratorBlock from "@/components/AIGeneratorBlock";
 
 const defaultQuestion = {
   id: Date.now(),
@@ -15,6 +17,13 @@ const defaultQuestion = {
   type: "single_choice",
   answers: [],
 };
+
+const defaultCollection = {
+  id: Date.now(),
+  collectionName: "",
+  points: 1,
+  questionsCount: 1,
+}
 
 const defaultValues = {
   name: "",
@@ -27,9 +36,12 @@ const defaultValues = {
 
 const CreateTestForm = () => {
   const [params] = useSearchParams();
+  const [collections, setCollections] = useState([]);
   const cloneId = params.get("cloneId");
-  const { getFullTestById, createTest } = useActions();
+  const { getFullTestById, getAllCollections, createTest } = useActions();
   const navigate = useNavigate();
+
+  const [showAIGenerationBlock, setShowAIGenerationBlock] = useState(false)
 
   const {
     register,
@@ -47,6 +59,11 @@ const CreateTestForm = () => {
     control,
     name: "questions",
   });
+
+  const { fields: collectionFields, append: addCollection, remove: delCollection } = useFieldArray({
+    control,
+    name: "samples",
+  })
 
   useEffect(() => {
     if (cloneId) {
@@ -90,7 +107,17 @@ const CreateTestForm = () => {
         }
       })();
     }
-  }, [cloneId, getFullTestById, reset]);
+    (async () => {
+      try {
+        const data = await getAllCollections().unwrap();
+        setCollections(data);
+      } catch (err) {
+        console.error("Failed to fetch collections:", err);
+      }
+    })();
+  }, [cloneId, getFullTestById, getAllCollections, reset]);
+
+  console.log(collections)
 
   const onSubmit = (data) => {
     console.log("Form submitted:", data);
@@ -103,6 +130,8 @@ const CreateTestForm = () => {
     <>
       <SidebarCreation
         addQuestion={() => append({ ...defaultQuestion, id: Date.now() })}
+        addCollection={() => addCollection({ ...defaultCollection, id: Date.now() })}
+        showAIGenerationBlock={() => setShowAIGenerationBlock(!showAIGenerationBlock)}
       />
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -163,7 +192,6 @@ const CreateTestForm = () => {
             valueAsNumber: true,
           }}
         />
-
         <h3>Questions</h3>
         {fields.length === 0 && <p>No questions added yet.</p>}
         {fields.map((q, index) => (
@@ -179,10 +207,22 @@ const CreateTestForm = () => {
             setValue={setValue}
           />
         ))}
-
+        {collectionFields.length > 0 && <h3>Collections</h3>}
+        {collectionFields.map((c, index) => (
+          <CollectionBlock
+            key={c.id}
+            c={c}
+            index={index}
+            collections={collections}
+            register={register}
+            errors={errors}
+            delCollection={delCollection}
+          />
+        ))}
         <br />
         <button type="submit">Create Test</button>
       </form>
+      {showAIGenerationBlock && <AIGeneratorBlock addQuestion={append} setShowAIGenerationBlock={() => setShowAIGenerationBlock(!showAIGenerationBlock)} />}
     </>
   );
 };

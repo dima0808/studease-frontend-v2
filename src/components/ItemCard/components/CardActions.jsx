@@ -21,7 +21,7 @@ const CardActions = (props) => {
   const param = isCollectionsPage ? name : id;
 
   const navigateToClone = () => {
-    navigate(`/${isCollectionsPage ? `${ROUTES.CREATE_COLLECTION}?cloneId=${id}` : `${ROUTES.CREATE_TEST}?cloneId=${id}`}`);
+    navigate(`/${isCollectionsPage ? `${ROUTES.CREATE_COLLECTION}?cloneName=${name}` : `${ROUTES.CREATE_TEST}?cloneId=${id}`}`);
   }
 
   const handleDelete = () => {

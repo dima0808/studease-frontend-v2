@@ -10,6 +10,47 @@ export const getAllCollections = createAsyncThunk("collections/getAllCollections
   }
 })
 
+export const createCollection = createAsyncThunk("collections/createCollection", async (collectionData, { rejectWithValue }) => {
+  try {
+    const { data } = await api.post("/admin/collections", collectionData);
+    return data
+  } catch {
+    return rejectWithValue("Failed to create collection");
+  }
+})
+
+export const getCollectionByName = createAsyncThunk("collections/getCollectionByName", async (collectionName, { rejectWithValue }) => {
+  try {
+    const { data } = await api.get('/admin/collections/' + collectionName)
+    return data
+  } catch {
+    return rejectWithValue("Failed to fetch collection")
+  }
+})
+
+export const getQuestionsByCollectionName = createAsyncThunk("collections/getQuestionsByCollectionName", async (collectionName, { rejectWithValue }) => {
+  try {
+    const { data } = await api.get('/admin/collections/' + collectionName + '/questions')
+    return data
+  } catch {
+    return rejectWithValue("Failed to fetch questions")
+  }
+})
+
+export const getFullCollectionByName = createAsyncThunk("collections/getFullCollectionByName", async (collectionName, { dispatch, rejectWithValue }) => {
+  try {
+    const collection = await dispatch(getCollectionByName(collectionName)).unwrap()
+    const questions = await dispatch(getQuestionsByCollectionName(collectionName)).unwrap()
+
+    return {
+      ...collection,
+      ...questions
+    }
+  } catch {
+    return rejectWithValue("Failed to fetch full collection")
+  }
+})
+
 export const deleteCollectionByName = createAsyncThunk("collections/deleteCollectionByName", async (collectionName, {rejectWithValue}) => {
   try {
     await api.delete('/admin/collections/' + collectionName)

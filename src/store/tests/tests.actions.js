@@ -76,6 +76,15 @@ export const createTest = createAsyncThunk("tests/createTest", async (testData, 
   }
 })
 
+export const generateQuestionsByAI = createAsyncThunk("tests/generateQuestions", async ({theme, questionType, points, questionsCount }, {rejectWithValue}) => {
+  try {
+    const { data } = await api.get(`/admin/questions/generate?theme=${theme}&questionType=${questionType}&points=${points}&questionsCount=${questionsCount}`)
+    return data
+  } catch {
+    return rejectWithValue("Failed to generate questions")
+  }
+})
+
 export const deleteTestById = createAsyncThunk("tests/deleteTestById", async (testId, {rejectWithValue}) => {
   try {
     await api.delete('/admin/tests/' + testId)
