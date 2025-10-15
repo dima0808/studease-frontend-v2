@@ -10,7 +10,7 @@
   height: 40px;
   background-color: var(--color-white);
   border: var(--border-strong);
-  transition: background 0.2s ease;
+  transition: background-color 0.2s ease, color 0.2s ease;
 
   &:disabled {
     opacity: 0.5;
@@ -22,7 +22,7 @@
   }
 
   @include hover {
-    background-color: var(--color-light-blue);
+    background-color: #ECEFF5;
   }
 
   &--action {

@@ -1,5 +1,5 @@
 .sidebar {
-  --border: 1px solid #323232;
+  --border: 1px solid #CECECE;
 
   position: sticky;
   top: 0;
@@ -9,7 +9,8 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background-color: var(--color-black);
+  background-color: #F8F8F8;
+  outline: 1px solid #CECECE;
   color: var(--color-white-light);
   padding: 72px 26px 67px 26px;
   border-radius: 0 var(--border-radius-large) var(--border-radius-large) 0;
@@ -31,7 +32,7 @@
     margin-bottom: auto;
 
     &-main {
-      margin-top: 69px;
+      margin-top: 39px;
       padding-block: 29px;
       border-top: var(--border);
       border-bottom: var(--border);
@@ -55,7 +56,7 @@
     align-items: center;
     justify-content: start;
     background-color: transparent;
-    color: var(--color-white-light);
+    color: #292929;
     font-weight: 500;
 
     @include hover {
@@ -83,16 +84,16 @@
     justify-content: center;
     top: 15px;
     right: 15px;
-    width: 35px;
-    height: 35px;
-    background: #232323;
-    border: 1px solid #333;
-    color: var(--color-white-light);
+    width: 40px;
+    height: 40px;
+    background-color: var(--color-white);
+    border: 1px solid #CECECE;
+    color: var(--color-text-black);
     border-radius: var(--border-radius-small);
     cursor: pointer;
 
     @include hover {
-      opacity: 0.8;
+      background-color: #ECEFF5;
     }
 
     img {

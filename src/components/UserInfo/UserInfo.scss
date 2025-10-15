@@ -2,19 +2,21 @@
   display: flex;
   column-gap: 15px;
   align-items: center;
-  background-color: #232323;
+  color: var(--color-text-black);
   padding: 15px;
-  border: 1px solid #333333;
+  border: 1px solid #CECECE;
   border-radius: var(--border-radius-large);
   margin-bottom: 20px;
 
   &__img {
     padding: 13px;
-    background-color: #151515;
+    background-color: #F8F8F8;
     border-radius: 8px;
+    border: 1px solid #CECECE;
   }
 
   &__name {
+    text-wrap: nowrap;
     font-weight: 500;
   }
 

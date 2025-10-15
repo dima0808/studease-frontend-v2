@@ -7,13 +7,10 @@ const ToggleButton = (props) => {
     setIsCollapsed,
   } = props
 
-  const title = isCollapsed ? "Expand sidebar" : "Collapse sidebar"
-
   return (
     <button
       className="sidebar__toggle"
       type="button"
-      title={title}
       onClick={() => setIsCollapsed(!isCollapsed)}
     >
       <img
