@@ -5,11 +5,14 @@ import {
   isRejected,
 } from '@reduxjs/toolkit';
 import Cookies from 'js-cookie';
-import { loginUser, registerUser } from '@/store/auth/auth.actions';
+import {
+  getCurrentUser,
+  loginUser,
+  registerUser
+} from '@/store/auth/auth.actions';
 
 const initialState = {
-  firstName: '',
-  lastName: '',
+  user: null,
   isLoading: false,
   error: null,
 };
@@ -29,6 +32,9 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(getCurrentUser.fulfilled, (state, action) => {
+        state.user = action.payload;
+      })
       .addMatcher(isPending(loginUser, registerUser), (state) => {
         state.isLoading = true;
         state.error = null;

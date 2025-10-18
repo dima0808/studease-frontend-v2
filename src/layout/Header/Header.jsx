@@ -39,9 +39,10 @@ const Header = () => {
   }, [pathname, clearSelection, setSortBy]);
 
   const isCollectionsPage = pathname === ROUTES_NAV.COLLECTIONS.href;
-  const data = pathname === isCollectionsPage ? collections : tests;
-  const deleteData =
-    pathname === isCollectionsPage ? deleteCollectionsByIds : deleteTestsByIds;
+  const data = isCollectionsPage ? collections : tests;
+  const deleteData = isCollectionsPage
+    ? deleteCollectionsByIds
+    : deleteTestsByIds;
 
   const filteredData = filterArr(data, { sortBy, search });
 
@@ -63,9 +64,7 @@ const Header = () => {
       <div className="header__wrapper">
         <h1 className="header__title">
           Your{' '}
-          {ROUTES_NAV[
-            pathname.toUpperCase().replace('/', '')
-          ].title.toLowerCase()}
+          {ROUTES_NAV[pathname.toUpperCase().replace('/', '')].title.toLowerCase()}
         </h1>
         <div className="header__view">
           <ToggleButton
