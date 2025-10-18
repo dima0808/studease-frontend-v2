@@ -2,6 +2,7 @@ import { motion as Motion, AnimatePresence } from "framer-motion";
 import { createPortal } from "react-dom";
 import { useEffect } from "react";
 import "./ConfirmDeleteModal.scss";
+import Button from "@/components/Button";
 
 const ConfirmDeleteModal = ({ isOpen, onClose, onConfirm, title, data }) => {
   useEffect(() => {
@@ -48,9 +49,12 @@ const ConfirmDeleteModal = ({ isOpen, onClose, onConfirm, title, data }) => {
             onClick={(e) => e.stopPropagation()}
           >
             <h2 className="modal-title">
-              Are you sure you want to delete {data.length > 1 ? `these ${title}` : `this ${title.slice(0, -1)}`}?
+              {data.length > 1
+                ? `Oops! Delete these ${title}?`
+                : `Delete this ${title.slice(0, -1)}?`}
             </h2>
-            <p className="modal-text">This action cannot be undone.</p>
+            <p className="modal-text">Once deleted, there’s no going back.</p>
+
 
             <ul className="modal-list">
               {data.map((item) => (
@@ -61,12 +65,8 @@ const ConfirmDeleteModal = ({ isOpen, onClose, onConfirm, title, data }) => {
             </ul>
 
             <div className="modal-actions">
-              <button className="btn cancel" onClick={onClose}>
-                Cancel
-              </button>
-              <button className="btn delete" onClick={onConfirm}>
-                Delete
-              </button>
+              <Button text="Cancel" onClick={onClose} />
+              <Button text="Delete" iconName="RemoveIcon" onClick={onConfirm} theme="red" />
             </div>
           </Motion.div>
         </Motion.div>

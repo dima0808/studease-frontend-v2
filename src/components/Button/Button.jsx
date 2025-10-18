@@ -19,7 +19,7 @@ const Button = (props) => {
 
   const IconComponent = icons[iconName];
   return (
-    <button disabled={disabled} onClick={onClick} title={text} type={type} className={classNames("button", className, `button--${theme}`)}>
+    <button disabled={disabled} onClick={onClick} type={type} className={classNames("button", className, `button--${theme}`)}>
       {IconComponent && <IconComponent className="button__icon" />}
       {hidden ? null : text}
     </button>

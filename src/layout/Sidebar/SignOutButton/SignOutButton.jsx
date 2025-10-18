@@ -1,6 +1,7 @@
 import SingOutIcon from "@/components/icons/SingOutIcon";
 import { Link } from "react-router-dom";
 import { useActions } from "@/hooks/useActions";
+import { motion as Motion } from "framer-motion";
 
 const SignOutButton = (props) => {
   const { isCollapsed } = props;
@@ -9,7 +10,13 @@ const SignOutButton = (props) => {
   return (
     <Link to="/" onClick={() => logout()} title="Sign out" className="sidebar__button" type="button">
       <SingOutIcon />
-      {!isCollapsed ? <span>Sign out</span> : ""}
+      {!isCollapsed && <Motion.span
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        exit={{ opacity: 0, x: -20 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+      >Sign out</Motion.span>}
+
     </Link>
   )
 }

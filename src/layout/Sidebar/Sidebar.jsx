@@ -14,7 +14,7 @@ const Sidebar = () => {
     <header className={classNames("sidebar", { "sidebar--collapsed": isCollapsed })}>
       <h1 className="sidebar__title">StudEase</h1>
 
-      <Navigation />
+      <Navigation isCollapsed={isCollapsed}/>
 
       <AnimatePresence mode="wait">
         {!isCollapsed && (
