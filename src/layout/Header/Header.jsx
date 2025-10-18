@@ -64,7 +64,9 @@ const Header = () => {
       <div className="header__wrapper">
         <h1 className="header__title">
           Your{' '}
-          {ROUTES_NAV[pathname.toUpperCase().replace('/', '')].title.toLowerCase()}
+          {ROUTES_NAV[
+            pathname.toUpperCase().replace('/', '')
+          ].title.toLowerCase()}
         </h1>
         <div className="header__view">
           <ToggleButton

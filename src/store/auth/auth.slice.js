@@ -8,7 +8,7 @@ import Cookies from 'js-cookie';
 import {
   getCurrentUser,
   loginUser,
-  registerUser
+  registerUser,
 } from '@/store/auth/auth.actions';
 
 const initialState = {
