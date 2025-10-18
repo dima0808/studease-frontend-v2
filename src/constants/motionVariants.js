@@ -4,13 +4,13 @@ export const dropdownVariants = {
     opacity: 1,
     scale: 1,
     y: 0,
-    transition: { duration: 0.2, ease: "easeOut" },
+    transition: { duration: 0.2, ease: 'easeOut' },
   },
   exit: {
     opacity: 0,
     scale: 0.95,
     y: -5,
-    transition: { duration: 0.15, ease: "easeIn" },
+    transition: { duration: 0.15, ease: 'easeIn' },
   },
 };
 
@@ -22,12 +22,12 @@ export const cardVariants = {
     transition: {
       delay: i * 0.05,
       duration: 0.4,
-      ease: "easeOut"
-    }
+      ease: 'easeOut',
+    },
   }),
   exit: {
     opacity: 0,
     y: -20,
-    transition: { duration: 0.3 }
-  }
-}
+    transition: { duration: 0.3 },
+  },
+};

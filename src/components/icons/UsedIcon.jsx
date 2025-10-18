@@ -17,7 +17,7 @@ const UsedIcon = ({ className, ...props }) => {
         strokeLinejoin="round"
       />
     </svg>
-  )
-}
+  );
+};
 
-export default UsedIcon
+export default UsedIcon;

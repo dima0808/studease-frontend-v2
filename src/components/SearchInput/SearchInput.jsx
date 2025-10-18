@@ -1,32 +1,32 @@
-import SearchIcon from "@/components/icons/SearchIcon";
-import { MdClear } from "react-icons/md";
-import { useSelector } from "react-redux";
-import { useActions } from "@/hooks/useActions";
-import useDebounce from "@/hooks/useDebounce";
-import { useState, useEffect } from "react";
-import './SearchInput.scss'
+import SearchIcon from '@/components/icons/SearchIcon';
+import { MdClear } from 'react-icons/md';
+import { useSelector } from 'react-redux';
+import { useActions } from '@/hooks/useActions';
+import useDebounce from '@/hooks/useDebounce';
+import { useState, useEffect } from 'react';
+import './SearchInput.scss';
 
 const SearchInput = ({ placeholder }) => {
-  const { search } = useSelector(state => state.filter)
-  const { setSearch } = useActions()
+  const { search } = useSelector((state) => state.filter);
+  const { setSearch } = useActions();
 
-  const [value, setValue] = useState(search)
+  const [value, setValue] = useState(search);
 
-  const debouncedValue = useDebounce(value)
+  const debouncedValue = useDebounce(value);
 
   useEffect(() => {
-    setSearch(debouncedValue)
-  }, [debouncedValue, setSearch])
+    setSearch(debouncedValue);
+  }, [debouncedValue, setSearch]);
 
   return (
     <div className="search-input">
-      <SearchIcon className="search-input__icon"/>
+      <SearchIcon className="search-input__icon" />
       <input
         type="text"
         className="search-input__field"
         placeholder={placeholder}
         value={value}
-        onChange={e => setValue(e.target.value)}
+        onChange={(e) => setValue(e.target.value)}
       />
       {value && (
         <button
@@ -39,7 +39,7 @@ const SearchInput = ({ placeholder }) => {
         </button>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default SearchInput
+export default SearchInput;

@@ -1,15 +1,10 @@
-import classNames from "classnames";
+import classNames from 'classnames';
 
 const Info = (props) => {
-  const {
-    title,
-    description,
-    icon: Icon,
-    className
-  } = props
+  const { title, description, icon: Icon, className } = props;
 
   return (
-    <div className={classNames("item-card__info", className)}>
+    <div className={classNames('item-card__info', className)}>
       <div className="item-card__icon">
         <Icon />
       </div>
@@ -18,7 +13,7 @@ const Info = (props) => {
         <p>{description}</p>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default Info;

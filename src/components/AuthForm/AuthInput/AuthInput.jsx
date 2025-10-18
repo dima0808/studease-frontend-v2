@@ -1,14 +1,22 @@
-import { useState } from "react";
-import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import classNames from "classnames";
+import { useState } from 'react';
+import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
+import classNames from 'classnames';
 
-const AuthInput = ({ id, label, type = "text", register, required, watch, error }) => {
+const AuthInput = ({
+  id,
+  label,
+  type = 'text',
+  register,
+  required,
+  watch,
+  error,
+}) => {
   const [showPassword, setShowPassword] = useState(false);
 
-  const isPassword = type === "password";
-  const inputType = isPassword && showPassword ? "text" : type;
+  const isPassword = type === 'password';
+  const inputType = isPassword && showPassword ? 'text' : type;
 
-  const value = watch ? watch(id) : "";
+  const value = watch ? watch(id) : '';
 
   return (
     <div className="auth-form__field">
@@ -16,7 +24,9 @@ const AuthInput = ({ id, label, type = "text", register, required, watch, error 
         id={id}
         type={inputType}
         {...register(id, { required })}
-        className={classNames("auth-form__input", { "auth-form__input--error": error })}
+        className={classNames('auth-form__input', {
+          'auth-form__input--error': error,
+        })}
         placeholder=" "
       />
       <label htmlFor={id} className="auth-form__label">
@@ -29,8 +39,8 @@ const AuthInput = ({ id, label, type = "text", register, required, watch, error 
           type="button"
           className="auth-form__toggle"
           onClick={() => setShowPassword((prev) => !prev)}
-          aria-label={showPassword ? "Hide password" : "Show password"}
-          title={showPassword ? "Hide password" : "Show password"}
+          aria-label={showPassword ? 'Hide password' : 'Show password'}
+          title={showPassword ? 'Hide password' : 'Show password'}
         >
           {showPassword ? (
             <AiOutlineEyeInvisible className="auth-form__icon" />

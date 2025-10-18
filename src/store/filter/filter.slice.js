@@ -1,13 +1,13 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  viewMode: localStorage.getItem("filter") || "grid",
-  search: "",
-  sortBy: "all",
+  viewMode: localStorage.getItem('filter') || 'grid',
+  search: '',
+  sortBy: 'all',
 };
 
 const filterSlice = createSlice({
-  name: "filter",
+  name: 'filter',
   initialState,
   reducers: {
     setSearch(state, action) {
@@ -15,13 +15,13 @@ const filterSlice = createSlice({
     },
     setViewMode(state, action) {
       state.viewMode = action.payload;
-      localStorage.setItem("filter", state.viewMode);
+      localStorage.setItem('filter', state.viewMode);
     },
     setSortBy(state, action) {
       state.sortBy = action.payload;
     },
   },
-})
+});
 
-export const { actions: filterActions } = filterSlice
+export const { actions: filterActions } = filterSlice;
 export default filterSlice.reducer;

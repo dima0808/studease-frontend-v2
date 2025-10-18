@@ -24,7 +24,9 @@
     font-size: 15px;
     text-align: center;
     cursor: pointer;
-    transition: background 0.2s ease, transform 0.2s ease;
+    transition:
+      background 0.2s ease,
+      transform 0.2s ease;
 
     &:hover {
       background: #444;

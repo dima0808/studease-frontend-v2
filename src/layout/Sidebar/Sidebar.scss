@@ -1,5 +1,5 @@
 .sidebar {
-  --border: 1px solid #CECECE;
+  --border: 1px solid #cecece;
 
   position: sticky;
   top: 0;
@@ -9,18 +9,20 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background-color: #F8F8F8;
-  outline: 1px solid #CECECE;
+  background-color: #f8f8f8;
+  outline: 1px solid #cecece;
   color: var(--color-white-light);
   padding: 72px 26px 67px 26px;
   border-radius: 0 var(--border-radius-large) var(--border-radius-large) 0;
-  transition: max-width 0.3s ease, padding 0.3s ease;
+  transition:
+    max-width 0.3s ease,
+    padding 0.3s ease;
 
   &__title {
     text-align: center;
     font-size: 48px;
     font-weight: 700;
-    background: linear-gradient(270deg, #2D96FF 4.4%, #00E2A6 92.9%);
+    background: linear-gradient(270deg, #2d96ff 4.4%, #00e2a6 92.9%);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -28,7 +30,6 @@
   }
 
   &__nav {
-
     margin-bottom: auto;
 
     &-main {
@@ -87,13 +88,13 @@
     width: 40px;
     height: 40px;
     background-color: var(--color-white);
-    border: 1px solid #CECECE;
+    border: 1px solid #cecece;
     color: var(--color-text-black);
     border-radius: var(--border-radius-small);
     cursor: pointer;
 
     @include hover {
-      background-color: #ECEFF5;
+      background-color: #eceff5;
     }
 
     img {
@@ -114,8 +115,8 @@
       pointer-events: none;
     }
 
-//    .menu-item__title {
-//      display: none;
-//    }
+    //    .menu-item__title {
+    //      display: none;
+    //    }
   }
 }

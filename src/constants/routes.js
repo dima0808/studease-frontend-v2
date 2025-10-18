@@ -7,29 +7,29 @@ export const ROUTES = {
   FAQ: 'faq',
   CREATE_TEST: 'create-test',
   CREATE_COLLECTION: 'create-collection',
-}
+};
 export const ROUTES_NAV = {
   COURSEBOARDS: {
     href: '/courseboards',
     title: 'Courseboards',
-    iconName: "DashboardIcon",
+    iconName: 'DashboardIcon',
   },
   TESTS: {
     href: '/tests',
     title: 'Tests',
-    iconName: "TestIcon",
+    iconName: 'TestIcon',
   },
   COLLECTIONS: {
     href: '/collections',
     title: 'Collections',
-    iconName: "CollectionIcon",
+    iconName: 'CollectionIcon',
   },
-}
+};
 
 export const ROUTES_NAV_SECONDARY = {
   FAQ: {
     href: '/faq',
     title: 'FAQ',
-    iconName: "FaqIcon",
-  }
-}
+    iconName: 'FaqIcon',
+  },
+};

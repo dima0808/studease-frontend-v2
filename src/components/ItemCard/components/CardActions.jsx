@@ -1,47 +1,48 @@
-import Button from "@/components/Button";
-import ActionMenu from "@/components/ItemCard/components/ActionMenu";
-import { useSelector } from "react-redux";
-import { useActions } from "@/hooks/useActions";
-import { useState } from "react";
-import ConfirmDeleteModal from "@/components/ConfirmDeleteModal";
-import { useLocation, useNavigate } from "react-router-dom";
-import { ROUTES, ROUTES_NAV } from "@/constants/routes";
+import Button from '@/components/Button';
+import ActionMenu from '@/components/ItemCard/components/ActionMenu';
+import { useSelector } from 'react-redux';
+import { useActions } from '@/hooks/useActions';
+import { useState } from 'react';
+import ConfirmDeleteModal from '@/components/ConfirmDeleteModal';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { ROUTES, ROUTES_NAV } from '@/constants/routes';
 
 const CardActions = (props) => {
   const { id, name, isSelected, wide } = props;
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { actionMode } = useSelector((state) => state.selection);
-  const { toggleItem, deleteTestById, deleteCollectionByName } = useActions();
+  const { toggleItem, deleteTestById, deleteCollectionById } = useActions();
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const isCollectionsPage = pathname === ROUTES_NAV.COLLECTIONS.href;
 
-  const deleteData = isCollectionsPage ? deleteCollectionByName : deleteTestById;
-  const param = isCollectionsPage ? name : id;
+  const deleteData = isCollectionsPage ? deleteCollectionById : deleteTestById;
 
   const navigateToClone = () => {
-    navigate(`/${isCollectionsPage ? `${ROUTES.CREATE_COLLECTION}?cloneName=${name}` : `${ROUTES.CREATE_TEST}?cloneId=${id}`}`);
-  }
+    navigate(
+      `/${isCollectionsPage ? ROUTES.CREATE_COLLECTION : ROUTES.CREATE_TEST}?cloneId=${id}`,
+    );
+  };
 
   const navigateToInfo = () => {
     if (!isCollectionsPage) {
       navigate(`/${ROUTES.TESTS}/${id}`);
     }
-  }
+  };
 
   const handleDelete = () => {
     setIsModalOpen(true);
   };
 
   const confirmDelete = () => {
-    deleteData(param);
+    deleteData(id);
     setIsModalOpen(false);
   };
 
   return (
     <>
-      {actionMode === "select" ? (
+      {actionMode === 'select' ? (
         <input
           type="checkbox"
           className="item-card__checkbox"
@@ -64,7 +65,13 @@ const CardActions = (props) => {
             hidden={true}
             iconName="CloneIcon"
           />
-          <Button disabled text="Export" theme="action" hidden={true} iconName="ExportIcon" />
+          <Button
+            disabled
+            text="Export"
+            theme="action"
+            hidden={true}
+            iconName="ExportIcon"
+          />
           <Button
             text="Delete"
             onClick={handleDelete}
@@ -85,7 +92,7 @@ const CardActions = (props) => {
 
       <ConfirmDeleteModal
         isOpen={isModalOpen}
-        title={isCollectionsPage ? "collections" : "tests"}
+        title={isCollectionsPage ? 'collections' : 'tests'}
         onClose={() => setIsModalOpen(false)}
         onConfirm={confirmDelete}
         data={[{ id, name }]}

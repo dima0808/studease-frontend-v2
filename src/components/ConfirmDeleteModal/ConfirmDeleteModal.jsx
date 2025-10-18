@@ -1,32 +1,32 @@
-import { motion as Motion, AnimatePresence } from "framer-motion";
-import { createPortal } from "react-dom";
-import { useEffect } from "react";
-import "./ConfirmDeleteModal.scss";
-import Button from "@/components/Button";
+import { motion as Motion, AnimatePresence } from 'framer-motion';
+import { createPortal } from 'react-dom';
+import { useEffect } from 'react';
+import './ConfirmDeleteModal.scss';
+import Button from '@/components/Button';
 
 const ConfirmDeleteModal = ({ isOpen, onClose, onConfirm, title, data }) => {
   useEffect(() => {
     if (!isOpen) return;
 
     const handleKeyDown = (e) => {
-      if (e.key === "Escape") {
+      if (e.key === 'Escape') {
         onClose();
       }
     };
 
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, onClose]);
 
   useEffect(() => {
     if (isOpen) {
-      document.body.style.overflow = "hidden";
+      document.body.style.overflow = 'hidden';
     } else {
-      document.body.style.overflow = "";
+      document.body.style.overflow = '';
     }
 
     return () => {
-      document.body.style.overflow = "";
+      document.body.style.overflow = '';
     };
   }, [isOpen]);
 
@@ -55,7 +55,6 @@ const ConfirmDeleteModal = ({ isOpen, onClose, onConfirm, title, data }) => {
             </h2>
             <p className="modal-text">Once deleted, there’s no going back.</p>
 
-
             <ul className="modal-list">
               {data.map((item) => (
                 <li key={item.id} className="modal-list__item">
@@ -66,13 +65,18 @@ const ConfirmDeleteModal = ({ isOpen, onClose, onConfirm, title, data }) => {
 
             <div className="modal-actions">
               <Button text="Cancel" onClick={onClose} />
-              <Button text="Delete" iconName="RemoveIcon" onClick={onConfirm} theme="red" />
+              <Button
+                text="Delete"
+                iconName="RemoveIcon"
+                onClick={onConfirm}
+                theme="red"
+              />
             </div>
           </Motion.div>
         </Motion.div>
       )}
     </AnimatePresence>,
-    document.body
+    document.body,
   );
 };
 

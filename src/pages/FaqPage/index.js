@@ -1,3 +1,3 @@
-import FaqPage from './FaqPage'
+import FaqPage from './FaqPage';
 
-export default FaqPage
+export default FaqPage;

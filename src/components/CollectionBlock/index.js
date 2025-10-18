@@ -1,3 +1,3 @@
-import CollectionBlock from './CollectionBlock'
+import CollectionBlock from './CollectionBlock';
 
-export default CollectionBlock
+export default CollectionBlock;

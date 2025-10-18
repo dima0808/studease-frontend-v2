@@ -1,3 +1,3 @@
-import GenericListPage from './GenericListPage'
+import GenericListPage from './GenericListPage';
 
-export default GenericListPage
+export default GenericListPage;

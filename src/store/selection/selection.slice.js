@@ -1,12 +1,12 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  actionMode: "view",
+  actionMode: 'view',
   selectedItems: [],
 };
 
 const selectionSlice = createSlice({
-  name: "selection",
+  name: 'selection',
   initialState,
   reducers: {
     setActionMode(state, action) {
@@ -15,8 +15,10 @@ const selectionSlice = createSlice({
     },
     toggleItem(state, action) {
       const newItem = action.payload;
-      if (state.selectedItems.some(item => item.id === newItem.id)) {
-        state.selectedItems = state.selectedItems.filter(item => item.id !== newItem.id);
+      if (state.selectedItems.some((item) => item.id === newItem.id)) {
+        state.selectedItems = state.selectedItems.filter(
+          (item) => item.id !== newItem.id,
+        );
       } else {
         state.selectedItems.push(newItem);
       }
@@ -28,7 +30,7 @@ const selectionSlice = createSlice({
       state.selectedItems = [];
     },
   },
-})
+});
 
-export const { actions: selectionActions } = selectionSlice
+export const { actions: selectionActions } = selectionSlice;
 export default selectionSlice.reducer;

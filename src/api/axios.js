@@ -1,13 +1,13 @@
-import axios from "axios";
-import { API_URL } from "@/constants/config";
-import Cookies from "js-cookie";
+import axios from 'axios';
+import { API_URL } from '@/constants/config';
+import Cookies from 'js-cookie';
 
 const api = axios.create({
   baseURL: API_URL,
 });
 
 api.interceptors.request.use((config) => {
-  const token = Cookies.get("token");
+  const token = Cookies.get('token');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }

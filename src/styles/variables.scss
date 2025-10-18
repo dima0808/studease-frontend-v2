@@ -1,28 +1,28 @@
 :root {
-  --color-white: #FFFFFF;
-  --color-white-light: #E7E7E7;
-  --color-white-dark: #F8F8F8;
+  --color-white: #ffffff;
+  --color-white-light: #e7e7e7;
+  --color-white-dark: #f8f8f8;
   --color-black: #000000;
 
   --color-text-black: #292929;
-  --color-text-gray: #5C5C5C;
+  --color-text-gray: #5c5c5c;
 
   --color-purple: #808899;
 
-  --color-green-light: #DFF3E7;
-  --color-green-dark: #32BE6A;
+  --color-green-light: #dff3e7;
+  --color-green-dark: #32be6a;
 
-  --color-red-light: #FFEAEA;
-  --color-red-dark: #FF4343;
+  --color-red-light: #ffeaea;
+  --color-red-dark: #ff4343;
 
   --color-blue: #3b82f6; //  #0088FF
-  --color-light-blue: #66CCFF4D;
+  --color-light-blue: #66ccff4d;
 
   --color-blue-light: #c3cafa;
 
-  --color-border: #EBE6E6;
-  --color-border-medium: #BEBEBE;
-  --color-border-strong: #B2B2B2;
+  --color-border: #ebe6e6;
+  --color-border-medium: #bebebe;
+  --color-border-strong: #b2b2b2;
 
   --border-radius-large: 20px;
   --border-radius-medium: 15px;
@@ -34,9 +34,9 @@
 
   --font-family-base: 'Manrope', sans-serif;
   --container-width: #{fluid-to-laptop(
-    $container-desktop-width,
-    $container-laptop-width
-  )};
+      $container-desktop-width,
+      $container-laptop-width
+    )};
   --container-padding-x: 16px;
 
   --section-padding-y: #{fluid(75, 40)};

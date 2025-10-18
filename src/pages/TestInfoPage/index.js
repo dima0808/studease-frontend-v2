@@ -1,3 +1,3 @@
-import TestInfoPage from './TestInfoPage'
+import TestInfoPage from './TestInfoPage';
 
-export default TestInfoPage
+export default TestInfoPage;

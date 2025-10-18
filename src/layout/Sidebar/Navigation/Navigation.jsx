@@ -1,5 +1,5 @@
-import { ROUTES_NAV, ROUTES_NAV_SECONDARY } from "@/constants/routes";
-import MenuItem from "@/components/MenuItem";
+import { ROUTES_NAV, ROUTES_NAV_SECONDARY } from '@/constants/routes';
+import MenuItem from '@/components/MenuItem';
 
 const Navigation = ({ isCollapsed }) => {
   return (
@@ -13,7 +13,7 @@ const Navigation = ({ isCollapsed }) => {
         <MenuItem isCollapsed={isCollapsed} {...ROUTES_NAV_SECONDARY.FAQ} />
       </div>
     </nav>
-  )
-}
+  );
+};
 
-export default Navigation
+export default Navigation;

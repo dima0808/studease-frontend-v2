@@ -1,13 +1,13 @@
-import { useDispatch } from "react-redux";
-import { useMemo } from "react";
-import { bindActionCreators } from "@reduxjs/toolkit";
-import { filterActions } from "@/store/filter/filter.slice";
-import { selectionActions } from "@/store/selection/selection.slice";
-import { testsActions } from "@/store/tests/tests.slice";
-import * as testsAsyncActions from "@/store/tests/tests.actions";
-import * as collectionsAsyncActions from "@/store/collections/collections.actions";
-import * as authAsyncActions from "@/store/auth/auth.actions";
-import { authActions } from "@/store/auth/auth.slice";
+import { useDispatch } from 'react-redux';
+import { useMemo } from 'react';
+import { bindActionCreators } from '@reduxjs/toolkit';
+import { filterActions } from '@/store/filter/filter.slice';
+import { selectionActions } from '@/store/selection/selection.slice';
+import { testsActions } from '@/store/tests/tests.slice';
+import * as testsAsyncActions from '@/store/tests/tests.actions';
+import * as collectionsAsyncActions from '@/store/collections/collections.actions';
+import * as authAsyncActions from '@/store/auth/auth.actions';
+import { authActions } from '@/store/auth/auth.slice';
 
 const rootActions = {
   ...authActions,
@@ -16,11 +16,11 @@ const rootActions = {
   ...testsActions,
   ...authAsyncActions,
   ...testsAsyncActions,
-  ...collectionsAsyncActions
-}
+  ...collectionsAsyncActions,
+};
 
 export const useActions = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  return useMemo(() => bindActionCreators(rootActions, dispatch), [dispatch])
-}
+  return useMemo(() => bindActionCreators(rootActions, dispatch), [dispatch]);
+};

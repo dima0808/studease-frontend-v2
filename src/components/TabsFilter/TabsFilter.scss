@@ -11,7 +11,9 @@
     border: none;
     border-bottom: 2px solid transparent;
     background-color: transparent;
-    transition: color var(--transition-duration), border-bottom var(--transition-duration);
+    transition:
+      color var(--transition-duration),
+      border-bottom var(--transition-duration);
 
     @include hover {
       color: var(--color-blue);

@@ -1,3 +1,3 @@
-import CollectionsPage from './CollectionsPage.jsx'
+import CollectionsPage from './CollectionsPage.jsx';
 
-export default CollectionsPage
+export default CollectionsPage;

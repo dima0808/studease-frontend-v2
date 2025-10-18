@@ -1,3 +1,3 @@
 import AuthButton from './AuthButton';
 
-export default AuthButton
+export default AuthButton;

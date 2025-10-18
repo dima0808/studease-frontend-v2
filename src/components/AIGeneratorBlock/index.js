@@ -1,3 +1,3 @@
-import AIGeneratorBlock from './AIGeneratorBlock'
+import AIGeneratorBlock from './AIGeneratorBlock';
 
-export default AIGeneratorBlock
+export default AIGeneratorBlock;

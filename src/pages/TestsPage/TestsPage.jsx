@@ -1,11 +1,12 @@
-import GenericListPage from "@/components/GenericListPage"
-import TestCard from "@/components/TestCard"
-import { useActions } from "@/hooks/useActions"
-import './TestsPage.scss'
-import { selectTests } from "@/store/tests/tests.slice";
+import GenericListPage from '@/components/GenericListPage';
+import TestCard from '@/components/TestCard';
+import { useActions } from '@/hooks/useActions';
+import './TestsPage.scss';
+import { selectTests } from '@/store/tests/tests.slice';
 
 const TestsPage = () => {
-  const { getAllTests } = useActions()
+  const { getAllTests } = useActions();
+
   return (
     <GenericListPage
       name="tests"
@@ -15,14 +16,14 @@ const TestsPage = () => {
         <TestCard
           key={test.id}
           index={index}
-          wide={viewMode === "table"}
+          wide={viewMode === 'table'}
           selectedItems={selectedItems}
           {...test}
         />
       )}
       hasSort
     />
-  )
-}
+  );
+};
 
-export default TestsPage
+export default TestsPage;

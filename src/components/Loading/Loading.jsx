@@ -1,6 +1,6 @@
 import './Loading.scss';
 
-const Loading = ({text}) => {
+const Loading = ({ text }) => {
   return (
     <div className="loading">
       <div className="loading__dots">

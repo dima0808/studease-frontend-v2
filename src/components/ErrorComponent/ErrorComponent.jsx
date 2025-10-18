@@ -1,6 +1,6 @@
-import { MdErrorOutline } from "react-icons/md"
-import Button from "@/components/Button"
-import "./ErrorComponent.scss"
+import { MdErrorOutline } from 'react-icons/md';
+import Button from '@/components/Button';
+import './ErrorComponent.scss';
 
 const ErrorComponent = ({ onRetry, description }) => {
   return (
@@ -21,7 +21,7 @@ const ErrorComponent = ({ onRetry, description }) => {
         onClick={onRetry}
       />
     </div>
-  )
-}
+  );
+};
 
-export default ErrorComponent
+export default ErrorComponent;

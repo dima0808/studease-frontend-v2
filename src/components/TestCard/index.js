@@ -1,3 +1,3 @@
-import TestCard from './TestCard'
+import TestCard from './TestCard';
 
-export default TestCard
+export default TestCard;

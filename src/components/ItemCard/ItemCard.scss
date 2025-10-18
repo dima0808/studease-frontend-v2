@@ -95,7 +95,7 @@
       border-color: var(--color-blue);
 
       &::after {
-        content: "";
+        content: '';
         position: absolute;
         inset: 5px;
         border-radius: 50%;
@@ -128,7 +128,7 @@
     flex-direction: column;
     gap: 6px;
     background: var(--color-white);
-    border: 1px solid #F1F1F1;
+    border: 1px solid #f1f1f1;
     border-radius: 12px;
     padding: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
@@ -175,7 +175,7 @@
     }
 
     p {
-      color: #5C626E;
+      color: #5c626e;
       font-size: 14px;
       font-weight: 600;
     }
@@ -183,7 +183,7 @@
 
   &__button {
     border-radius: 10px;
-    border: 1px solid #D7D7D7;
+    border: 1px solid #d7d7d7;
     background: var(--color-white);
     padding: 7px;
     display: inline-flex;
@@ -192,7 +192,7 @@
     cursor: pointer;
 
     @include hover {
-      background-color: #ECEFF5;
+      background-color: #eceff5;
     }
   }
 

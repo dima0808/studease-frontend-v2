@@ -1,36 +1,35 @@
-import './CollectionBlock.scss'
-import FormInput from "@/components/FormInput";
-import React from "react";
+import './CollectionBlock.scss';
+import FormInput from '@/components/FormInput';
+import React from 'react';
 
 const CollectionBlock = (props) => {
-  const {
-    register,
-    index,
-    collections,
-    errors,
-    delCollection,
-
-  } = props
+  const { register, index, collections, errors, delCollection } = props;
   return (
-    <div style={{ border: "1px solid #ccc", padding: 10, marginBottom: 10 }}>
+    <div style={{ border: '1px solid #ccc', padding: 10, marginBottom: 10 }}>
       <div className="form-input">
         <label>Collection Name</label>
         <select
-          {...register(`samples.${index}.collectionName`, { required: "Collection is required" })}
+          {...register(`samples.${index}.collectionId`, {
+            required: 'Collection is required',
+          })}
           defaultValue=""
         >
           <option value="" disabled>
             Select a collection
           </option>
           {collections.map((collection) => (
-            <option key={collection.name} value={collection.name}>
+            <option key={collection.name} value={collection.id}>
               {collection.name} (Questions: {collection.questionsCount})
             </option>
           ))}
         </select>
-        {errors.samples && errors.samples[index] && errors.samples[index].collectionName && (
-          <p style={{ color: "red" }}>{errors.samples[index].collectionName.message}</p>
-        )}
+        {errors.samples &&
+          errors.samples[index] &&
+          errors.samples[index].collectionId && (
+            <p style={{ color: 'red' }}>
+              {errors.samples[index].collectionId.message}
+            </p>
+          )}
 
         <FormInput
           label="Points"
@@ -40,8 +39,8 @@ const CollectionBlock = (props) => {
           register={register}
           errors={errors}
           rules={{
-            required: "Points are required",
-            min: { value: 1, message: "Must be at least 1 point" },
+            required: 'Points are required',
+            min: { value: 1, message: 'Must be at least 1 point' },
             valueAsNumber: true,
           }}
         />
@@ -53,15 +52,17 @@ const CollectionBlock = (props) => {
           register={register}
           errors={errors}
           rules={{
-            required: "Questions count is required",
-            min: { value: 1, message: "Must be at least 1 question" },
+            required: 'Questions count is required',
+            min: { value: 1, message: 'Must be at least 1 question' },
             valueAsNumber: true,
           }}
         />
-        <button type="button" onClick={() => delCollection(index)}>Delete Collection</button>
+        <button type="button" onClick={() => delCollection(index)}>
+          Delete Collection
+        </button>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default CollectionBlock
+export default CollectionBlock;

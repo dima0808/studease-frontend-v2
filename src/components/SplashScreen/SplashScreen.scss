@@ -30,20 +30,34 @@
   white-space: nowrap;
   border-right: 3px solid #2d96ff;
   width: 0;
-  animation: typing 2s steps(60) forwards, blink 0.75s step-end infinite;
+  animation:
+    typing 2s steps(60) forwards,
+    blink 0.75s step-end infinite;
 }
 
 @keyframes gradientText {
-  0% { background-position: 0 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0 50%; }
+  0% {
+    background-position: 0 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
 }
 
 @keyframes typing {
-  from { width: 0; }
-  to { width: 520px; }
+  from {
+    width: 0;
+  }
+  to {
+    width: 520px;
+  }
 }
 
 @keyframes blink {
-  50% { border-color: transparent; }
+  50% {
+    border-color: transparent;
+  }
 }

@@ -1,3 +1,3 @@
-import TestsPage from "./TestsPage"
+import TestsPage from './TestsPage';
 
-export default TestsPage
+export default TestsPage;

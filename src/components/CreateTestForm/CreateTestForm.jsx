@@ -1,35 +1,35 @@
-import React, { useEffect, useState } from "react";
-import { useForm, useFieldArray } from "react-hook-form";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { useActions } from "@/hooks/useActions";
-import { ROUTES } from "@/constants/routes";
-import BackButton from "@/components/BackButton";
-import FormInput from "@/components/FormInput";
-import QuestionBlock from "@/components/QuestionBlock";
-import SidebarCreation from "@/components/SidebarCreation";
-import CollectionBlock from "@/components/CollectionBlock";
-import AIGeneratorBlock from "@/components/AIGeneratorBlock";
+import React, { useEffect, useState } from 'react';
+import { useForm, useFieldArray } from 'react-hook-form';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useActions } from '@/hooks/useActions';
+import { ROUTES } from '@/constants/routes';
+import BackButton from '@/components/BackButton';
+import FormInput from '@/components/FormInput';
+import QuestionBlock from '@/components/QuestionBlock';
+import SidebarCreation from '@/components/SidebarCreation';
+import CollectionBlock from '@/components/CollectionBlock';
+import AIGeneratorBlock from '@/components/AIGeneratorBlock';
 
 const defaultQuestion = {
   id: Date.now(),
-  content: "",
+  content: '',
   points: 1,
-  type: "single_choice",
+  type: 'single_choice',
   answers: [],
 };
 
 const defaultCollection = {
   id: Date.now(),
-  collectionName: "",
+  collectionName: '',
   points: 1,
   questionsCount: 1,
-}
+};
 
 const defaultValues = {
-  name: "",
-  openDate: "",
-  deadline: "",
-  minutesToComplete: "",
+  name: '',
+  openDate: '',
+  deadline: '',
+  minutesToComplete: '',
   questions: [],
   samples: [],
 };
@@ -37,11 +37,11 @@ const defaultValues = {
 const CreateTestForm = () => {
   const [params] = useSearchParams();
   const [collections, setCollections] = useState([]);
-  const cloneId = params.get("cloneId");
+  const cloneId = params.get('cloneId');
   const { getFullTestById, getAllCollections, createTest } = useActions();
   const navigate = useNavigate();
 
-  const [showAIGenerationBlock, setShowAIGenerationBlock] = useState(false)
+  const [showAIGenerationBlock, setShowAIGenerationBlock] = useState(false);
 
   const {
     register,
@@ -57,13 +57,17 @@ const CreateTestForm = () => {
 
   const { fields, append, remove } = useFieldArray({
     control,
-    name: "questions",
+    name: 'questions',
   });
 
-  const { fields: collectionFields, append: addCollection, remove: delCollection } = useFieldArray({
+  const {
+    fields: collectionFields,
+    append: addCollection,
+    remove: delCollection,
+  } = useFieldArray({
     control,
-    name: "samples",
-  })
+    name: 'samples',
+  });
 
   useEffect(() => {
     if (cloneId) {
@@ -80,7 +84,7 @@ const CreateTestForm = () => {
 
           if (Array.isArray(filteredData.questions)) {
             filteredData.questions = filteredData.questions.map((q) => {
-              if (q.type === "matching" && Array.isArray(q.answers)) {
+              if (q.type === 'matching' && Array.isArray(q.answers)) {
                 return {
                   ...q,
                   answers: q.answers
@@ -98,12 +102,12 @@ const CreateTestForm = () => {
           const newData = {
             ...defaultValues,
             ...filteredData,
-            name: (filteredData.name || "") + " (Copy)",
+            name: (filteredData.name || '') + ' (Copy)',
           };
 
           reset(newData);
         } catch (err) {
-          console.error("Failed to fetch test:", err);
+          console.error('Failed to fetch test:', err);
         }
       })();
     }
@@ -112,15 +116,15 @@ const CreateTestForm = () => {
         const data = await getAllCollections().unwrap();
         setCollections(data);
       } catch (err) {
-        console.error("Failed to fetch collections:", err);
+        console.error('Failed to fetch collections:', err);
       }
     })();
   }, [cloneId, getFullTestById, getAllCollections, reset]);
 
-  console.log(collections)
+  console.log(collections);
 
   const onSubmit = (data) => {
-    console.log("Form submitted:", data);
+    console.log('Form submitted:', data);
     createTest(data);
     // reset();
     // navigate(`/${ROUTES.TESTS}`);
@@ -130,12 +134,16 @@ const CreateTestForm = () => {
     <>
       <SidebarCreation
         addQuestion={() => append({ ...defaultQuestion, id: Date.now() })}
-        addCollection={() => addCollection({ ...defaultCollection, id: Date.now() })}
-        showAIGenerationBlock={() => setShowAIGenerationBlock(!showAIGenerationBlock)}
+        addCollection={() =>
+          addCollection({ ...defaultCollection, id: Date.now() })
+        }
+        showAIGenerationBlock={() =>
+          setShowAIGenerationBlock(!showAIGenerationBlock)
+        }
       />
       <form
         onSubmit={handleSubmit(onSubmit)}
-        style={{ maxWidth: 800, margin: "0 auto" }}
+        style={{ maxWidth: 800, margin: '0 auto' }}
       >
         <FormInput
           label="Test Name"
@@ -144,7 +152,7 @@ const CreateTestForm = () => {
           placeholder="Java Basics Test 9"
           register={register}
           errors={errors}
-          rules={{ required: "Name is required" }}
+          rules={{ required: 'Name is required' }}
         />
 
         <FormInput
@@ -155,10 +163,10 @@ const CreateTestForm = () => {
           register={register}
           errors={errors}
           rules={{
-            required: "Open date is required",
+            required: 'Open date is required',
             pattern: {
               value: /^\d{2}\.\d{2}\.\d{4} \d{2}:\d{2}$/,
-              message: "Date must be in format DD.MM.YYYY HH:mm",
+              message: 'Date must be in format DD.MM.YYYY HH:mm',
             },
           }}
         />
@@ -171,10 +179,10 @@ const CreateTestForm = () => {
           register={register}
           errors={errors}
           rules={{
-            required: "Deadline is required",
+            required: 'Deadline is required',
             pattern: {
               value: /^\d{2}\.\d{2}\.\d{4} \d{2}:\d{2}$/,
-              message: "Date must be in format DD.MM.YYYY HH:mm",
+              message: 'Date must be in format DD.MM.YYYY HH:mm',
             },
           }}
         />
@@ -187,8 +195,8 @@ const CreateTestForm = () => {
           register={register}
           errors={errors}
           rules={{
-            required: "Minutes to complete is required",
-            min: { value: 1, message: "Must be at least 1 minute" },
+            required: 'Minutes to complete is required',
+            min: { value: 1, message: 'Must be at least 1 minute' },
             valueAsNumber: true,
           }}
         />
@@ -222,7 +230,14 @@ const CreateTestForm = () => {
         <br />
         <button type="submit">Create Test</button>
       </form>
-      {showAIGenerationBlock && <AIGeneratorBlock addQuestion={append} setShowAIGenerationBlock={() => setShowAIGenerationBlock(!showAIGenerationBlock)} />}
+      {showAIGenerationBlock && (
+        <AIGeneratorBlock
+          addQuestion={append}
+          setShowAIGenerationBlock={() =>
+            setShowAIGenerationBlock(!showAIGenerationBlock)
+          }
+        />
+      )}
     </>
   );
 };

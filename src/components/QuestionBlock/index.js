@@ -1,3 +1,3 @@
-import QuestionBlock from './QuestionBlock'
+import QuestionBlock from './QuestionBlock';
 
-export default QuestionBlock
+export default QuestionBlock;

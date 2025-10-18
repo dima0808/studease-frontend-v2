@@ -1,11 +1,11 @@
-import { useForm } from "react-hook-form";
-import { useNavigate, useOutletContext } from "react-router-dom";
-import AuthButton from "@/components/AuthForm/AuthButton";
-import AuthInput from "@/components/AuthForm/AuthInput";
-import { useSelector } from "react-redux";
-import { useActions } from "@/hooks/useActions";
-import "../AuthForm.scss";
-import { ROUTES } from "@/constants/routes";
+import { useForm } from 'react-hook-form';
+import { useNavigate, useOutletContext } from 'react-router-dom';
+import AuthButton from '@/components/AuthForm/AuthButton';
+import AuthInput from '@/components/AuthForm/AuthInput';
+import { useSelector } from 'react-redux';
+import { useActions } from '@/hooks/useActions';
+import '../AuthForm.scss';
+import { ROUTES } from '@/constants/routes';
 
 const RegisterForm = () => {
   const {
@@ -18,9 +18,9 @@ const RegisterForm = () => {
   const { registerUser } = useActions();
   const navigate = useNavigate();
 
-  const { isLoading, error} = useSelector((state) => state.auth)
+  const { isLoading, error } = useSelector((state) => state.auth);
 
-  const { handleShowSplash } = useOutletContext()
+  const { handleShowSplash } = useOutletContext();
 
   const handleRegister = async (data) => {
     await registerUser(data).unwrap();
@@ -35,10 +35,10 @@ const RegisterForm = () => {
         type="text"
         register={(name) =>
           register(name, {
-            required: "Email is required",
+            required: 'Email is required',
             pattern: {
               value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-              message: "Invalid email address",
+              message: 'Invalid email address',
             },
           })
         }
@@ -51,7 +51,7 @@ const RegisterForm = () => {
         type="text"
         register={(name) =>
           register(name, {
-            required: "First name is required",
+            required: 'First name is required',
           })
         }
         error={errors.firstName}
@@ -63,7 +63,7 @@ const RegisterForm = () => {
         type="text"
         register={(name) =>
           register(name, {
-            required: "Last name is required",
+            required: 'Last name is required',
           })
         }
         error={errors.lastName}
@@ -85,9 +85,9 @@ const RegisterForm = () => {
         type="password"
         register={(name) =>
           register(name, {
-            required: "Please repeat your password",
+            required: 'Please repeat your password',
             validate: (value) =>
-              value === watch("password") || "Passwords do not match",
+              value === watch('password') || 'Passwords do not match',
           })
         }
         error={errors.repeatPassword}

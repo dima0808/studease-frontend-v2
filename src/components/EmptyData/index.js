@@ -1,3 +1,3 @@
-import EmptyData from './EmptyData'
+import EmptyData from './EmptyData';
 
-export default EmptyData
+export default EmptyData;

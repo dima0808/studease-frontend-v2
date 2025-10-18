@@ -1,3 +1,3 @@
-import TabsFilter from './TabsFilter'
+import TabsFilter from './TabsFilter';
 
-export default TabsFilter
+export default TabsFilter;

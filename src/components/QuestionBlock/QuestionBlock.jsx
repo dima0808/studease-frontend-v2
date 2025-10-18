@@ -1,9 +1,18 @@
-import { useFieldArray } from "react-hook-form";
-import FormInput from "@/components/FormInput";
-import { typeQuestion } from "@/utils/typeQuestion";
-import React from "react";
+import { useFieldArray } from 'react-hook-form';
+import FormInput from '@/components/FormInput';
+import { typeQuestion } from '@/utils/typeQuestion';
+import React from 'react';
 
-const QuestionBlock = ({ q, index, control, register, errors, watch, remove, setValue }) => {
+const QuestionBlock = ({
+  q,
+  index,
+  control,
+  register,
+  errors,
+  watch,
+  remove,
+  setValue,
+}) => {
   const type = watch(`questions.${index}.type`);
 
   const {
@@ -16,7 +25,7 @@ const QuestionBlock = ({ q, index, control, register, errors, watch, remove, set
   });
 
   return (
-    <div style={{ border: "1px solid #ccc", padding: 10, marginBottom: 20 }}>
+    <div style={{ border: '1px solid #ccc', padding: 10, marginBottom: 20 }}>
       <FormInput
         label={`Question ${index + 1}`}
         name={`questions.${index}.content`}
@@ -24,7 +33,7 @@ const QuestionBlock = ({ q, index, control, register, errors, watch, remove, set
         placeholder="Enter question text"
         register={register}
         errors={errors}
-        rules={{ required: "Question is required" }}
+        rules={{ required: 'Question is required' }}
       />
 
       <FormInput
@@ -34,7 +43,11 @@ const QuestionBlock = ({ q, index, control, register, errors, watch, remove, set
         placeholder="1"
         register={register}
         errors={errors}
-        rules={{ required: "Points are required", min: { value: 1, message: "Min 1" }, valueAsNumber: true, }}
+        rules={{
+          required: 'Points are required',
+          min: { value: 1, message: 'Min 1' },
+          valueAsNumber: true,
+        }}
       />
 
       <div>
@@ -48,7 +61,7 @@ const QuestionBlock = ({ q, index, control, register, errors, watch, remove, set
       </div>
 
       {/* Answers */}
-      {(type === "single_choice" || type === "multiple_choices") && (
+      {(type === 'single_choice' || type === 'multiple_choices') && (
         <div>
           <h4>Answers</h4>
           {answerFields.length === 0 && <p>No answers added yet.</p>}
@@ -59,46 +72,59 @@ const QuestionBlock = ({ q, index, control, register, errors, watch, remove, set
                 placeholder="Answer text"
                 {...register(`questions.${index}.answers.${aIndex}.content`)}
               />
-              {type === "multiple_choices" && (
+              {type === 'multiple_choices' && (
                 <input
                   type="checkbox"
-                  {...register(`questions.${index}.answers.${aIndex}.isCorrect`, {
-                    setValueAs: v => Boolean(v),
-                  })}
+                  {...register(
+                    `questions.${index}.answers.${aIndex}.isCorrect`,
+                    {
+                      setValueAs: (v) => Boolean(v),
+                    },
+                  )}
                 />
               )}
-              {type === "single_choice" && (
+              {type === 'single_choice' && (
                 <input
                   type="radio"
-                  checked={watch(`questions.${index}.answers.${aIndex}.isCorrect`)}
+                  checked={watch(
+                    `questions.${index}.answers.${aIndex}.isCorrect`,
+                  )}
                   onChange={() => {
                     answerFields.forEach((_, i) => {
-                      setValue(`questions.${index}.answers.${i}.isCorrect`, i === aIndex);
+                      setValue(
+                        `questions.${index}.answers.${i}.isCorrect`,
+                        i === aIndex,
+                      );
                     });
                   }}
                 />
               )}
-              <button type="button" onClick={() => removeAnswer(aIndex)}>Remove</button>
+              <button type="button" onClick={() => removeAnswer(aIndex)}>
+                Remove
+              </button>
             </div>
           ))}
           <button
             type="button"
-            onClick={() => appendAnswer(typeQuestion("default"))}
+            onClick={() => appendAnswer(typeQuestion('default'))}
           >
             Add Answer
           </button>
         </div>
       )}
 
-      {type === "essay" && (
+      {type === 'essay' && (
         <p>Essay type – no predefined answers, student writes text.</p>
       )}
 
-      {type === "matching" && (
+      {type === 'matching' && (
         <div>
           <h4>Matching Pairs</h4>
           {answerFields.map((a, aIndex) => (
-            <div key={a.id} style={{ display: "flex", gap: 10, marginBottom: 10 }}>
+            <div
+              key={a.id}
+              style={{ display: 'flex', gap: 10, marginBottom: 10 }}
+            >
               <input
                 type="text"
                 placeholder="Left option"
@@ -107,21 +133,27 @@ const QuestionBlock = ({ q, index, control, register, errors, watch, remove, set
               <input
                 type="text"
                 placeholder="Right option"
-                {...register(`questions.${index}.answers.${aIndex}.rightOption`)}
+                {...register(
+                  `questions.${index}.answers.${aIndex}.rightOption`,
+                )}
               />
-              <button type="button" onClick={() => removeAnswer(aIndex)}>Remove</button>
+              <button type="button" onClick={() => removeAnswer(aIndex)}>
+                Remove
+              </button>
             </div>
           ))}
           <button
             type="button"
-            onClick={() => appendAnswer(typeQuestion("matching"))}
+            onClick={() => appendAnswer(typeQuestion('matching'))}
           >
             Add Pair
           </button>
         </div>
       )}
 
-      <button type="button" onClick={() => remove(index)}>Remove Question</button>
+      <button type="button" onClick={() => remove(index)}>
+        Remove Question
+      </button>
     </div>
   );
 };

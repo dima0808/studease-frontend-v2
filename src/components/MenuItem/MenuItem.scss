@@ -5,11 +5,13 @@
   padding: 18px 21px;
   border-radius: var(--border-radius-large);
   font-weight: 600;
-  transition: background-color .2s ease, color .2s ease;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
   color: var(--color-text-black);
 
   @include hover {
-    background-color: #ECEFF5;
+    background-color: #eceff5;
     color: var(--color-blue);
   }
 
@@ -20,8 +22,8 @@
 
   &--active {
     padding: 17px 20px;
-    border: 1px solid #DADADA;
-    background-color: #ECEFF5;
+    border: 1px solid #dadada;
+    background-color: #eceff5;
     color: var(--color-blue);
     pointer-events: none;
     cursor: none;

@@ -1,5 +1,5 @@
-import { AnimatePresence, motion as Motion } from "framer-motion";
-import './SplashScreen.scss'
+import { AnimatePresence, motion as Motion } from 'framer-motion';
+import './SplashScreen.scss';
 
 const SplashScreen = ({ showSplash }) => {
   return (
@@ -10,7 +10,7 @@ const SplashScreen = ({ showSplash }) => {
           initial={{ opacity: 0, scale: 1 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.9 }}
-          transition={{ duration: 0.8, ease: "easeInOut" }}
+          transition={{ duration: 0.8, ease: 'easeInOut' }}
         >
           <h1 className="splash-title">StudEase</h1>
           <p className="splash-desc">

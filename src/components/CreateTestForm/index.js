@@ -1,3 +1,3 @@
-import CreateTestForm from './CreateTestForm'
+import CreateTestForm from './CreateTestForm';
 
 export default CreateTestForm;

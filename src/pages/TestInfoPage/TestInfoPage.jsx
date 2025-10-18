@@ -1,10 +1,10 @@
 import './TestInfoPage.scss';
-import { useNavigate, useParams } from "react-router-dom";
-import BackButton from "@/components/BackButton";
-import { useEffect, useState } from "react";
-import { useActions } from "@/hooks/useActions";
-import { ROUTES_NAV } from "@/constants/routes";
-import { FRONTEND_PORT, HTTP_PROTOCOL, IP } from "@/constants/config";
+import { useNavigate, useParams } from 'react-router-dom';
+import BackButton from '@/components/BackButton';
+import { useEffect, useState } from 'react';
+import { useActions } from '@/hooks/useActions';
+import { ROUTES_NAV } from '@/constants/routes';
+import { FRONTEND_PORT, HTTP_PROTOCOL, IP } from '@/constants/config';
 
 const TestInfoPage = () => {
   const { testId } = useParams();
@@ -18,15 +18,16 @@ const TestInfoPage = () => {
       (async () => {
         try {
           const testData = await getFullTestById(testId).unwrap();
-          const finishedSessions = await getFinishedSessionsByTestId(testId).unwrap();
+          const finishedSessions =
+            await getFinishedSessionsByTestId(testId).unwrap();
           const detailedTestData = {
             ...testData,
-            ...finishedSessions
+            ...finishedSessions,
           };
           setTest(testData);
-          console.log("Detailed Test Data:", detailedTestData);
+          console.log('Detailed Test Data:', detailedTestData);
         } catch (error) {
-          console.error("Error fetching test data:", error);
+          console.error('Error fetching test data:', error);
           navigate(ROUTES_NAV.TESTS.href);
         }
       })();
@@ -41,7 +42,7 @@ const TestInfoPage = () => {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {
-      console.error("Не вдалося скопіювати посилання:", err);
+      console.error('Не вдалося скопіювати посилання:', err);
     }
   };
 
@@ -55,7 +56,7 @@ const TestInfoPage = () => {
           alignItems: 'center',
           height: '100vh',
           flexDirection: 'column',
-          gap: '20px'
+          gap: '20px',
         }}
       >
         <h1>Test Info Page</h1>
@@ -66,29 +67,45 @@ const TestInfoPage = () => {
             borderRadius: '8px',
             width: '80%',
             maxWidth: '600px',
-            textAlign: 'left'
+            textAlign: 'left',
           }}
         >
           {test ? (
             <>
               <h2>{test.name}</h2>
-              <p><span>Open date: </span>{test.openDate}</p>
-              <p><span>Deadline: </span>{test.deadline}</p>
-              <p><span>Max score: </span>{test.maxScore}</p>
-              <p><span>Minutes to complete: </span>{test.minutesToComplete}</p>
-              <p><span>Questions count: </span>{test.questionsCount}</p>
+              <p>
+                <span>Open date: </span>
+                {test.openDate}
+              </p>
+              <p>
+                <span>Deadline: </span>
+                {test.deadline}
+              </p>
+              <p>
+                <span>Max score: </span>
+                {test.maxScore}
+              </p>
+              <p>
+                <span>Minutes to complete: </span>
+                {test.minutesToComplete}
+              </p>
+              <p>
+                <span>Questions count: </span>
+                {test.questionsCount}
+              </p>
 
-              <div className="test-info__link-block"
+              <div
+                className="test-info__link-block"
                 style={{
                   marginTop: '20px',
                   display: 'flex',
                   flexDirection: 'column',
-                  gap: '10px'
+                  gap: '10px',
                 }}
               >
-                <label htmlFor="testLink"><strong>
-                  Test Link:
-                </strong></label>
+                <label htmlFor="testLink">
+                  <strong>Test Link:</strong>
+                </label>
                 <div className="test-info__link-row">
                   <input
                     id="testLink"
@@ -99,9 +116,9 @@ const TestInfoPage = () => {
                   />
                   <button
                     onClick={handleCopyLink}
-                    className={`test-info__copy-btn ${copied ? "copied" : ""}`}
+                    className={`test-info__copy-btn ${copied ? 'copied' : ''}`}
                   >
-                    {copied ? "Copied!" : "Copy Link"}
+                    {copied ? 'Copied!' : 'Copy Link'}
                   </button>
                 </div>
               </div>

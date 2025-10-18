@@ -1,17 +1,13 @@
-import { useState, useEffect, useRef } from "react";
-import ActionIcon from "@/components/icons/ActionIcon";
-import Button from "@/components/Button";
-import { motion as Motion, AnimatePresence } from "framer-motion";
-import { dropdownVariants } from "@/constants/motionVariants";
+import { useState, useEffect, useRef } from 'react';
+import ActionIcon from '@/components/icons/ActionIcon';
+import Button from '@/components/Button';
+import { motion as Motion, AnimatePresence } from 'framer-motion';
+import { dropdownVariants } from '@/constants/motionVariants';
 
 const ActionMenu = (props) => {
-  const {
-    handleDelete,
-    navigateToClone,
-    navigateToInfo
-  } = props;
+  const { handleDelete, navigateToClone, navigateToInfo } = props;
   const [open, setOpen] = useState(false);
-  const [position, setPosition] = useState({ top: "100%", right: 0 });
+  const [position, setPosition] = useState({ top: '100%', right: 0 });
   const menuRef = useRef(null);
   const buttonRef = useRef(null);
 
@@ -23,7 +19,7 @@ const ActionMenu = (props) => {
     };
 
     const handleEsc = (event) => {
-      if (event.key === "Escape") {
+      if (event.key === 'Escape') {
         setOpen(false);
       }
     };
@@ -32,14 +28,14 @@ const ActionMenu = (props) => {
       setOpen(false);
     };
 
-    document.addEventListener("mousedown", handleClickOutside);
-    document.addEventListener("keydown", handleEsc);
-    window.addEventListener("scroll", handleScroll, { passive: true });
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('keydown', handleEsc);
+    window.addEventListener('scroll', handleScroll, { passive: true });
 
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-      document.removeEventListener("keydown", handleEsc);
-      window.removeEventListener("scroll", handleScroll);
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('keydown', handleEsc);
+      window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
@@ -83,7 +79,7 @@ const ActionMenu = (props) => {
             ref={menuRef}
             className="item-card__dropdown"
             style={{
-              position: "fixed",
+              position: 'fixed',
               top: `${position.top}px`,
               left: `${position.left}px`,
             }}
@@ -95,8 +91,8 @@ const ActionMenu = (props) => {
             <Button
               text="Info"
               onClick={() => {
-                navigateToInfo()
-                setOpen(false)
+                navigateToInfo();
+                setOpen(false);
               }}
               iconName="InfoIcon"
             />
@@ -109,7 +105,11 @@ const ActionMenu = (props) => {
               iconName="CloneIcon"
             />
             <Button disabled text="Export" iconName="ExportIcon" />
-            <Button onClick={handleDelete} text="Delete" iconName="RemoveIcon" />
+            <Button
+              onClick={handleDelete}
+              text="Delete"
+              iconName="RemoveIcon"
+            />
           </Motion.div>
         )}
       </AnimatePresence>

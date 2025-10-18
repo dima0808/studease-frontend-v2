@@ -16,7 +16,7 @@ const CountIcon = ({ className, ...props }) => {
         fill="currentColor"
       />
     </svg>
-  )
-}
+  );
+};
 
-export default CountIcon
+export default CountIcon;

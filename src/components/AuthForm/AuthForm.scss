@@ -15,7 +15,7 @@
     justify-content: center;
     background: none;
     border: none;
-    color: #B2B2B2;
+    color: #b2b2b2;
     cursor: pointer;
     font-size: 18px;
 
@@ -52,10 +52,10 @@
   &__input {
     width: 100%;
     padding: 10px 38px 10px 18px;
-    border: 1px solid #B2B2B2;
+    border: 1px solid #b2b2b2;
     border-radius: 12px;
     outline: none;
-    background: #FFF;
+    background: #fff;
     color: #292929;
     font-size: 15px;
     font-weight: 500;
@@ -96,7 +96,7 @@
     left: 12px;
     top: 50%;
     transform: translateY(-50%);
-    color: #B2B2B2;
+    color: #b2b2b2;
     pointer-events: none;
     transition: all 0.2s ease-in-out;
     font-size: 15px;
@@ -123,7 +123,7 @@
     }
 
     &--loading {
-      background: linear-gradient(270deg, #2D96FF 4.4%, #00E2A6 92.9%);
+      background: linear-gradient(270deg, #2d96ff 4.4%, #00e2a6 92.9%);
       background-size: 200% 200%;
       animation: gradient-move 1s linear infinite;
       cursor: not-allowed;

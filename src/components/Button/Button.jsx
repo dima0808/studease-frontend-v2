@@ -1,6 +1,6 @@
-import './Button.scss'
-import { icons } from "@/components/icons";
-import classNames from "classnames";
+import './Button.scss';
+import { icons } from '@/components/icons';
+import classNames from 'classnames';
 
 const Button = (props) => {
   const {
@@ -9,21 +9,26 @@ const Button = (props) => {
     iconName,
     text = 'Button',
     /*
-    * theme: 'default' | 'dark' | 'primary' | 'red'
+     * theme: 'default' | 'dark' | 'primary' | 'red'
      */
     theme = 'default',
     onClick,
     hidden = false,
     disabled = false,
-  } = props
+  } = props;
 
   const IconComponent = icons[iconName];
   return (
-    <button disabled={disabled} onClick={onClick} type={type} className={classNames("button", className, `button--${theme}`)}>
+    <button
+      disabled={disabled}
+      onClick={onClick}
+      type={type}
+      className={classNames('button', className, `button--${theme}`)}
+    >
       {IconComponent && <IconComponent className="button__icon" />}
       {hidden ? null : text}
     </button>
-  )
-}
+  );
+};
 
-export default Button
+export default Button;

@@ -1,33 +1,32 @@
-import './CreateCollectionForm.scss'
-import SidebarCreation from "@/components/SidebarCreation";
-import { useSearchParams } from "react-router-dom";
-import { useActions } from "@/hooks/useActions";
-import { useFieldArray, useForm } from "react-hook-form";
-import FormInput from "@/components/FormInput";
-import React, { useEffect, useState } from "react";
-import QuestionBlock from "@/components/QuestionBlock";
-import AIGeneratorBlock from "@/components/AIGeneratorBlock";
+import './CreateCollectionForm.scss';
+import SidebarCreation from '@/components/SidebarCreation';
+import { useSearchParams } from 'react-router-dom';
+import { useActions } from '@/hooks/useActions';
+import { useFieldArray, useForm } from 'react-hook-form';
+import FormInput from '@/components/FormInput';
+import React, { useEffect, useState } from 'react';
+import QuestionBlock from '@/components/QuestionBlock';
+import AIGeneratorBlock from '@/components/AIGeneratorBlock';
 
 const defaultQuestion = {
   id: Date.now(),
-  content: "",
+  content: '',
   points: 1,
-  type: "single_choice",
+  type: 'single_choice',
   answers: [],
 };
 
 const defaultValues = {
-  name: "",
-  questions: []
-}
-
+  name: '',
+  questions: [],
+};
 
 const CreateCollectionForm = () => {
-  const [params] = useSearchParams()
-  const cloneName = params.get("cloneName")
-  const { getFullCollectionByName, createCollection } = useActions()
+  const [params] = useSearchParams();
+  const cloneId = params.get('cloneId');
+  const { getFullCollectionById, createCollection } = useActions();
 
-  const [showAIGenerationBlock, setShowAIGenerationBlock] = useState(false)
+  const [showAIGenerationBlock, setShowAIGenerationBlock] = useState(false);
 
   const {
     register,
@@ -38,21 +37,19 @@ const CreateCollectionForm = () => {
     setValue,
     formState: { errors },
   } = useForm({
-    defaultValues
-  })
+    defaultValues,
+  });
 
-  const {
-    fields, append, remove
-  } = useFieldArray({
+  const { fields, append, remove } = useFieldArray({
     control,
-    name: "questions"
-  })
+    name: 'questions',
+  });
 
   useEffect(() => {
-    if (cloneName) {
+    if (cloneId) {
       (async () => {
         try {
-          const data = await getFullCollectionByName(cloneName).unwrap();
+          const data = await getFullCollectionById(cloneId).unwrap();
 
           const filteredData = Object.keys(defaultValues).reduce((acc, key) => {
             if (data[key] !== undefined) {
@@ -63,7 +60,7 @@ const CreateCollectionForm = () => {
 
           if (Array.isArray(filteredData.questions)) {
             filteredData.questions = filteredData.questions.map((q) => {
-              if (q.type === "matching" && Array.isArray(q.answers)) {
+              if (q.type === 'matching' && Array.isArray(q.answers)) {
                 return {
                   ...q,
                   answers: q.answers
@@ -81,32 +78,34 @@ const CreateCollectionForm = () => {
           const newData = {
             ...defaultValues,
             ...filteredData,
-            name: (filteredData.name || "") + " (Copy)",
+            name: (filteredData.name || '') + ' (Copy)',
           };
 
           reset(newData);
         } catch (err) {
-          console.error("Failed to fetch test:", err);
+          console.error('Failed to fetch test:', err);
         }
       })();
     }
-  }, [cloneName, getFullCollectionByName, reset]);
+  }, [cloneId, getFullCollectionById, reset]);
 
   const onSubmit = (data) => {
-    console.log("Form submitted:", data)
-    createCollection(data)
+    console.log('Form submitted:', data);
+    createCollection(data);
     // reset()
-  }
+  };
 
   return (
     <>
       <SidebarCreation
         addQuestion={() => append({ ...defaultQuestion, id: Date.now() })}
-        showAIGenerationBlock={() => setShowAIGenerationBlock(!showAIGenerationBlock)}
+        showAIGenerationBlock={() =>
+          setShowAIGenerationBlock(!showAIGenerationBlock)
+        }
       />
       <form
         onSubmit={handleSubmit(onSubmit)}
-        style={{ maxWidth: 800, margin: "0 auto" }}
+        style={{ maxWidth: 800, margin: '0 auto' }}
       >
         <FormInput
           label="Collection Name"
@@ -115,7 +114,7 @@ const CreateCollectionForm = () => {
           placeholder="Enter collection name"
           register={register}
           errors={errors}
-          rules={{ required: "Name is required" }}
+          rules={{ required: 'Name is required' }}
         />
 
         <h3>Questions</h3>
@@ -137,9 +136,16 @@ const CreateCollectionForm = () => {
         <br />
         <button type="submit">Create Test</button>
       </form>
-      {showAIGenerationBlock && <AIGeneratorBlock addQuestion={append} setShowAIGenerationBlock={() => setShowAIGenerationBlock(!showAIGenerationBlock)} />}
+      {showAIGenerationBlock && (
+        <AIGeneratorBlock
+          addQuestion={append}
+          setShowAIGenerationBlock={() =>
+            setShowAIGenerationBlock(!showAIGenerationBlock)
+          }
+        />
+      )}
     </>
-  )
-}
+  );
+};
 
-export default CreateCollectionForm
+export default CreateCollectionForm;

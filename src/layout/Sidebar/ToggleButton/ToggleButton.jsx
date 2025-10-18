@@ -1,11 +1,8 @@
-import classNames from "classnames";
-import arrowLeft from "@/assets/icons/arrow-left.svg";
+import classNames from 'classnames';
+import arrowLeft from '@/assets/icons/arrow-left.svg';
 
 const ToggleButton = (props) => {
-  const {
-    isCollapsed,
-    setIsCollapsed,
-  } = props
+  const { isCollapsed, setIsCollapsed } = props;
 
   return (
     <button
@@ -21,7 +18,7 @@ const ToggleButton = (props) => {
         alt="Arrow left icon"
       />
     </button>
-  )
-}
+  );
+};
 
-export default ToggleButton
+export default ToggleButton;
