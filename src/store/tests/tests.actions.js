@@ -136,13 +136,14 @@ export const deleteTestById = createAsyncThunk(
 
 export const deleteTestsByIds = createAsyncThunk(
   'tests/deleteTestsByIds',
-  async (testIds, { dispatch, rejectWithValue }) => {
+  async (tests, { rejectWithValue }) => {
     try {
-      await Promise.all(
-        // todo: change to batch delete endpoint when available
-        testIds.map((test) => dispatch(deleteTestById(test.id))),
-      );
-      return testIds;
+      await api.delete('/admin/tests', {
+        data: {
+          testIds: tests.map((test) => test.id),
+        },
+      });
+      return tests;
     } catch {
       return rejectWithValue('Failed to delete tests');
     }

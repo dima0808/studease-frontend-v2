@@ -88,14 +88,13 @@ export const deleteCollectionById = createAsyncThunk(
 
 export const deleteCollectionsByIds = createAsyncThunk(
   'collections/deleteCollectionsByIds',
-  async (collections, { dispatch, rejectWithValue }) => {
+  async (collections, { rejectWithValue }) => {
     try {
-      await Promise.all(
-        // todo: change to batch delete endpoint when available
-        collections.map((collection) =>
-          dispatch(deleteCollectionById(collection.id)),
-        ),
-      );
+      await api.delete('/admin/collections', {
+        data: {
+          collectionIds: collections.map((c) => c.id),
+        },
+      });
       return collections;
     } catch {
       return rejectWithValue('Failed to delete collections');

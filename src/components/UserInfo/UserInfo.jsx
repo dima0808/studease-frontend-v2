@@ -12,7 +12,6 @@ const UserInfo = () => {
     getCurrentUser();
   }, [getCurrentUser]);
 
-  console.log(user);
   return (
     <>
       {user ? (
