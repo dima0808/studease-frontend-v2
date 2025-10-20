@@ -1,0 +1,12 @@
+.important {
+  padding: 4px 8px;
+  border: 1px solid var(--color-red-dark);
+  background-color: var(--color-red-light);
+  color: var(--color-red-dark);
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  column-gap: 4px;
+  font-size: 12px;
+  font-weight: 500;
+}

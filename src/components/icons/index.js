@@ -12,6 +12,9 @@ import InfoIcon from '@/components/icons/InfoIcon';
 import ExportIcon from '@/components/icons/ExportIcon';
 import CountIcon from '@/components/icons/CountIcon';
 import UsedIcon from '@/components/icons/UsedIcon';
+import DurationIcon from '@/components/icons/DurationIcon';
+import ScoreIcon from '@/components/icons/ScoreIcon';
+import ImportantIcon from '@/components/icons/ImportantIcon';
 
 export const icons = {
   CollectionIcon,
@@ -28,4 +31,7 @@ export const icons = {
   ExportIcon,
   CountIcon,
   UsedIcon,
+  DurationIcon,
+  ScoreIcon,
+  ImportantIcon,
 };

@@ -1,0 +1,63 @@
+.test-session-layout {
+  display: flex;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.test-intro {
+  display: flex;
+  flex-direction: column;
+  row-gap: 25px;
+  width: 673px;
+  min-height: 287px;
+  border-radius: 34px;
+  background-color: var(--color-white-dark);
+  border: var(--border);
+  padding: 58px;
+
+  &__title {
+    color: var(--color-text-black);
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.test-user-form {
+  display: flex;
+  flex-direction: column;
+  row-gap: 25px;
+  width: 673px;
+  min-height: 287px;
+  border-radius: 34px;
+  background-color: var(--color-white-dark);
+  border: var(--border);
+  padding: 58px;
+
+  &__title {
+    font-size: 1.3rem;
+    font-weight: 600;
+  }
+
+  &__subtitle {
+    margin-bottom: 15px;
+  }
+
+  &__content {
+    background-color: var(--color-white);
+    border: var(--border);
+    padding: 15px;
+    border-radius: 15px;
+  }
+
+  &__inputs {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    column-gap: 10px;
+  }
+}

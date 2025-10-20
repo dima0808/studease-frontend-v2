@@ -4,6 +4,7 @@ import selectionSlice from '@/store/selection/selection.slice';
 import testsSlice from '@/store/tests/tests.slice';
 import authSlice from '@/store/auth/auth.slice';
 import collectionsSlice from '@/store/collections/collections.slice';
+import testSessionSlice from '@/store/testSession/testSession.slice';
 
 export const store = configureStore({
   reducer: {
@@ -12,5 +13,6 @@ export const store = configureStore({
     collections: collectionsSlice,
     filter: filterSlice,
     selection: selectionSlice,
+    testSession: testSessionSlice,
   },
 });

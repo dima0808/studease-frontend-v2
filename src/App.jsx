@@ -10,6 +10,7 @@ import CollectionsPage from '@/pages/CollectionsPage';
 import CreateTestForm from '@/components/CreateTestForm';
 import CreateCollectionForm from '@/components/CreateCollectionForm/CreateCollectionForm';
 import TestInfoPage from '@/pages/TestInfoPage';
+import TestSessionPage from '@/pages/TestSessionPage';
 
 function App() {
   return (
@@ -18,7 +19,7 @@ function App() {
         <Route index element={<LoginForm />} />
         <Route path={ROUTES.REGISTER} element={<RegisterForm />} />
       </Route>
-
+      <Route path={`${ROUTES.DEFAULT}/:testId`} element={<TestSessionPage />} />
       <Route path={ROUTES.DEFAULT} element={<MainLayout />}>
         <Route path={ROUTES.TESTS} element={<TestsPage />} />
         <Route path={ROUTES.COLLECTIONS} element={<CollectionsPage />} />
