@@ -1,6 +1,30 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getTestSessionById } from '@/store/testSession/testSession.actions';
 
+const questions = [
+  { id: 1, text: 'Столиця України?', options: ['Львів', 'Київ', 'Одеса'] },
+  {
+    id: 2,
+    text: 'Коли Україна здобула незалежність?',
+    options: ['1990', '1991', '1992'],
+  },
+  {
+    id: 3,
+    text: 'Яка найбільша річка в Україні?',
+    options: ['Дніпро', 'Південний Буг', 'Дунай'],
+  },
+  {
+    id: 4,
+    text: 'Хто є автором твору "Кобзар"?',
+    options: ['Іван Франко', 'Леся Українка', 'Тарас Шевченко'],
+  },
+  {
+    id: 5,
+    text: 'Яка гора є найвищою в Україні?',
+    options: ['Говерла', 'Піп Іван', 'Бребенескул'],
+  },
+];
+
 const initialState = {
   step: 1, // 1 - вступ, 2 - дані користувача, 3 - питання
   testInfo: null,
@@ -8,6 +32,7 @@ const initialState = {
     fullName: '',
     group: '',
   },
+  questions,
   isLoading: false,
   error: null,
   answers: [],
@@ -18,26 +43,28 @@ const testSessionSlice = createSlice({
   name: 'testSession',
   initialState,
   reducers: {
-    nextStep(state) {
-      if (state.step < 3) state.step += 1;
+    nextStep: (state) => {
+      state.step += 1;
     },
-    prevStep(state) {
-      if (state.step > 1) state.step -= 1;
+    prevStep: (state) => {
+      state.step -= 1;
     },
-    setUserData(state, action) {
+    setStep: (state, action) => {
+      state.step = action.payload;
+    },
+    setUserData: (state, action) => {
       state.userData = action.payload;
     },
-    setTestInfo(state, action) {
-      state.testInfo = action.payload;
-    },
-    saveAnswer(state, action) {
+    saveAnswer: (state, action) => {
       state.answers.push(action.payload);
     },
-    finishTest(state) {
+    finishTest: (state) => {
       state.isFinished = true;
     },
-    resetSession() {
-      return initialState;
+    resetSession: (state) => {
+      state.step = 3;
+      state.userData = null;
+      state.answers = [];
     },
   },
 

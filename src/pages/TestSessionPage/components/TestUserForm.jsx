@@ -41,7 +41,7 @@ const TestUserForm = ({ name }) => {
               register(name, {
                 required: 'Group is required',
                 pattern: {
-                  value: /^[A-Za-zА-Яа-яІіЇїЄєҐґ]{2}-\d{2}$/u,
+                  value: /^\p{L}{2}-\d{2}$/u,
                   message: 'Format: XX-XX (e.g. IO-21)',
                 },
               })
@@ -57,7 +57,7 @@ const TestUserForm = ({ name }) => {
               register(name, {
                 required: 'Full name is required',
                 pattern: {
-                  value: /^[A-Z][a-z]+ [A-Z][a-z]+$/,
+                  value: /^\p{Lu}\p{L}+ \p{Lu}\p{L}+$/u,
                   message: 'Format: Surname Name (e.g. Ivanov Ivan)',
                 },
               })

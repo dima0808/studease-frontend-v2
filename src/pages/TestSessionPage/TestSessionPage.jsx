@@ -15,7 +15,7 @@ const TestSessionPage = () => {
     (state) => state.testSession,
   );
   const { testId } = useParams();
-  const { getTestSessionById } = useActions();
+  const { getTestSessionById, resetSession } = useActions();
 
   useEffect(() => {
     getTestSessionById(testId);
@@ -23,6 +23,17 @@ const TestSessionPage = () => {
 
   return (
     <TestSessionLayout>
+      <button
+        onClick={resetSession}
+        style={{
+          position: 'absolute',
+          top: 10,
+          right: 10,
+        }}
+        type="button"
+      >
+        reset
+      </button>
       {isLoading && <Loading text="test" />}
       {error && <p className="error">{error}</p>}
       {!isLoading && !error && (
