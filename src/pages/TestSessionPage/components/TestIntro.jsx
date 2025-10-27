@@ -10,7 +10,7 @@ import { motion as Motion } from 'framer-motion';
 
 const TestIntro = (props) => {
   const { name, deadline, questionsCount, minutesToComplete, maxScore } = props;
-  const { nextStep } = useActions();
+  const { setStep } = useActions();
 
   return (
     <Motion.div
@@ -39,7 +39,7 @@ const TestIntro = (props) => {
 
       <div className="test-intro__actions">
         <Important text="Anti-cheat is on" />
-        <Button theme="primary" onClick={nextStep} text="Next" />
+        <Button theme="primary" onClick={() => setStep(2)} text="Next" />
       </div>
     </Motion.div>
   );

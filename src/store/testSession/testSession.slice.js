@@ -1,70 +1,62 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { getTestSessionById } from '@/store/testSession/testSession.actions';
-
-const questions = [
-  { id: 1, text: 'Столиця України?', options: ['Львів', 'Київ', 'Одеса'] },
-  {
-    id: 2,
-    text: 'Коли Україна здобула незалежність?',
-    options: ['1990', '1991', '1992'],
-  },
-  {
-    id: 3,
-    text: 'Яка найбільша річка в Україні?',
-    options: ['Дніпро', 'Південний Буг', 'Дунай'],
-  },
-  {
-    id: 4,
-    text: 'Хто є автором твору "Кобзар"?',
-    options: ['Іван Франко', 'Леся Українка', 'Тарас Шевченко'],
-  },
-  {
-    id: 5,
-    text: 'Яка гора є найвищою в Україні?',
-    options: ['Говерла', 'Піп Іван', 'Бребенескул'],
-  },
-];
+import { createSlice, isFulfilled } from '@reduxjs/toolkit';
+import {
+  finishTestSession,
+  getCurrentQuestion,
+  getNextQuestion,
+  getTestSessionById,
+  startTestSession,
+} from '@/store/testSession/testSession.actions';
+import Cookies from 'js-cookie';
 
 const initialState = {
   step: 1, // 1 - вступ, 2 - дані користувача, 3 - питання
   testInfo: null,
-  userData: {
-    fullName: '',
-    group: '',
+  testSession: null,
+  credentials: {
+    studentName: Cookies.get('studentName') || '',
+    studentGroup: Cookies.get('studentGroup') || '',
   },
-  questions,
+  question: null,
   isLoading: false,
   error: null,
-  answers: [],
-  isFinished: false,
+  answerIds: [],
+  answerContent: null,
 };
 
 const testSessionSlice = createSlice({
   name: 'testSession',
   initialState,
   reducers: {
-    nextStep: (state) => {
-      state.step += 1;
-    },
-    prevStep: (state) => {
-      state.step -= 1;
-    },
     setStep: (state, action) => {
       state.step = action.payload;
     },
-    setUserData: (state, action) => {
-      state.userData = action.payload;
+    setCredentials: (state, action) => {
+      state.credentials = action.payload;
+      Cookies.set('studentName', action.payload.studentName);
+      Cookies.set('studentGroup', action.payload.studentGroup);
     },
-    saveAnswer: (state, action) => {
-      state.answers.push(action.payload);
+    toggleAnswerId: (state, action) => {
+      const answerId = action.payload.answerId;
+      const isSingleChoice = action.payload.isSingleChoice;
+      if (isSingleChoice) {
+        state.answerIds = [answerId];
+      } else {
+        if (state.answerIds.includes(answerId)) {
+          state.answerIds = state.answerIds.filter((id) => id !== answerId);
+        } else {
+          state.answerIds.push(answerId);
+        }
+      }
     },
-    finishTest: (state) => {
-      state.isFinished = true;
-    },
-    resetSession: (state) => {
-      state.step = 3;
-      state.userData = null;
-      state.answers = [];
+    forceEndTestSession: (state, action) => {
+      state.step = 4;
+      state.testSession = action.payload;
+      state.credentials = {
+        studentName: '',
+        studentGroup: '',
+      };
+      Cookies.remove('studentName');
+      Cookies.remove('studentGroup');
     },
   },
 
@@ -82,7 +74,28 @@ const testSessionSlice = createSlice({
       .addCase(getTestSessionById.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
-      });
+      })
+      .addCase(getCurrentQuestion.rejected, (state) => {
+        state.step = 1;
+      })
+      .addCase(finishTestSession.fulfilled, (state, action) => {
+        state.step = 4;
+        state.testSession = action.payload;
+        state.credentials = {
+          studentName: '',
+          studentGroup: '',
+        };
+        Cookies.remove('studentName');
+        Cookies.remove('studentGroup');
+      })
+      .addMatcher(
+        isFulfilled(startTestSession, getCurrentQuestion, getNextQuestion),
+        (state, action) => {
+          state.step = 3;
+          state.question = action.payload.data;
+          state.testSession = action.payload.testSession;
+        },
+      );
   },
 });
 

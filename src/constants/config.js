@@ -5,3 +5,4 @@ export const BACKEND_PORT = import.meta.env.VITE_HOST_BACKEND_PORT || '';
 export const FRONTEND_PORT = import.meta.env.VITE_HOST_FRONTEND_PORT || '';
 
 export const API_URL = `${HTTP_PROTOCOL}://${IP}${BACKEND_PORT ? `:${BACKEND_PORT}` : ''}/api/v1`;
+export const WS_URL = `${WS_PROTOCOL}://${IP}${BACKEND_PORT ? `:${BACKEND_PORT}` : ''}/ws`;

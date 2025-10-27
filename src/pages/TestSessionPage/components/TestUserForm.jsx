@@ -3,19 +3,28 @@ import { motion as Motion } from 'framer-motion';
 import AuthInput from '@/components/AuthForm/AuthInput';
 import { useActions } from '@/hooks/useActions';
 import Button from '@/components/Button';
+import { useSelector } from 'react-redux';
 
 const TestUserForm = ({ name }) => {
+  const { credentials, testInfo } = useSelector((state) => state.testSession);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: { ...credentials },
+  });
 
-  const { setUserData, nextStep, prevStep } = useActions();
+  const { setCredentials, setStep, startTestSession } = useActions();
 
   const handleStart = (data) => {
-    setUserData(data);
-    nextStep();
+    setCredentials(data);
+    startTestSession({
+      testId: testInfo.id,
+      credentials: data,
+    });
+    setStep(3);
   };
 
   return (
@@ -34,7 +43,7 @@ const TestUserForm = ({ name }) => {
         </p>
         <div className="test-user-form__inputs">
           <AuthInput
-            id="group"
+            id="studentGroup"
             label="Group"
             type="text"
             register={(name) =>
@@ -46,11 +55,11 @@ const TestUserForm = ({ name }) => {
                 },
               })
             }
-            error={errors.group}
+            error={errors.studentGroup}
             required
           />
           <AuthInput
-            id="fullName"
+            id="studentName"
             label="Full name"
             type="text"
             register={(name) =>
@@ -62,14 +71,14 @@ const TestUserForm = ({ name }) => {
                 },
               })
             }
-            error={errors.fullName}
+            error={errors.studentName}
             required
           />
         </div>
       </div>
 
       <div className="test-intro__actions">
-        <Button onClick={prevStep} text="Back" />
+        <Button onClick={() => setStep(1)} text="Back" />
         <Button theme="primary" text="Start" type="submit" />
       </div>
     </Motion.form>

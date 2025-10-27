@@ -9,31 +9,24 @@ import { useEffect } from 'react';
 import { useActions } from '@/hooks/useActions';
 import Loading from '@/components/Loading';
 import { AnimatePresence } from 'framer-motion';
+import TestFinished from '@/pages/TestSessionPage/components/TestFinished.jsx';
 
 const TestSessionPage = () => {
-  const { step, isLoading, error, testInfo } = useSelector(
+  const { step, isLoading, error, testInfo, credentials } = useSelector(
     (state) => state.testSession,
   );
   const { testId } = useParams();
-  const { getTestSessionById, resetSession } = useActions();
+  const { getTestSessionById, getCurrentQuestion } = useActions();
 
   useEffect(() => {
     getTestSessionById(testId);
-  }, [getTestSessionById, testId]);
+    if (credentials.studentGroup !== '' && credentials.studentName !== '') {
+      getCurrentQuestion({ testId, credentials });
+    }
+  }, []);
 
   return (
     <TestSessionLayout>
-      <button
-        onClick={resetSession}
-        style={{
-          position: 'absolute',
-          top: 10,
-          right: 10,
-        }}
-        type="button"
-      >
-        reset
-      </button>
       {isLoading && <Loading text="test" />}
       {error && <p className="error">{error}</p>}
       {!isLoading && !error && (
@@ -41,6 +34,7 @@ const TestSessionPage = () => {
           {step === 1 && <TestIntro {...testInfo} key="intro" />}
           {step === 2 && <TestUserForm {...testInfo} key="form" />}
           {step === 3 && <TestQuestions key="questions" />}
+          {step === 4 && <TestFinished key="finished" />}
         </AnimatePresence>
       )}
     </TestSessionLayout>
