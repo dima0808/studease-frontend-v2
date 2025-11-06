@@ -22,8 +22,8 @@ export const startTestSession = createAsyncThunk(
         getCurrentTestSession({ testId, credentials }),
       ).unwrap();
       return { data, testSession };
-    } catch {
-      return rejectWithValue('Failed to start test session');
+    } catch (error) {
+      return rejectWithValue(error.response.data.message);
     }
   },
 );

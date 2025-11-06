@@ -1,0 +1,44 @@
+.essay-block {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 700px;
+  margin: 20px auto;
+
+  .textarea-wrapper {
+    position: relative;
+    width: 100%;
+
+    textarea {
+      width: 100%;
+      min-height: 220px;
+      max-height: 400px;
+      resize: vertical;
+      border: 2px solid #e5e7eb;
+      border-radius: 16px;
+      padding: 18px 20px;
+      font-size: 16px;
+      line-height: 1.6;
+      color: #111827;
+      background-color: #f9fafb;
+      outline: none;
+      transition: all 0.2s ease;
+
+      &:focus {
+        background-color: #fff;
+        border-color: #3b82f6;
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+      }
+
+      &::placeholder {
+        color: #9ca3af;
+        font-style: italic;
+      }
+
+      &.error {
+        border-color: var(--color-red-dark);
+        background-color: var(--color-red-light);
+      }
+    }
+  }
+}

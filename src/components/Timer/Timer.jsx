@@ -14,7 +14,9 @@ const Timer = ({ seconds }) => {
     return <div className="timer time-up">--:--:--</div>;
   }
 
-  return <div className="timer">{formatTime()}</div>;
+  const timerClass = seconds <= 60 ? 'timer danger' : 'timer';
+
+  return <div className={timerClass}>{formatTime()}</div>;
 };
 
 export default Timer;

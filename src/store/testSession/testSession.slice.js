@@ -1,4 +1,4 @@
-import { createSlice, isFulfilled } from '@reduxjs/toolkit';
+import { createSlice, isFulfilled, isRejected } from '@reduxjs/toolkit';
 import {
   finishTestSession,
   getCurrentQuestion,
@@ -9,7 +9,7 @@ import {
 import Cookies from 'js-cookie';
 
 const initialState = {
-  step: 1, // 1 - вступ, 2 - дані користувача, 3 - питання
+  step: 1,
   testInfo: null,
   testSession: null,
   credentials: {
@@ -19,6 +19,8 @@ const initialState = {
   question: null,
   isLoading: false,
   error: null,
+  errorStartTest: null,
+  isLoadingTestSession: false,
   answerIds: [],
   answerContent: null,
 };
@@ -88,12 +90,22 @@ const testSessionSlice = createSlice({
         Cookies.remove('studentName');
         Cookies.remove('studentGroup');
       })
+      .addCase(startTestSession.pending, (state) => {
+        state.errorStartTest = null;
+        state.isLoadingTestSession = true;
+      })
+      .addCase(startTestSession.rejected, (state, action) => {
+        console.log(action.payload);
+        state.errorStartTest = action.payload;
+        state.isLoadingTestSession = false;
+      })
       .addMatcher(
         isFulfilled(startTestSession, getCurrentQuestion, getNextQuestion),
         (state, action) => {
           state.step = 3;
           state.question = action.payload.data;
           state.testSession = action.payload.testSession;
+          state.isLoadingTestSession = false;
         },
       );
   },
