@@ -5,8 +5,9 @@ import { motion as Motion, AnimatePresence } from 'framer-motion';
 import { dropdownVariants } from '@/constants/motionVariants';
 
 const ActionMenu = (props) => {
-  const { handleDelete, navigateToClone, navigateToInfo } = props;
+  const { handleDelete, navigateToClone, navigateToInfo, handleCopyLink} = props;
   const [open, setOpen] = useState(false);
+
   const [position, setPosition] = useState({ top: '100%', right: 0 });
   const menuRef = useRef(null);
   const buttonRef = useRef(null);
@@ -95,6 +96,14 @@ const ActionMenu = (props) => {
                 setOpen(false);
               }}
               iconName="InfoIcon"
+            />
+            <Button
+              text="Link"
+              onClick={() => {
+                handleCopyLink()
+                setOpen(false);
+              }}
+              iconName="LinkIcon"
             />
             <Button
               text="Clone"

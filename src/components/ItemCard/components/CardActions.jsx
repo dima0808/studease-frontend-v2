@@ -6,11 +6,15 @@ import { useState } from 'react';
 import ConfirmDeleteModal from '@/components/ConfirmDeleteModal';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ROUTES, ROUTES_NAV } from '@/constants/routes';
+import { FRONTEND_PORT, HTTP_PROTOCOL, IP } from "@/constants/config";
+import NotificationMessage from "@/components/NotificationMessage";
 
 const CardActions = (props) => {
   const { id, name, isSelected, wide } = props;
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [notification, setNotification] = useState(null);
+
   const { actionMode } = useSelector((state) => state.selection);
   const { toggleItem, deleteTestById, deleteCollectionById } = useActions();
   const { pathname } = useLocation();
@@ -40,6 +44,18 @@ const CardActions = (props) => {
     setIsModalOpen(false);
   };
 
+  const testLink = `${HTTP_PROTOCOL}://${IP}${FRONTEND_PORT}/${id}`;
+
+  const handleCopyLink = async () => {
+    try {
+      await navigator.clipboard.writeText(testLink);
+      setNotification(`Link to test "${name}" copied successfully!`);
+    } catch (err) {
+      console.error('Failed to copy link:', err);
+      setNotification('Error copying link!');
+    }
+  };
+
   return (
     <>
       {actionMode === 'select' ? (
@@ -51,6 +67,13 @@ const CardActions = (props) => {
         />
       ) : wide ? (
         <div className="item-card__actions--wide">
+          <Button
+            text="Copy Link"
+            onClick={handleCopyLink}
+            iconName="LinkIcon"
+            theme="action"
+            hidden={true}
+          />
           <Button
             text="Info"
             onClick={navigateToInfo}
@@ -82,11 +105,13 @@ const CardActions = (props) => {
         </div>
       ) : (
         <ActionMenu
+          handleCopyLink={handleCopyLink}
           navigateToInfo={navigateToInfo}
           navigateToClone={navigateToClone}
           handleDelete={handleDelete}
           confirmDelete={confirmDelete}
           id={id}
+          name={name}
         />
       )}
 
@@ -97,6 +122,13 @@ const CardActions = (props) => {
         onConfirm={confirmDelete}
         data={[{ id, name }]}
       />
+
+      {notification && (
+        <NotificationMessage
+          message={notification}
+          onClose={() => setNotification(null)}
+        />
+      )}
     </>
   );
 };

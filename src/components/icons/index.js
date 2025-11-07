@@ -15,6 +15,7 @@ import UsedIcon from '@/components/icons/UsedIcon';
 import DurationIcon from '@/components/icons/DurationIcon';
 import ScoreIcon from '@/components/icons/ScoreIcon';
 import ImportantIcon from '@/components/icons/ImportantIcon';
+import LinkIcon from "@/components/icons/LinkIcon";
 
 export const icons = {
   CollectionIcon,
@@ -34,4 +35,5 @@ export const icons = {
   DurationIcon,
   ScoreIcon,
   ImportantIcon,
+  LinkIcon
 };
