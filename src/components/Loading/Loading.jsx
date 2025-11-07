@@ -1,9 +1,9 @@
 import './Loading.scss';
-import classNames from "classnames";
+import classNames from 'classnames';
 
-const Loading = ({className, text }) => {
+const Loading = ({ className, text }) => {
   return (
-    <div className={classNames("loading", className)}>
+    <div className={classNames('loading', className)}>
       <div className="loading__dots">
         <span></span>
         <span></span>

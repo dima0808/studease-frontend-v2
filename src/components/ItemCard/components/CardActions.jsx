@@ -6,8 +6,8 @@ import { useState } from 'react';
 import ConfirmDeleteModal from '@/components/ConfirmDeleteModal';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ROUTES, ROUTES_NAV } from '@/constants/routes';
-import { FRONTEND_PORT, HTTP_PROTOCOL, IP } from "@/constants/config";
-import NotificationMessage from "@/components/NotificationMessage";
+import { FRONTEND_PORT, HTTP_PROTOCOL, IP } from '@/constants/config';
+import NotificationMessage from '@/components/NotificationMessage';
 
 const CardActions = (props) => {
   const { id, name, isSelected, wide } = props;

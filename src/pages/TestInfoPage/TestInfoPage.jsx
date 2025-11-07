@@ -12,7 +12,7 @@ import {
   FiChevronDown,
 } from 'react-icons/fi';
 import { FaArrowLeft } from 'react-icons/fa';
-import { motion as Motion } from 'framer-motion'
+import { motion as Motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { useActions } from '@/hooks/useActions';
 import { ROUTES_NAV } from '@/constants/routes';
@@ -41,7 +41,8 @@ const TestInfoPage = () => {
       (async () => {
         try {
           const testData = await getFullTestById(testId).unwrap();
-          const finishedSessions = await getFinishedSessionsByTestId(testId).unwrap();
+          const finishedSessions =
+            await getFinishedSessionsByTestId(testId).unwrap();
 
           const detailedTestData = {
             ...testData,
@@ -84,7 +85,7 @@ const TestInfoPage = () => {
   const [searchQuery, setSearchQuery] = useState('');
 
   const filteredSessions = (test?.sessions || []).filter((session) =>
-    session.studentName.toLowerCase().includes(searchQuery.toLowerCase())
+    session.studentName.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
   const sortedSessions = [...filteredSessions].sort((a, b) => {
@@ -96,9 +97,9 @@ const TestInfoPage = () => {
     return 0;
   });
 
-
   const SortIcon = ({ field }) => {
-    if (sortField !== field) return <FiChevronUp className="sort-icon disabled" />;
+    if (sortField !== field)
+      return <FiChevronUp className="sort-icon disabled" />;
     return sortOrder === 'asc' ? (
       <FiChevronUp className="sort-icon" />
     ) : (
@@ -106,10 +107,12 @@ const TestInfoPage = () => {
     );
   };
 
-  if (!test) return (<div className="test-info-page">
-    <Loading className="test-info-page__loading" text="test info..." />
-  </div>);
-
+  if (!test)
+    return (
+      <div className="test-info-page">
+        <Loading className="test-info-page__loading" text="test info..." />
+      </div>
+    );
 
   return (
     <Motion.div
@@ -149,25 +152,32 @@ const TestInfoPage = () => {
       >
         <h2 className="test-info-page__sessions-title">Test Details</h2>
         <p className="test-info-page__details-item">
-          <FiCalendar className="test-info-page__icon" /> Open date: {test.openDate}
+          <FiCalendar className="test-info-page__icon" /> Open date:{' '}
+          {test.openDate}
         </p>
         <p className="test-info-page__details-item">
-          <FiCalendar className="test-info-page__icon" /> Deadline: {test.deadline}
+          <FiCalendar className="test-info-page__icon" /> Deadline:{' '}
+          {test.deadline}
         </p>
         <p className="test-info-page__details-item">
-          <FiClock className="test-info-page__icon" /> Minutes to complete: {test.minutesToComplete}
+          <FiClock className="test-info-page__icon" /> Minutes to complete:{' '}
+          {test.minutesToComplete}
         </p>
         <p className="test-info-page__details-item">
-          <FiAward className="test-info-page__icon" /> Max score: {test.maxScore}
+          <FiAward className="test-info-page__icon" /> Max score:{' '}
+          {test.maxScore}
         </p>
         <p className="test-info-page__details-item">
-          <FiList className="test-info-page__icon" /> Questions count: {test.questionsCount}
+          <FiList className="test-info-page__icon" /> Questions count:{' '}
+          {test.questionsCount}
         </p>
         <p className="test-info-page__details-item">
-          <FiUsers className="test-info-page__icon" /> Started sessions: {test.startedSessions}
+          <FiUsers className="test-info-page__icon" /> Started sessions:{' '}
+          {test.startedSessions}
         </p>
         <p className="test-info-page__details-item">
-          <FiCheckCircle className="test-info-page__icon" /> Finished sessions: {test.finishedSessions}
+          <FiCheckCircle className="test-info-page__icon" /> Finished sessions:{' '}
+          {test.finishedSessions}
         </p>
       </Motion.div>
 
@@ -194,19 +204,34 @@ const TestInfoPage = () => {
             animate="visible"
           >
             <div className="test-info-page__list-header">
-              <div onClick={() => handleSort('studentGroup')} className="test-info-page__list-header-item">
+              <div
+                onClick={() => handleSort('studentGroup')}
+                className="test-info-page__list-header-item"
+              >
                 <FiUsers /> Group <SortIcon field="studentGroup" />
               </div>
-              <div onClick={() => handleSort('studentName')} className="test-info-page__list-header-item">
+              <div
+                onClick={() => handleSort('studentName')}
+                className="test-info-page__list-header-item"
+              >
                 <FiUser /> Name <SortIcon field="studentName" />
               </div>
-              <div onClick={() => handleSort('startedAt')} className="test-info-page__list-header-item">
+              <div
+                onClick={() => handleSort('startedAt')}
+                className="test-info-page__list-header-item"
+              >
                 <FiClock /> Started <SortIcon field="startedAt" />
               </div>
-              <div onClick={() => handleSort('finishedAt')} className="test-info-page__list-header-item">
+              <div
+                onClick={() => handleSort('finishedAt')}
+                className="test-info-page__list-header-item"
+              >
                 <FiCalendar /> Finished <SortIcon field="finishedAt" />
               </div>
-              <div onClick={() => handleSort('mark')} className="test-info-page__list-header-item">
+              <div
+                onClick={() => handleSort('mark')}
+                className="test-info-page__list-header-item"
+              >
                 <FiAward /> Score <SortIcon field="mark" />
               </div>
             </div>
@@ -226,17 +251,29 @@ const TestInfoPage = () => {
                   className="test-info-page__list-row"
                   variants={fadeUp}
                 >
-                  <div className="test-info-page__list-cell">{session.studentGroup}</div>
-                  <div className="test-info-page__list-cell">{session.studentName}</div>
-                  <div className="test-info-page__list-cell">{session.startedAt}</div>
-                  <div className="test-info-page__list-cell">{session.finishedAt}</div>
-                  <div className="test-info-page__list-cell">{session.mark}</div>
+                  <div className="test-info-page__list-cell">
+                    {session.studentGroup}
+                  </div>
+                  <div className="test-info-page__list-cell">
+                    {session.studentName}
+                  </div>
+                  <div className="test-info-page__list-cell">
+                    {session.startedAt}
+                  </div>
+                  <div className="test-info-page__list-cell">
+                    {session.finishedAt}
+                  </div>
+                  <div className="test-info-page__list-cell">
+                    {session.mark}
+                  </div>
                 </Motion.div>
               ))}
             </Motion.div>
           </Motion.div>
         ) : (
-          <p className="test-info-page__no-sessions">No finished sessions available.</p>
+          <p className="test-info-page__no-sessions">
+            No finished sessions available.
+          </p>
         )}
       </Motion.div>
     </Motion.div>

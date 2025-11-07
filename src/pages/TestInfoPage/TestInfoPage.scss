@@ -69,7 +69,7 @@
     border-radius: 12px;
     overflow: hidden;
     background: #fff;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
   }
 
   &__list-header {
@@ -153,9 +153,5 @@
   &:focus {
     border-color: var(--color-purple);
     outline: none;
-
   }
 }
-
-
-
