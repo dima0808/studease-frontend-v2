@@ -90,3 +90,37 @@ input:-webkit-autofill:active {
     background-position: 0 50%;
   }
 }
+
+@media print {
+  body {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    color-adjust: exact;
+  }
+
+  * {
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  .display-question-block,
+  .display-choice-item.selected,
+  .display-matchpairs__row,
+  .display-essay__answer {
+    background-color: inherit !important;
+    color: inherit !important;
+    -webkit-print-color-adjust: exact !important;
+  }
+
+  .display-choice-item.selected {
+    font-weight: 700;
+    font-size: 18px;
+  }
+
+  .checkbox-indicator,
+  .radio-indicator,
+  .arrow {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}

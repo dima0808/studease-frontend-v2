@@ -19,15 +19,11 @@ import { ROUTES_NAV } from '@/constants/routes';
 import { FRONTEND_PORT, HTTP_PROTOCOL, IP } from '@/constants/config';
 import Button from '@/components/Button';
 import Loading from '@/components/Loading';
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 20 },
-  visible: (delay = 0) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, delay },
-  }),
-};
+import { fadeUp } from '@/constants/motionVariants';
+import DisplaySingleChoice from '@/components/DisplayQuestions/DisplaySingleChoice';
+import DisplayMultipleChoice from '@/components/DisplayQuestions/DisplayMultipleChoice';
+import DisplayEssay from '@/components/DisplayQuestions/DisplayEssay';
+import DisplayMatchPairs from '@/components/DisplayQuestions/DisplayMatchPairs';
 
 const TestInfoPage = () => {
   const { testId } = useParams();
@@ -121,7 +117,6 @@ const TestInfoPage = () => {
       animate="visible"
       variants={fadeUp}
     >
-      {/* HEADER */}
       <Motion.div
         className="test-info-page__header"
         variants={fadeUp}
@@ -144,7 +139,6 @@ const TestInfoPage = () => {
         />
       </Motion.div>
 
-      {/* DETAILS */}
       <Motion.div
         className="test-info-page__details"
         variants={fadeUp}
@@ -181,7 +175,6 @@ const TestInfoPage = () => {
         </p>
       </Motion.div>
 
-      {/* SESSIONS */}
       <Motion.div
         className="test-info-page__sessions"
         variants={fadeUp}
@@ -274,6 +267,59 @@ const TestInfoPage = () => {
           <p className="test-info-page__no-sessions">
             No finished sessions available.
           </p>
+        )}
+      </Motion.div>
+
+      <Motion.div
+        className="test-info-page__questions"
+        variants={fadeUp}
+        custom={0.4}
+      >
+        <div className="test-info-page__section-header">
+          <h2 className="test-info-page__sessions-title">Test Questions</h2>
+        </div>
+
+        {test.questions && test.questions.length > 0 ? (
+          <Motion.div
+            className="test-info-page__list-body"
+            variants={{
+              hidden: {},
+              visible: { transition: { staggerChildren: 0.05 } },
+            }}
+          >
+            {test.questions.map((question) => {
+              switch (question.type) {
+                case 'single_choice':
+                  return (
+                    <Motion.div key={question.id} variants={fadeUp}>
+                      <DisplaySingleChoice question={question} />
+                    </Motion.div>
+                  );
+                case 'multiple_choices':
+                  return (
+                    <Motion.div key={question.id} variants={fadeUp}>
+                      <DisplayMultipleChoice question={question} />
+                    </Motion.div>
+                  );
+                case 'essay':
+                  return (
+                    <Motion.div key={question.id} variants={fadeUp}>
+                      <DisplayEssay question={question} />
+                    </Motion.div>
+                  );
+                case 'matching':
+                  return (
+                    <Motion.div key={question.id} variants={fadeUp}>
+                      <DisplayMatchPairs question={question} />
+                    </Motion.div>
+                  );
+                default:
+                  return null;
+              }
+            })}
+          </Motion.div>
+        ) : (
+          <p className="test-info-page__no-sessions">No questions available.</p>
         )}
       </Motion.div>
     </Motion.div>

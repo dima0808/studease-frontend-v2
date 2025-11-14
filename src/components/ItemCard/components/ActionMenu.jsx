@@ -3,11 +3,14 @@ import ActionIcon from '@/components/icons/ActionIcon';
 import Button from '@/components/Button';
 import { motion as Motion, AnimatePresence } from 'framer-motion';
 import { dropdownVariants } from '@/constants/motionVariants';
+import { useLocation } from 'react-router-dom';
+import { ROUTES_NAV } from '@/constants/routes';
 
 const ActionMenu = (props) => {
   const { handleDelete, navigateToClone, navigateToInfo, handleCopyLink } =
     props;
   const [open, setOpen] = useState(false);
+  const { pathname } = useLocation();
 
   const [position, setPosition] = useState({ top: '100%', right: 0 });
   const menuRef = useRef(null);
@@ -98,14 +101,16 @@ const ActionMenu = (props) => {
               }}
               iconName="InfoIcon"
             />
-            <Button
-              text="Link"
-              onClick={() => {
-                handleCopyLink();
-                setOpen(false);
-              }}
-              iconName="LinkIcon"
-            />
+            {pathname === ROUTES_NAV.TESTS.href && (
+              <Button
+                text="Link"
+                onClick={() => {
+                  handleCopyLink();
+                  setOpen(false);
+                }}
+                iconName="LinkIcon"
+              />
+            )}
             <Button
               text="Clone"
               onClick={() => {

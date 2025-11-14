@@ -67,13 +67,15 @@ const CardActions = (props) => {
         />
       ) : wide ? (
         <div className="item-card__actions--wide">
-          <Button
-            text="Copy Link"
-            onClick={handleCopyLink}
-            iconName="LinkIcon"
-            theme="action"
-            hidden={true}
-          />
+          {pathname === ROUTES_NAV.TESTS.href && (
+            <Button
+              text="Copy Link"
+              onClick={handleCopyLink}
+              iconName="LinkIcon"
+              theme="action"
+              hidden={true}
+            />
+          )}
           <Button
             text="Info"
             onClick={navigateToInfo}

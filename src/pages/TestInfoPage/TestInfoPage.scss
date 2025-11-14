@@ -39,6 +39,10 @@
     height: auto;
   }
 
+  &__questions {
+    padding-block: 50px;
+  }
+
   &__details {
     display: flex;
     flex-direction: column;
@@ -126,6 +130,7 @@
 
   &__sessions {
     padding-block: 50px;
+    border-bottom: var(--border);
   }
 }
 

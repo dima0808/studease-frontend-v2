@@ -4,6 +4,10 @@
   height: 100vh;
   flex-direction: column;
   justify-content: center;
+
+  &:has(.test-finished) {
+    display: block;
+  }
 }
 
 .test-intro {
@@ -181,4 +185,52 @@
 
 .question-block__button {
   float: right;
+}
+
+.test-finished {
+  margin: 0 auto;
+  padding: 40px 20px;
+  max-width: 900px;
+
+  &__header {
+    margin-bottom: 30px;
+  }
+
+  &__title {
+    font-size: 36px;
+    font-weight: 700;
+    color: #292929;
+  }
+
+  &__student-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 40px;
+    padding: 20px;
+    border: 1px solid #e3e3e3;
+    border-radius: 12px;
+    background: #fafafa;
+  }
+
+  &__info-item {
+    display: flex;
+    gap: 10px;
+
+    .label {
+      font-weight: 600;
+      color: #555;
+    }
+  }
+
+  &__questions {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  &__q-index {
+    font-weight: 500;
+    padding-bottom: 20px;
+  }
 }
