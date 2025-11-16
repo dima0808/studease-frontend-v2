@@ -30,9 +30,7 @@ const CardActions = (props) => {
   };
 
   const navigateToInfo = () => {
-    if (!isCollectionsPage) {
-      navigate(`/${ROUTES.TESTS}/${id}`);
-    }
+    navigate(`/${isCollectionsPage ? ROUTES.COLLECTIONS : ROUTES.TESTS}/${id}`);
   };
 
   const handleDelete = () => {

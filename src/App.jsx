@@ -11,6 +11,7 @@ import CreateTestForm from '@/components/CreateTestForm';
 import CreateCollectionForm from '@/components/CreateCollectionForm/CreateCollectionForm';
 import TestInfoPage from '@/pages/TestInfoPage';
 import TestSessionPage from '@/pages/TestSessionPage';
+import CollectionInfoPage from '@/pages/CollectionInfoPage';
 
 function App() {
   return (
@@ -29,6 +30,10 @@ function App() {
         />
       </Route>
       <Route path={`${ROUTES.TESTS}/:testId`} element={<TestInfoPage />} />
+      <Route
+        path={`${ROUTES.COLLECTIONS}/:collectionId`}
+        element={<CollectionInfoPage />}
+      />
       <Route
         path={`${ROUTES.CREATE_TEST}/:cloneId?`}
         element={<CreateTestForm />}
