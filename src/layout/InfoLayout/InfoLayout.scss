@@ -1,4 +1,4 @@
-.test-info-page {
+.info-layout-page {
   margin: 0 auto;
   padding-inline: 20px;
   max-width: 1400px;
@@ -134,14 +134,14 @@
   }
 }
 
-.test-info-page__section-header {
+.info-layout-page__section-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding-bottom: 20px;
 }
 
-.test-info-page__search-input {
+.info-layout-page__search-input {
   padding: 8px 12px;
   border: 1px solid #ddd;
   border-radius: 8px;

@@ -1,4 +1,3 @@
-import './TestInfoPage.scss';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
   FiCalendar,
@@ -24,6 +23,7 @@ import DisplaySingleChoice from '@/components/DisplayQuestions/DisplaySingleChoi
 import DisplayMultipleChoice from '@/components/DisplayQuestions/DisplayMultipleChoice';
 import DisplayEssay from '@/components/DisplayQuestions/DisplayEssay';
 import DisplayMatchPairs from '@/components/DisplayQuestions/DisplayMatchPairs';
+import InfoLayout from '@/layout/InfoLayout';
 
 const TestInfoPage = () => {
   const { testId } = useParams();
@@ -105,34 +105,29 @@ const TestInfoPage = () => {
 
   if (!test)
     return (
-      <div className="test-info-page">
-        <Loading className="test-info-page__loading" text="test info..." />
+      <div className="info-layout-page">
+        <Loading className="info-layout-page__loading" text="test info..." />
       </div>
     );
 
   return (
-    <Motion.div
-      className="test-info-page"
-      initial="hidden"
-      animate="visible"
-      variants={fadeUp}
-    >
+    <InfoLayout>
       <Motion.div
-        className="test-info-page__header"
+        className="info-layout-page__header"
         variants={fadeUp}
         custom={0.1}
       >
-        <div className="test-info-page__title-container">
+        <div className="info-layout-page__title-container">
           <Button
-            className="test-info-page__back"
+            className="info-layout-page__back"
             text={<FaArrowLeft size={21} />}
             onClick={() => navigate(-1)}
           />
-          <h1 className="test-info-page__title">{test.name}</h1>
+          <h1 className="info-layout-page__title">{test.name}</h1>
         </div>
 
         <Button
-          className="test-info-page__copy-link-button"
+          className="info-layout-page__copy-link-button"
           text={copied ? 'Copied!' : 'Copy Test Link'}
           onClick={handleCopyLink}
           iconName="LinkIcon"
@@ -140,97 +135,99 @@ const TestInfoPage = () => {
       </Motion.div>
 
       <Motion.div
-        className="test-info-page__details"
+        className="info-layout-page__details"
         variants={fadeUp}
         custom={0.2}
       >
-        <h2 className="test-info-page__sessions-title">Test Details</h2>
-        <p className="test-info-page__details-item">
-          <FiCalendar className="test-info-page__icon" /> Open date:{' '}
+        <h2 className="info-layout-page__sessions-title">Test Details</h2>
+        <p className="info-layout-page__details-item">
+          <FiCalendar className="info-layout-page__icon" /> Open date:{' '}
           {test.openDate}
         </p>
-        <p className="test-info-page__details-item">
-          <FiCalendar className="test-info-page__icon" /> Deadline:{' '}
+        <p className="info-layout-page__details-item">
+          <FiCalendar className="info-layout-page__icon" /> Deadline:{' '}
           {test.deadline}
         </p>
-        <p className="test-info-page__details-item">
-          <FiClock className="test-info-page__icon" /> Minutes to complete:{' '}
+        <p className="info-layout-page__details-item">
+          <FiClock className="info-layout-page__icon" /> Minutes to complete:{' '}
           {test.minutesToComplete}
         </p>
-        <p className="test-info-page__details-item">
-          <FiAward className="test-info-page__icon" /> Max score:{' '}
+        <p className="info-layout-page__details-item">
+          <FiAward className="info-layout-page__icon" /> Max score:{' '}
           {test.maxScore}
         </p>
-        <p className="test-info-page__details-item">
-          <FiList className="test-info-page__icon" /> Questions count:{' '}
+        <p className="info-layout-page__details-item">
+          <FiList className="info-layout-page__icon" /> Questions count:{' '}
           {test.questionsCount}
         </p>
-        <p className="test-info-page__details-item">
-          <FiUsers className="test-info-page__icon" /> Started sessions:{' '}
+        <p className="info-layout-page__details-item">
+          <FiUsers className="info-layout-page__icon" /> Started sessions:{' '}
           {test.startedSessions}
         </p>
-        <p className="test-info-page__details-item">
-          <FiCheckCircle className="test-info-page__icon" /> Finished sessions:{' '}
-          {test.finishedSessions}
+        <p className="info-layout-page__details-item">
+          <FiCheckCircle className="info-layout-page__icon" /> Finished
+          sessions: {test.finishedSessions}
         </p>
       </Motion.div>
 
       <Motion.div
-        className="test-info-page__sessions"
+        className="info-layout-page__sessions"
         variants={fadeUp}
         custom={0.3}
       >
-        <div className="test-info-page__section-header">
-          <h2 className="test-info-page__sessions-title">Finished Sessions</h2>
+        <div className="info-layout-page__section-header">
+          <h2 className="info-layout-page__sessions-title">
+            Finished Sessions
+          </h2>
           <input
             type="text"
             placeholder="Search by student name..."
-            className="test-info-page__search-input"
+            className="info-layout-page__search-input"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
         {test.sessions && test.sessions.length > 0 ? (
           <Motion.div
-            className="test-info-page__list"
+            className="info-layout-page__list"
             initial="hidden"
             animate="visible"
           >
-            <div className="test-info-page__list-header">
+            <div className="info-layout-page__list-header">
               <div
                 onClick={() => handleSort('studentGroup')}
-                className="test-info-page__list-header-item"
+                className="info-layout-page__list-header-item"
               >
                 <FiUsers /> Group <SortIcon field="studentGroup" />
               </div>
               <div
                 onClick={() => handleSort('studentName')}
-                className="test-info-page__list-header-item"
+                className="info-layout-page__list-header-item"
               >
                 <FiUser /> Name <SortIcon field="studentName" />
               </div>
               <div
                 onClick={() => handleSort('startedAt')}
-                className="test-info-page__list-header-item"
+                className="info-layout-page__list-header-item"
               >
                 <FiClock /> Started <SortIcon field="startedAt" />
               </div>
               <div
                 onClick={() => handleSort('finishedAt')}
-                className="test-info-page__list-header-item"
+                className="info-layout-page__list-header-item"
               >
                 <FiCalendar /> Finished <SortIcon field="finishedAt" />
               </div>
               <div
                 onClick={() => handleSort('mark')}
-                className="test-info-page__list-header-item"
+                className="info-layout-page__list-header-item"
               >
                 <FiAward /> Score <SortIcon field="mark" />
               </div>
             </div>
 
             <Motion.div
-              className="test-info-page__list-body"
+              className="info-layout-page__list-body"
               variants={{
                 hidden: {},
                 visible: {
@@ -241,22 +238,22 @@ const TestInfoPage = () => {
               {sortedSessions.map((session) => (
                 <Motion.div
                   key={session.sessionId}
-                  className="test-info-page__list-row"
+                  className="info-layout-page__list-row"
                   variants={fadeUp}
                 >
-                  <div className="test-info-page__list-cell">
+                  <div className="info-layout-page__list-cell">
                     {session.studentGroup}
                   </div>
-                  <div className="test-info-page__list-cell">
+                  <div className="info-layout-page__list-cell">
                     {session.studentName}
                   </div>
-                  <div className="test-info-page__list-cell">
+                  <div className="info-layout-page__list-cell">
                     {session.startedAt}
                   </div>
-                  <div className="test-info-page__list-cell">
+                  <div className="info-layout-page__list-cell">
                     {session.finishedAt}
                   </div>
-                  <div className="test-info-page__list-cell">
+                  <div className="info-layout-page__list-cell">
                     {session.mark}
                   </div>
                 </Motion.div>
@@ -264,24 +261,24 @@ const TestInfoPage = () => {
             </Motion.div>
           </Motion.div>
         ) : (
-          <p className="test-info-page__no-sessions">
+          <p className="info-layout-page__no-sessions">
             No finished sessions available.
           </p>
         )}
       </Motion.div>
 
       <Motion.div
-        className="test-info-page__questions"
+        className="info-layout-page__questions"
         variants={fadeUp}
         custom={0.4}
       >
-        <div className="test-info-page__section-header">
-          <h2 className="test-info-page__sessions-title">Test Questions</h2>
+        <div className="info-layout-page__section-header">
+          <h2 className="info-layout-page__sessions-title">Test Questions</h2>
         </div>
 
         {test.questions && test.questions.length > 0 ? (
           <Motion.div
-            className="test-info-page__list-body"
+            className="info-layout-page__list-body"
             variants={{
               hidden: {},
               visible: { transition: { staggerChildren: 0.05 } },
@@ -319,10 +316,12 @@ const TestInfoPage = () => {
             })}
           </Motion.div>
         ) : (
-          <p className="test-info-page__no-sessions">No questions available.</p>
+          <p className="info-layout-page__no-sessions">
+            No questions available.
+          </p>
         )}
       </Motion.div>
-    </Motion.div>
+    </InfoLayout>
   );
 };
 

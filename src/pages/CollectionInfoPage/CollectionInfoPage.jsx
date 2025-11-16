@@ -1,4 +1,3 @@
-import './CollectionInfoPage.scss';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { ROUTES_NAV } from '@/constants/routes';
@@ -13,6 +12,7 @@ import DisplayMultipleChoice from '@/components/DisplayQuestions/DisplayMultiple
 import DisplayEssay from '@/components/DisplayQuestions/DisplayEssay';
 import DisplayMatchPairs from '@/components/DisplayQuestions/DisplayMatchPairs';
 import Loading from '@/components/Loading';
+import InfoLayout from '@/layout/InfoLayout';
 
 const CollectionInfoPage = () => {
   const { collectionId } = useParams();
@@ -38,59 +38,54 @@ const CollectionInfoPage = () => {
 
   if (!collection)
     return (
-      <div className="test-info-page">
-        <Loading className="test-info-page__loading" text="test info..." />
+      <div className="info-layout-page">
+        <Loading className="info-layout-page__loading" text="test info..." />
       </div>
     );
 
   return (
-    <Motion.div
-      className="test-info-page"
-      initial="hidden"
-      animate="visible"
-      variants={fadeUp}
-    >
+    <InfoLayout>
       <Motion.div
-        className="test-info-page__header"
+        className="info-layout-page__header"
         variants={fadeUp}
         custom={0.1}
       >
-        <div className="test-info-page__title-container">
+        <div className="info-layout-page__title-container">
           <Button
-            className="test-info-page__back"
+            className="info-layout-page__back"
             text={<FaArrowLeft size={21} />}
             onClick={() => navigate(-1)}
           />
-          <h1 className="test-info-page__title">{collection.name}</h1>
+          <h1 className="info-layout-page__title">{collection.name}</h1>
         </div>
       </Motion.div>
 
       <Motion.div
-        className="test-info-page__details"
+        className="info-layout-page__details"
         variants={fadeUp}
         custom={0.2}
       >
-        <h2 className="test-info-page__sessions-title">Collection Details</h2>
-        <p className="test-info-page__details-item">
-          <FiList className="test-info-page__icon" /> Questions count:{' '}
+        <h2 className="info-layout-page__sessions-title">Collection Details</h2>
+        <p className="info-layout-page__details-item">
+          <FiList className="info-layout-page__icon" /> Questions count:{' '}
           {collection.questionsCount}
         </p>
       </Motion.div>
 
       <Motion.div
-        className="test-info-page__questions"
+        className="info-layout-page__questions"
         variants={fadeUp}
         custom={0.4}
       >
-        <div className="test-info-page__section-header">
-          <h2 className="test-info-page__sessions-title">
+        <div className="info-layout-page__section-header">
+          <h2 className="info-layout-page__sessions-title">
             Collection Questions
           </h2>
         </div>
 
         {collection.questions && collection.questions.length > 0 ? (
           <Motion.div
-            className="test-info-page__list-body"
+            className="info-layout-page__list-body"
             variants={{
               hidden: {},
               visible: { transition: { staggerChildren: 0.05 } },
@@ -128,10 +123,12 @@ const CollectionInfoPage = () => {
             })}
           </Motion.div>
         ) : (
-          <p className="test-info-page__no-sessions">No questions available.</p>
+          <p className="info-layout-page__no-sessions">
+            No questions available.
+          </p>
         )}
       </Motion.div>
-    </Motion.div>
+    </InfoLayout>
   );
 };
 
