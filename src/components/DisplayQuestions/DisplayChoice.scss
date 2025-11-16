@@ -11,7 +11,6 @@
   font-weight: 600;
   padding: 4px 10px;
   border-radius: 8px;
-  text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
@@ -49,8 +48,7 @@
   font-size: 15px;
 
   &.selected {
-    background: var(--color-blue-light);
-    font-weight: 600;
+    font-weight: 700;
     color: var(--color-text-black);
   }
 
@@ -62,7 +60,7 @@
     border-radius: 50%;
 
     &.checked {
-      background: var(--color-blue-light);
+      background: rgba(59, 130, 246, 0.6);
     }
   }
 
