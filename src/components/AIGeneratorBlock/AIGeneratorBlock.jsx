@@ -1,9 +1,9 @@
 import './AIGeneratorBlock.scss';
 import { motion as Motion, AnimatePresence } from 'framer-motion';
-import { X } from 'lucide-react';
+import { X, Loader2 } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import FormInput from '@/components/FormInput';
-import React from 'react';
+import React, { useState } from 'react';
 import { useActions } from '@/hooks/useActions';
 
 const AIGeneratorBlock = ({
@@ -25,14 +25,20 @@ const AIGeneratorBlock = ({
   });
 
   const { generateQuestionsByAI } = useActions();
+  const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = async (data) => {
     try {
+      setIsLoading(true);
+
       const { questions } = await generateQuestionsByAI(data).unwrap();
       questions.forEach((q) => addQuestion(q));
+
       setShowAIGenerationBlock(false);
     } catch (error) {
       console.error('Error generating questions:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -45,7 +51,7 @@ const AIGeneratorBlock = ({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={() => setShowAIGenerationBlock(false)}
+            onClick={() => !isLoading && setShowAIGenerationBlock(false)}
           />
 
           <Motion.div
@@ -60,6 +66,7 @@ const AIGeneratorBlock = ({
               <button
                 type="button"
                 className="ai-modal__close"
+                disabled={isLoading}
                 onClick={() => setShowAIGenerationBlock(false)}
               >
                 <X size={22} />
@@ -93,6 +100,7 @@ const AIGeneratorBlock = ({
                   {...register('questionType', {
                     required: 'Question type is required',
                   })}
+                  disabled={isLoading}
                 >
                   <option value="single_choice">Single Choice</option>
                   <option value="multiple_choices">Multiple Choices</option>
@@ -133,8 +141,16 @@ const AIGeneratorBlock = ({
                 }}
               />
 
-              <button type="submit" className="btn-primary">
-                Generate Questions
+              <button
+                type="submit"
+                className="btn-primary"
+                disabled={isLoading}
+              >
+                {isLoading ? (
+                  <Loader2 className="spin" size={18} />
+                ) : (
+                  'Generate Questions'
+                )}
               </button>
             </form>
           </Motion.div>
