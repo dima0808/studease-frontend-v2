@@ -21,8 +21,10 @@ export const createCollection = createAsyncThunk(
     try {
       const { data } = await api.post('/admin/collections', collectionData);
       return data;
-    } catch {
-      return rejectWithValue('Failed to create collection');
+    } catch (error) {
+      return rejectWithValue(
+        error.response.data.message || 'Failed to create test',
+      );
     }
   },
 );

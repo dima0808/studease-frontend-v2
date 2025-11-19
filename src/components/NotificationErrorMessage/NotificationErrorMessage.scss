@@ -1,0 +1,21 @@
+.notification-error-message {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  background: var(--color-red-light);
+  color: var(--color-red-dark);
+
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  border: 1px solid var(--color-red-dark);
+
+  z-index: 9999;
+  pointer-events: none;
+}

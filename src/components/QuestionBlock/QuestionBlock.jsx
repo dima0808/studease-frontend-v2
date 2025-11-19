@@ -1,10 +1,11 @@
 import { useFieldArray } from 'react-hook-form';
 import FormInput from '@/components/FormInput';
 import { typeQuestion } from '@/utils/typeQuestion';
-import React from 'react';
+import { Trash2, Plus, XCircle, Check, ListChecks } from 'lucide-react';
+
+import './QuestionBlock.scss';
 
 const QuestionBlock = ({
-  q,
   index,
   control,
   register,
@@ -25,9 +26,21 @@ const QuestionBlock = ({
   });
 
   return (
-    <div style={{ border: '1px solid #ccc', padding: 10, marginBottom: 20 }}>
+    <div className="question">
+      <div className="question__header">
+        <h3 className="question__title">Question {index + 1}</h3>
+
+        <button
+          type="button"
+          className="question__remove"
+          onClick={() => remove(index)}
+        >
+          <Trash2 size={18} />
+        </button>
+      </div>
+
       <FormInput
-        label={`Question ${index + 1}`}
+        label="Question Text"
         name={`questions.${index}.content`}
         type="text"
         placeholder="Enter question text"
@@ -50,9 +63,12 @@ const QuestionBlock = ({
         }}
       />
 
-      <div>
-        <label>Type</label>
-        <select {...register(`questions.${index}.type`)}>
+      <div className="question__field">
+        <label className="question__label">Type</label>
+        <select
+          className="question__select"
+          {...register(`questions.${index}.type`)}
+        >
           <option value="single_choice">Single Choice</option>
           <option value="multiple_choices">Multiple Choices</option>
           <option value="essay">Essay</option>
@@ -60,21 +76,29 @@ const QuestionBlock = ({
         </select>
       </div>
 
-      {/* Answers */}
       {(type === 'single_choice' || type === 'multiple_choices') && (
-        <div>
-          <h4>Answers</h4>
-          {answerFields.length === 0 && <p>No answers added yet.</p>}
+        <div className="answers">
+          <div className="answers__header">
+            <h4>Answers</h4>
+          </div>
+
+          {answerFields.length === 0 && (
+            <p className="answers__empty">No answers added yet.</p>
+          )}
+
           {answerFields.map((a, aIndex) => (
-            <div key={a.id} style={{ marginBottom: 10 }}>
+            <div key={a.id} className="answer-item">
               <input
                 type="text"
                 placeholder="Answer text"
+                className="answer-item__text"
                 {...register(`questions.${index}.answers.${aIndex}.content`)}
               />
+
               {type === 'multiple_choices' && (
                 <input
                   type="checkbox"
+                  className="answer-item__check"
                   {...register(
                     `questions.${index}.answers.${aIndex}.isCorrect`,
                     {
@@ -83,9 +107,11 @@ const QuestionBlock = ({
                   )}
                 />
               )}
+
               {type === 'single_choice' && (
                 <input
                   type="radio"
+                  className="answer-item__radio"
                   checked={watch(
                     `questions.${index}.answers.${aIndex}.isCorrect`,
                   )}
@@ -99,61 +125,73 @@ const QuestionBlock = ({
                   }}
                 />
               )}
-              <button type="button" onClick={() => removeAnswer(aIndex)}>
-                Remove
+
+              <button
+                type="button"
+                className="answer-item__remove"
+                onClick={() => removeAnswer(aIndex)}
+              >
+                <XCircle size={18} />
               </button>
             </div>
           ))}
+
           <button
             type="button"
+            className="answers__add"
             onClick={() => appendAnswer(typeQuestion('default'))}
           >
-            Add Answer
+            <Plus size={18} /> Add Answer
           </button>
         </div>
       )}
 
       {type === 'essay' && (
-        <p>Essay type – no predefined answers, student writes text.</p>
+        <p className="question__note">
+          Essay type – student writes a text response.
+        </p>
       )}
 
       {type === 'matching' && (
-        <div>
+        <div className="matching">
           <h4>Matching Pairs</h4>
+
           {answerFields.map((a, aIndex) => (
-            <div
-              key={a.id}
-              style={{ display: 'flex', gap: 10, marginBottom: 10 }}
-            >
+            <div key={a.id} className="matching__row">
               <input
                 type="text"
-                placeholder="Left option"
+                placeholder="Left"
+                className="matching__input"
                 {...register(`questions.${index}.answers.${aIndex}.leftOption`)}
               />
               <input
                 type="text"
-                placeholder="Right option"
+                placeholder="Right"
+                className="matching__input"
                 {...register(
                   `questions.${index}.answers.${aIndex}.rightOption`,
                 )}
               />
-              <button type="button" onClick={() => removeAnswer(aIndex)}>
-                Remove
+
+              <button
+                type="button"
+                className="matching__remove"
+                onClick={() => removeAnswer(aIndex)}
+              >
+                <XCircle size={18} />
               </button>
             </div>
           ))}
+
           <button
             type="button"
+            className="matching__add"
             onClick={() => appendAnswer(typeQuestion('matching'))}
           >
-            Add Pair
+            <Plus size={18} /> Add Pair
           </button>
         </div>
       )}
-
-      <button type="button" onClick={() => remove(index)}>
-        Remove Question
-      </button>
     </div>
   );
 };

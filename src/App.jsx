@@ -7,11 +7,10 @@ import TestsPage from '@/pages/TestsPage';
 import { ROUTES } from '@/constants/routes';
 import FaqPage from '@/pages/FaqPage';
 import CollectionsPage from '@/pages/CollectionsPage';
-import CreateTestForm from '@/components/CreateTestForm';
-import CreateCollectionForm from '@/components/CreateCollectionForm/CreateCollectionForm';
 import TestInfoPage from '@/pages/TestInfoPage';
 import TestSessionPage from '@/pages/TestSessionPage';
 import CollectionInfoPage from '@/pages/CollectionInfoPage';
+import CreatePage from '@/pages/CreatePage';
 
 function App() {
   return (
@@ -36,11 +35,11 @@ function App() {
       />
       <Route
         path={`${ROUTES.CREATE_TEST}/:cloneId?`}
-        element={<CreateTestForm />}
+        element={<CreatePage />}
       />
       <Route
-        path={ROUTES.CREATE_COLLECTION}
-        element={<CreateCollectionForm />}
+        path={`${ROUTES.CREATE_COLLECTION}/:cloneId?`}
+        element={<CreatePage />}
       />
       <Route path={ROUTES.FAQ} element={<FaqPage />} />
     </Routes>

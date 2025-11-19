@@ -1,0 +1,137 @@
+.sidebar-create {
+  --border: 1px solid #cecece;
+
+  position: sticky;
+  top: 0;
+  max-width: 333px;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #f8f8f8;
+  outline: var(--border);
+  padding: 72px 26px 67px 26px;
+  border-radius: 0 var(--border-radius-large) var(--border-radius-large) 0;
+  transition:
+    max-width 0.3s ease,
+    padding 0.3s ease;
+
+  &__title {
+    text-align: center;
+    text-wrap: nowrap;
+    font-size: 48px;
+    font-weight: 700;
+    background: linear-gradient(270deg, #2d96ff 4.4%, #00e2a6 92.9%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: opacity 0.3s ease;
+  }
+
+  &__nav {
+    margin-bottom: auto;
+
+    &-main {
+      margin-top: 39px;
+      padding-block: 29px;
+      border-top: var(--border);
+      border-bottom: var(--border);
+      display: flex;
+      flex-direction: column;
+      row-gap: 15px;
+    }
+  }
+
+  &__button {
+    border: none;
+    background-color: transparent;
+    display: inline-flex;
+    align-items: center;
+    column-gap: 10px;
+    padding: 18px 21px;
+    border-radius: var(--border-radius-large);
+    font-weight: 600;
+    transition:
+      background-color 0.3s ease,
+      color 0.3s ease;
+    color: var(--color-text-black);
+
+    &--back {
+      width: 100%;
+    }
+
+    &:active {
+      scale: (0.98);
+    }
+
+    @include hover {
+      background-color: #eceff5;
+      color: var(--color-blue);
+    }
+
+    &__icon {
+      width: 20px;
+      height: 20px;
+    }
+
+    &--primary {
+      width: 100%;
+      margin-top: 10px;
+      background: #2d96ff;
+      color: #fff;
+      padding: 12px 14px;
+      border-radius: 8px;
+      justify-content: center;
+    }
+  }
+
+  &__hint {
+    color: #4a4a4a;
+    font-size: 15px;
+    margin-bottom: 20px;
+  }
+
+  &__toggle {
+    position: absolute;
+    top: -55px;
+    right: 0;
+    width: 40px;
+    height: 40px;
+    background-color: var(--color-white);
+    border: 1px solid #cecece;
+    border-radius: var(--border-radius-small);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #eceff5;
+    }
+
+    &--right {
+      transform: rotate(180deg);
+    }
+  }
+
+  &--collapsed {
+    max-width: 80px;
+    padding: 40px 10px;
+
+    .sidebar-create__button--primary {
+      background-color: transparent;
+      color: var(--color-text-black);
+
+      @include hover {
+        background-color: #eceff5;
+        color: var(--color-blue);
+      }
+    }
+
+    .sidebar-create__title {
+      opacity: 0;
+      pointer-events: none;
+    }
+  }
+}

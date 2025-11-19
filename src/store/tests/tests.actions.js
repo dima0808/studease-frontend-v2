@@ -99,8 +99,10 @@ export const createTest = createAsyncThunk(
     try {
       const { data } = await api.post('/admin/tests', testData);
       return data;
-    } catch {
-      return rejectWithValue('Failed to create test');
+    } catch (error) {
+      return rejectWithValue(
+        error.response.data.message || 'Failed to create test',
+      );
     }
   },
 );
