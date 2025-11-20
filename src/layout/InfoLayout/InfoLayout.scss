@@ -78,7 +78,7 @@
 
   &__list-header {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     background: #f9fafb;
     font-weight: 600;
     color: #333;
@@ -108,7 +108,7 @@
 
   &__list-row {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     padding: 10px 16px;
     border-bottom: 1px solid #eee;
     transition: background 0.2s ease;
@@ -158,5 +158,16 @@
   &:focus {
     border-color: var(--color-purple);
     outline: none;
+  }
+}
+
+.info-layout-page__list-cell--icon {
+  display: flex;
+  align-items: center;
+  color: var(--color-text-black);
+  transition: color 0.3s ease;
+
+  @include hover {
+    color: var(--color-blue);
   }
 }

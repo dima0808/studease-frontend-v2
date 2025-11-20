@@ -11,6 +11,7 @@ import TestInfoPage from '@/pages/TestInfoPage';
 import TestSessionPage from '@/pages/TestSessionPage';
 import CollectionInfoPage from '@/pages/CollectionInfoPage';
 import CreatePage from '@/pages/CreatePage';
+import SessionDetailsPage from '@/pages/SessionDetailsPage';
 
 function App() {
   return (
@@ -42,6 +43,10 @@ function App() {
         element={<CreatePage />}
       />
       <Route path={ROUTES.FAQ} element={<FaqPage />} />
+      <Route
+        path={`${ROUTES.SESSION_DETAILS}/:testId`}
+        element={<SessionDetailsPage />}
+      />
     </Routes>
   );
 }

@@ -7,6 +7,7 @@ export const ROUTES = {
   FAQ: 'faq',
   CREATE_TEST: 'create-test',
   CREATE_COLLECTION: 'create-collection',
+  SESSION_DETAILS: 'session-details',
 };
 export const ROUTES_NAV = {
   COURSEBOARDS: {

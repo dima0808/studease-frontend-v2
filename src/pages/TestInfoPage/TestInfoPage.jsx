@@ -9,7 +9,10 @@ import {
   FiUser,
   FiChevronUp,
   FiChevronDown,
+  FiInfo,
 } from 'react-icons/fi';
+
+import { Eye } from 'lucide-react';
 import { FaArrowLeft } from 'react-icons/fa';
 import { motion as Motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
@@ -44,7 +47,6 @@ const TestInfoPage = () => {
             ...testData,
             sessions: finishedSessions.sessions || [],
           };
-          console.log(detailedTestData);
           setTest(detailedTestData);
         } catch (error) {
           console.error('Error fetching test data:', error);
@@ -224,6 +226,9 @@ const TestInfoPage = () => {
               >
                 <FiAward /> Score <SortIcon field="mark" />
               </div>
+              <div className="info-layout-page__list-header-item">
+                <FiInfo /> Details
+              </div>
             </div>
 
             <Motion.div
@@ -255,6 +260,17 @@ const TestInfoPage = () => {
                   </div>
                   <div className="info-layout-page__list-cell">
                     {session.mark}
+                  </div>
+                  <div
+                    className="info-layout-page__list-cell info-layout-page__list-cell--icon"
+                    onClick={() =>
+                      navigate(
+                        `/session-details/${testId}?credentials=${session.studentGroup}:${session.studentName}`,
+                      )
+                    }
+                    style={{ cursor: 'pointer' }}
+                  >
+                    <Eye size={20} />
                   </div>
                 </Motion.div>
               ))}
