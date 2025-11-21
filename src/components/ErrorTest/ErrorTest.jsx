@@ -1,9 +1,11 @@
 import { motion as Motion } from 'framer-motion';
 import './ErrorTest.scss';
 import Button from '@/components/Button';
+import classNames from "classnames";
 
 const ErrorBlock = ({
   message,
+  className,
   image,
   onReload,
   buttonText,
@@ -11,7 +13,7 @@ const ErrorBlock = ({
 }) => {
   return (
     <Motion.div
-      className="error-test"
+      className={classNames("error-test", className)}
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
