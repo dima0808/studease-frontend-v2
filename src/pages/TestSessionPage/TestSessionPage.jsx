@@ -39,7 +39,7 @@ const TestSessionPage = () => {
           }}
           message="Sorry, we couldn't find your test. Please check the link or try again later."
           image={image}
-          buttonText="Go to Home"
+          buttonText="Go to home"
         />
       )}
       {!isLoading && !error && (

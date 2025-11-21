@@ -100,7 +100,7 @@ const TestQuestions = () => {
         message={`${errorStartTest ? `${errorStartTest}.` : 'An unexpected error occurred while starting the test.'} Please reload the page to try again.`}
         showErrorText={false}
         image={image}
-        buttonText="Reload Page"
+        buttonText="Reload page"
       />
     );
   }
