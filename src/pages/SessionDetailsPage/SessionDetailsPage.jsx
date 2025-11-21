@@ -23,11 +23,9 @@ const SessionDetailsPage = () => {
   const studentGroup = searchParams.get('studentGroup');
   const navigate = useNavigate();
   const { getFinishedSessionsByTestId } = useActions();
-  const [sessionDetails, setSessionDetails] = useState('info');
+  const [sessionDetails, setSessionDetails] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-
-  const normalized = normalizeTestSession(sessionDetails);
 
   useEffect(() => {
     if (!testId || !studentName || !studentGroup) {
@@ -88,6 +86,8 @@ const SessionDetailsPage = () => {
       </InfoLayout>
     );
 
+  const normalized = normalizeTestSession(sessionDetails.sessions[0]);
+
   return (
     <InfoLayout>
       <Motion.div
@@ -102,29 +102,33 @@ const SessionDetailsPage = () => {
             onClick={() => navigate(-1)}
           />
           <h1 className="info-layout-page__title">
-            Session details for {studentName} ({studentGroup})
+            Answers by {studentName} ({studentGroup})
           </h1>
         </div>
-        <div className="test-finished__questions">
-          <div className="test-finished__questions">
-            {normalized.map((q, index) => (
-              <div key={q.id} className="test-finished__question-block">
-                <p className="test-finished__q-index">Question {index + 1}</p>
+      </Motion.div>
+      <Motion.div
+        variants={fadeUp}
+        custom={0.4}
+        className="info-layout-page__questions"
+      >
+        <div>
+          {normalized.map((q, index) => (
+            <div key={q.id} className="test-finished__question-block">
+              <p className="test-finished__q-index">Question {index + 1}</p>
 
-                {q.type === 'multiple_choices' && (
-                  <DisplayMultipleChoice question={q} />
-                )}
+              {q.type === 'multiple_choices' && (
+                <DisplayMultipleChoice question={q} />
+              )}
 
-                {q.type === 'single_choice' && (
-                  <DisplaySingleChoice question={q} />
-                )}
+              {q.type === 'single_choice' && (
+                <DisplaySingleChoice question={q} />
+              )}
 
-                {q.type === 'essay' && <DisplayEssay question={q} />}
+              {q.type === 'essay' && <DisplayEssay question={q} />}
 
-                {q.type === 'matching' && <DisplayMatchPairs question={q} />}
-              </div>
-            ))}
-          </div>
+              {q.type === 'matching' && <DisplayMatchPairs question={q} />}
+            </div>
+          ))}
         </div>
       </Motion.div>
     </InfoLayout>

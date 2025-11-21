@@ -228,7 +228,7 @@ const TestInfoPage = () => {
                 <FiAward /> Score <SortIcon field="mark" />
               </div>
               <div className="info-layout-page__list-header-item">
-                <FiInfo /> Details
+                <FiInfo /> View answers
               </div>
             </div>
 
