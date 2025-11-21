@@ -62,14 +62,21 @@ export const getSamplesByTestId = createAsyncThunk(
 
 export const getFinishedSessionsByTestId = createAsyncThunk(
   'tests/getFinishedSessionsByTestId',
-  async (testId, { rejectWithValue }) => {
+  async ({ testId, studentName, studentGroup }, { rejectWithValue }) => {
     try {
       const { data } = await api.get(
         '/admin/tests/' + testId + '/finishedSessions',
+        {
+          params: {
+            studentName,
+            studentGroup
+          }
+        }
       );
       return data;
-    } catch {
-      return rejectWithValue('Failed to fetch finished sessions');
+    } catch (error) {
+      console.log(error.response.data.message);
+      return rejectWithValue(error.response.data.message || 'Failed to load session details');
     }
   },
 );
