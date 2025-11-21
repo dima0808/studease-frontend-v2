@@ -4,6 +4,7 @@ const initialState = {
   viewMode: localStorage.getItem('filter') || 'grid',
   search: '',
   sortBy: 'all',
+  isCollapsed: localStorage.getItem('isCollapsed') === 'true' || false,
 };
 
 const filterSlice = createSlice({
@@ -19,6 +20,10 @@ const filterSlice = createSlice({
     },
     setSortBy(state, action) {
       state.sortBy = action.payload;
+    },
+    setIsCollapsed(state, action) {
+      state.isCollapsed = action.payload;
+      localStorage.setItem('isCollapsed', state.isCollapsed);
     },
   },
 });

@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { motion as Motion, AnimatePresence } from 'framer-motion';
 import UserInfo from '@/components/UserInfo';
 import ToggleButton from '@/layout/Sidebar/ToggleButton';
@@ -6,9 +5,12 @@ import Navigation from './Navigation';
 import SignOutButton from '@/layout/Sidebar/SignOutButton';
 import classNames from 'classnames';
 import './Sidebar.scss';
+import { useSelector } from 'react-redux';
+import { useActions } from '@/hooks/useActions';
 
 const Sidebar = () => {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const { isCollapsed } = useSelector((state) => state.filter);
+  const { setIsCollapsed } = useActions();
 
   return (
     <header

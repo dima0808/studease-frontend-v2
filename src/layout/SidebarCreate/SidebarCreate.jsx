@@ -11,6 +11,8 @@ import {
   CheckCircle,
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useActions } from '@/hooks/useActions';
 
 const SidebarCreate = ({
   addQuestion,
@@ -19,7 +21,8 @@ const SidebarCreate = ({
   onCreate,
   isTest,
 }) => {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const { isCollapsed } = useSelector((state) => state.filter);
+  const { setIsCollapsed } = useActions();
 
   const navigate = useNavigate();
 
@@ -34,7 +37,7 @@ const SidebarCreate = ({
       <nav className="sidebar-create__nav">
         <div className="sidebar-create__nav-main">
           <button
-            title="Add question"
+            title={isCollapsed && 'Add question'}
             className="sidebar-create__button"
             onClick={addQuestion}
           >
@@ -53,7 +56,7 @@ const SidebarCreate = ({
 
           {isTest && (
             <button
-              title="Add collection"
+              title={isCollapsed && 'Add collection'}
               className="sidebar-create__button"
               onClick={addCollection}
             >
@@ -72,7 +75,7 @@ const SidebarCreate = ({
           )}
 
           <button
-            title="AI generate"
+            title={isCollapsed && 'AI Generate'}
             className="sidebar-create__button"
             onClick={showAIGenerationBlock}
           >
@@ -124,7 +127,7 @@ const SidebarCreate = ({
         </button>
         }*/}
         <button
-          title="Back"
+          title={isCollapsed && 'Back'}
           className="sidebar-create__button sidebar-create__button--back"
           onClick={() => navigate(-1)}
         >

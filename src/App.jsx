@@ -12,7 +12,7 @@ import TestSessionPage from '@/pages/TestSessionPage';
 import CollectionInfoPage from '@/pages/CollectionInfoPage';
 import CreatePage from '@/pages/CreatePage';
 import SessionDetailsPage from '@/pages/SessionDetailsPage';
-import CourseboardsPage from "@/pages/CourseboardsPage";
+import CourseboardsPage from '@/pages/CourseboardsPage';
 
 function App() {
   return (
@@ -25,10 +25,7 @@ function App() {
       <Route path={ROUTES.DEFAULT} element={<MainLayout />}>
         <Route path={ROUTES.TESTS} element={<TestsPage />} />
         <Route path={ROUTES.COLLECTIONS} element={<CollectionsPage />} />
-        <Route
-          path={ROUTES.COURSEBOARDS}
-          element={<CourseboardsPage />}
-        />
+        <Route path={ROUTES.COURSEBOARDS} element={<CourseboardsPage />} />
       </Route>
       <Route path={`${ROUTES.TESTS}/:testId`} element={<TestInfoPage />} />
       <Route

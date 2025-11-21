@@ -11,7 +11,7 @@ const SignOutButton = (props) => {
     <Link
       to="/"
       onClick={() => logout()}
-      title="Sign out"
+      title={isCollapsed && 'Sign out'}
       className="sidebar__button"
       type="button"
     >

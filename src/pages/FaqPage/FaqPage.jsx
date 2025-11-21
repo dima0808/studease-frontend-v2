@@ -1,11 +1,11 @@
 import React from 'react';
 import './FaqPage.scss';
 import { faqQuestion } from '@/pages/FaqPage/faqQuestions.data';
-import { fadeUp } from "@/constants/motionVariants";
-import Button from "@/components/Button";
-import { FaArrowLeft } from "react-icons/fa";
-import { motion as Motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
+import { fadeUp } from '@/constants/motionVariants';
+import Button from '@/components/Button';
+import { FaArrowLeft } from 'react-icons/fa';
+import { motion as Motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 const Faq = () => {
   const navigate = useNavigate();

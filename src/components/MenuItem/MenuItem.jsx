@@ -10,6 +10,7 @@ const MenuItem = (props) => {
 
   return (
     <NavLink
+      title={isCollapsed && title}
       to={href}
       className={({ isActive }) =>
         classNames('menu-item', className, { 'menu-item--active': isActive })

@@ -24,7 +24,7 @@ export const ROUTES_NAV = {
     href: '/courseboards',
     title: 'Courseboards',
     iconName: 'DashboardIcon',
-  }
+  },
 };
 
 export const ROUTES_NAV_SECONDARY = {
