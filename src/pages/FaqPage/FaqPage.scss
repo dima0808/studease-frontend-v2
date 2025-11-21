@@ -1,19 +1,12 @@
 .faq-page {
-  padding: 40px;
   color: #333;
   background-color: #fff;
   max-width: 1000px;
   margin: 0 auto;
   border-radius: 8px;
 
-  &__title {
-    font-size: 2rem;
-    font-weight: 600;
-    margin-bottom: 30px;
-    color: #00c1a6;
-  }
-
   &__list {
+    padding-block: 60px;
     display: grid;
     grid-template-columns: 1fr;
     gap: 20px;
