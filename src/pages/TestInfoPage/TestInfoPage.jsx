@@ -17,7 +17,7 @@ import { FaArrowLeft } from 'react-icons/fa';
 import { motion as Motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { useActions } from '@/hooks/useActions';
-import { ROUTES_NAV } from '@/constants/routes';
+import { ROUTES, ROUTES_NAV } from '@/constants/routes';
 import { FRONTEND_PORT, HTTP_PROTOCOL, IP } from '@/constants/config';
 import Button from '@/components/Button';
 import Loading from '@/components/Loading';
@@ -40,8 +40,9 @@ const TestInfoPage = () => {
       (async () => {
         try {
           const testData = await getFullTestById(testId).unwrap();
-          const finishedSessions =
-            await getFinishedSessionsByTestId(testId).unwrap();
+          const finishedSessions = await getFinishedSessionsByTestId({
+            testId,
+          }).unwrap();
 
           const detailedTestData = {
             ...testData,
@@ -265,7 +266,7 @@ const TestInfoPage = () => {
                     className="info-layout-page__list-cell info-layout-page__list-cell--icon"
                     onClick={() =>
                       navigate(
-                        `/session-details/${testId}?credentials=${session.studentGroup}:${session.studentName}`,
+                        `/${ROUTES.SESSION_DETAILS}/${testId}?studentGroup=${session.studentGroup}&studentName=${session.studentName}`,
                       )
                     }
                     style={{ cursor: 'pointer' }}

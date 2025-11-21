@@ -69,14 +69,16 @@ export const getFinishedSessionsByTestId = createAsyncThunk(
         {
           params: {
             studentName,
-            studentGroup
-          }
-        }
+            studentGroup,
+          },
+        },
       );
       return data;
     } catch (error) {
       console.log(error.response.data.message);
-      return rejectWithValue(error.response.data.message || 'Failed to load session details');
+      return rejectWithValue(
+        error.response.data.message || 'Failed to load session details',
+      );
     }
   },
 );

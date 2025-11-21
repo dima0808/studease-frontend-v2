@@ -1,2 +1,6 @@
 .session-details-page {
+  &__error {
+    height: 100vh;
+    @include flex-center();
+  }
 }
