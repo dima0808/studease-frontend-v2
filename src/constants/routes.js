@@ -10,11 +10,6 @@ export const ROUTES = {
   SESSION_DETAILS: 'session-details',
 };
 export const ROUTES_NAV = {
-  COURSEBOARDS: {
-    href: '/courseboards',
-    title: 'Courseboards',
-    iconName: 'DashboardIcon',
-  },
   TESTS: {
     href: '/tests',
     title: 'Tests',
@@ -25,6 +20,11 @@ export const ROUTES_NAV = {
     title: 'Collections',
     iconName: 'CollectionIcon',
   },
+  COURSEBOARDS: {
+    href: '/courseboards',
+    title: 'Courseboards',
+    iconName: 'DashboardIcon',
+  }
 };
 
 export const ROUTES_NAV_SECONDARY = {
