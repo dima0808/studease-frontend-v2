@@ -24,4 +24,9 @@ export default defineConfig({
   server: {
     host: true,
   },
+  preview: {
+    allowedHosts: ['frontend', 'localhost', '127.0.0.1', 'studease.tech', 'www.studease.tech'],
+    host: true,
+    port: 3000
+  }
 });
