@@ -7,9 +7,11 @@ import classNames from 'classnames';
 import './Sidebar.scss';
 import { useSelector } from 'react-redux';
 import { useActions } from '@/hooks/useActions';
+import { AlertCircle } from 'lucide-react';
 
 const Sidebar = () => {
   const { isCollapsed } = useSelector((state) => state.filter);
+  const { error } = useSelector((state) => state.auth);
   const { setIsCollapsed } = useActions();
 
   return (
@@ -31,6 +33,13 @@ const Sidebar = () => {
           >
             <UserInfo />
           </Motion.div>
+        )}
+        {error && isCollapsed && (
+          <div className="user-info__error">
+            <div className="user-info__error-header">
+              <AlertCircle className="error-icon" size={20} />
+            </div>
+          </div>
         )}
       </AnimatePresence>
 

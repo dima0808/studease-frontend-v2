@@ -15,6 +15,7 @@ import DisplayMultipleChoice from '@/components/DisplayQuestions/DisplayMultiple
 import DisplaySingleChoice from '@/components/DisplayQuestions/DisplaySingleChoice';
 import DisplayEssay from '@/components/DisplayQuestions/DisplayEssay';
 import DisplayMatchPairs from '@/components/DisplayQuestions/DisplayMatchPairs';
+import { ROUTES } from "@/constants/routes";
 
 const SessionDetailsPage = () => {
   const { testId } = useParams();
@@ -26,6 +27,10 @@ const SessionDetailsPage = () => {
   const [sessionDetails, setSessionDetails] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  useEffect(() => {
+    document.title = `Answers - ${studentName || ''}`;
+  }, [studentName])
 
   useEffect(() => {
     if (!testId || !studentName || !studentGroup) {
@@ -99,7 +104,7 @@ const SessionDetailsPage = () => {
           <Button
             className="info-layout-page__back"
             text={<FaArrowLeft size={21} />}
-            onClick={() => navigate(-1)}
+            onClick={() => navigate(`/${ROUTES.TESTS}/${testId}`)}
           />
           <h1 className="info-layout-page__title">
             Answers by {studentName} ({studentGroup})

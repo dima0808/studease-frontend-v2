@@ -31,8 +31,10 @@ export const getCurrentUser = createAsyncThunk(
     try {
       const { data } = await api.get('/auth/current');
       return data;
-    } catch {
-      return rejectWithValue('Failed to fetch user data.');
+    } catch (error) {
+      return rejectWithValue(
+        error.response.data.message || 'Failed to fetch user data.',
+      );
     }
   },
 );
