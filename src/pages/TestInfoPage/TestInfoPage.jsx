@@ -12,6 +12,8 @@ import {
   FiInfo,
 } from 'react-icons/fi';
 
+import { Link } from 'react-router-dom';
+
 import { Eye } from 'lucide-react';
 import { FaArrowLeft } from 'react-icons/fa';
 import { motion as Motion } from 'framer-motion';
@@ -34,6 +36,10 @@ const TestInfoPage = () => {
   const [copied, setCopied] = useState(false);
   const { getFullTestById, getFinishedSessionsByTestId } = useActions();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    document.title = `Test Info - ${test ? test.name : ''}`;
+  }, [test]);
 
   useEffect(() => {
     if (testId) {
@@ -83,9 +89,15 @@ const TestInfoPage = () => {
 
   const [searchQuery, setSearchQuery] = useState('');
 
-  const filteredSessions = (test?.sessions || []).filter((session) =>
-    session.studentName.toLowerCase().includes(searchQuery.toLowerCase()),
-  );
+  const filteredSessions = (test?.sessions || []).filter((session) => {
+    const query = searchQuery.toLowerCase();
+
+    return (
+      session.studentName.toLowerCase().includes(query) ||
+      session.studentGroup.toLowerCase().includes(query)
+    );
+  });
+
 
   const sortedSessions = [...filteredSessions].sort((a, b) => {
     if (!sortField) return 0;
@@ -124,7 +136,7 @@ const TestInfoPage = () => {
           <Button
             className="info-layout-page__back"
             text={<FaArrowLeft size={21} />}
-            onClick={() => navigate(-1)}
+            onClick={() => navigate(`/${ROUTES.TESTS}`)}
           />
           <h1 className="info-layout-page__title">{test.name}</h1>
         </div>
@@ -184,7 +196,7 @@ const TestInfoPage = () => {
           </h2>
           <input
             type="text"
-            placeholder="Search by student name..."
+            placeholder="Search by student name or group..."
             className="info-layout-page__search-input"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
@@ -262,17 +274,13 @@ const TestInfoPage = () => {
                   <div className="info-layout-page__list-cell">
                     {session.mark}
                   </div>
-                  <div
+                  <Link
+                    to={`/${ROUTES.SESSION_DETAILS}/${testId}?studentGroup=${session.studentGroup}&studentName=${session.studentName}`}
+                    target="_blank"
                     className="info-layout-page__list-cell info-layout-page__list-cell--icon"
-                    onClick={() =>
-                      navigate(
-                        `/${ROUTES.SESSION_DETAILS}/${testId}?studentGroup=${session.studentGroup}&studentName=${session.studentName}`,
-                      )
-                    }
-                    style={{ cursor: 'pointer' }}
                   >
                     <Eye size={20} />
-                  </div>
+                  </Link>
                 </Motion.div>
               ))}
             </Motion.div>
