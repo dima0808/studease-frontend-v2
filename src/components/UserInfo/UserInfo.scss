@@ -8,6 +8,51 @@
   border-radius: var(--border-radius-large);
   margin-bottom: 20px;
 
+  &__error {
+    display: grid;
+    align-items: center;
+    gap: 10px;
+
+    padding: 15px;
+    border: 1px solid #ffcccc;
+    border-radius: var(--border-radius-large);
+    background: #fff5f5;
+    color: #d9534f;
+    text-align: center;
+
+    &-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .error-icon {
+      color: #d9534f;
+    }
+
+    .error-text {
+      margin: 0;
+      font-size: 14px;
+      font-weight: 500;
+      color: #c0392b;
+      text-wrap: nowrap;
+    }
+  }
+
+  &__error-link {
+    font-size: 14px;
+    color: #c0392b;
+    text-decoration: underline;
+    cursor: pointer;
+    display: block;
+    text-align: center;
+
+    @include hover {
+      opacity: 0.7;
+    }
+  }
+
   &__img {
     padding: 13px;
     background-color: #f8f8f8;

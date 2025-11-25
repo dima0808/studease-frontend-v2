@@ -33,21 +33,28 @@ const authSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getCurrentUser.fulfilled, (state, action) => {
+        state.isLoading = false;
         state.user = action.payload;
       })
-      .addMatcher(isPending(loginUser, registerUser), (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
+      .addMatcher(
+        isPending(loginUser, registerUser, getCurrentUser),
+        (state) => {
+          state.isLoading = true;
+          state.error = null;
+        },
+      )
       .addMatcher(isFulfilled(loginUser, registerUser), (state, action) => {
         state.isLoading = false;
         state.error = null;
-        Cookies.set('token', action.payload, { expires: 1 / 24 });
+        Cookies.set('token', action.payload, { expires: 1 });
       })
-      .addMatcher(isRejected(loginUser, registerUser), (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload;
-      });
+      .addMatcher(
+        isRejected(loginUser, registerUser, getCurrentUser),
+        (state, action) => {
+          state.isLoading = false;
+          state.error = action.payload;
+        },
+      );
   },
 });
 
