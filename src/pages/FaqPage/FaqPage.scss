@@ -5,11 +5,19 @@
   margin: 0 auto;
   border-radius: 8px;
 
+  @include mobile {
+    padding-inline: 10px;
+  }
+
   &__list {
     padding-block: 60px;
     display: grid;
     grid-template-columns: 1fr;
     gap: 20px;
+
+    @include mobile {
+      padding-block: 40px;
+    }
   }
 
   &__item {
@@ -24,6 +32,10 @@
     &:hover {
       transform: translateY(-3px);
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    @include mobile {
+      padding: 15px;
     }
   }
 

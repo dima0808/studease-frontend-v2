@@ -25,6 +25,10 @@
     font-size: 40px;
     color: #292929;
     font-weight: 700;
+
+    @include mobile {
+      font-size: 28px;
+    }
   }
 
   &__back {
