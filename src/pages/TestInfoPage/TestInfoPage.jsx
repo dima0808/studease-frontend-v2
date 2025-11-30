@@ -121,7 +121,7 @@ const TestInfoPage = () => {
   if (!test)
     return (
       <div className="info-layout-page">
-        <Loading className="info-layout-page__loading" text="test info..." />
+        <Loading className="info-layout-page__loading" text="test info" />
       </div>
     );
 

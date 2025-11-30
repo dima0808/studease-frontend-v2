@@ -2,6 +2,7 @@
   position: fixed;
   bottom: 20px;
   right: 20px;
+  max-width: 800px;
   background: var(--color-green-light);
   color: var(--color-green-dark);
   padding: 12px 20px;
@@ -10,5 +11,10 @@
   font-weight: 500;
   border: 1px solid var(--color-green-dark);
   z-index: 9999;
-  pointer-events: none;
+
+  &--error {
+    background: var(--color-red-light);
+    color: var(--color-red-dark);
+    border: 1px solid var(--color-red-dark);
+  }
 }

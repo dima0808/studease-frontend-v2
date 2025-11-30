@@ -139,8 +139,10 @@ export const deleteTestById = createAsyncThunk(
     try {
       await api.delete('/admin/tests/' + testId);
       return testId;
-    } catch {
-      return rejectWithValue('Failed to delete test');
+    } catch (error) {
+      return rejectWithValue(
+        error.response.data.message || 'Failed to delete test',
+      );
     }
   },
 );
@@ -155,8 +157,10 @@ export const deleteTestsByIds = createAsyncThunk(
         },
       });
       return tests;
-    } catch {
-      return rejectWithValue('Failed to delete tests');
+    } catch (error) {
+      return rejectWithValue(
+        error.response.data.message || 'Failed to delete test',
+      );
     }
   },
 );

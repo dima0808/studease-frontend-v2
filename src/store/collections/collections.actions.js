@@ -82,8 +82,10 @@ export const deleteCollectionById = createAsyncThunk(
     try {
       await api.delete('/admin/collections/' + collectionId);
       return collectionId;
-    } catch {
-      return rejectWithValue('Failed to delete collection');
+    } catch (error) {
+      return rejectWithValue(
+        error.response.data.message || 'Failed to delete collection',
+      );
     }
   },
 );
@@ -98,8 +100,10 @@ export const deleteCollectionsByIds = createAsyncThunk(
         },
       });
       return collections;
-    } catch {
-      return rejectWithValue('Failed to delete collections');
+    } catch (error) {
+      return rejectWithValue(
+        error.response.data.message || 'Failed to delete collection',
+      );
     }
   },
 );
