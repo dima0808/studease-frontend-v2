@@ -1,7 +1,10 @@
 import { motion as Motion, AnimatePresence } from 'framer-motion';
 import './NotificationMessage.scss';
+import classNames from "classnames";
 
-const NotificationMessage = ({ message, onClose, duration = 3000 }) => {
+const NotificationMessage = (props) => {
+  const { message, onClose, duration = 3000, type = null } = props;
+
   setTimeout(() => onClose(), duration);
 
   return (
@@ -13,7 +16,9 @@ const NotificationMessage = ({ message, onClose, duration = 3000 }) => {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 20 }}
           transition={{ duration: 0.4, ease: 'easeInOut' }}
-          className="notification-message"
+          className={classNames("notification-message", {
+            "notification-message--error": type === "error",
+          })}
         >
           {message}
         </Motion.div>

@@ -10,12 +10,14 @@ import * as authAsyncActions from '@/store/auth/auth.actions';
 import * as testSessionAsyncActions from '@/store/testSession/testSession.actions';
 import { authActions } from '@/store/auth/auth.slice';
 import { testSessionActions } from '@/store/testSession/testSession.slice';
+import { collectionsActions } from "@/store/collections/collections.slice";
 
 const rootActions = {
   ...authActions,
   ...filterActions,
   ...selectionActions,
   ...testsActions,
+  ...collectionsActions,
   ...testSessionActions,
   ...authAsyncActions,
   ...testsAsyncActions,

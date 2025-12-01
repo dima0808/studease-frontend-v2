@@ -1,4 +1,4 @@
-import { createSelector, createSlice } from '@reduxjs/toolkit';
+import { createSelector, createSlice, isRejected } from '@reduxjs/toolkit';
 import {
   deleteCollectionById,
   deleteCollectionsByIds,
@@ -9,12 +9,17 @@ const initialState = {
   collections: [],
   isLoading: false,
   error: null,
+  errorCollectionAction: null
 };
 
 const collectionsSlice = createSlice({
   name: 'collections',
   initialState,
-  reducers: {},
+  reducers: {
+    setErrorCollectionAction(state, action) {
+      state.errorCollectionAction = action.payload;
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getAllCollections.pending, (state) => {
@@ -34,13 +39,18 @@ const collectionsSlice = createSlice({
         state.collections = state.collections.filter(
           (collection) => collection.id !== action.payload,
         );
+        state.errorCollectionAction = null;
       })
       .addCase(deleteCollectionsByIds.fulfilled, (state, action) => {
         state.collections = state.collections.filter(
           (collection) =>
             !action.payload.some((item) => item.id === collection.id),
         );
-      });
+        state.errorCollectionAction = null;
+      })
+      .addMatcher(isRejected(deleteCollectionById, deleteCollectionsByIds), (state, action) => {
+        state.errorCollectionAction = action.payload;
+      })
   },
 });
 
@@ -55,4 +65,5 @@ export const selectCollections = createSelector(
   }),
 );
 
+export const { actions: collectionsActions } = collectionsSlice
 export default collectionsSlice.reducer;

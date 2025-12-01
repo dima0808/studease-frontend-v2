@@ -16,7 +16,17 @@ const CardActions = (props) => {
   const [notification, setNotification] = useState(null);
 
   const { actionMode } = useSelector((state) => state.selection);
-  const { toggleItem, deleteTestById, deleteCollectionById } = useActions();
+  const { errorTestAction } = useSelector((state) => state.tests);
+  const { errorCollectionAction } = useSelector((state) => state.collections);
+
+  const {
+    toggleItem,
+    deleteTestById,
+    deleteCollectionById,
+    setErrorTestAction,
+    setErrorCollectionAction
+  } = useActions();
+
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const isCollectionsPage = pathname === ROUTES_NAV.COLLECTIONS.href;
@@ -122,6 +132,14 @@ const CardActions = (props) => {
         onConfirm={confirmDelete}
         data={[{ id, name }]}
       />
+
+      {(errorTestAction || errorCollectionAction) && (
+        <NotificationMessage
+          type="error"
+          message={isCollectionsPage ? errorCollectionAction : errorTestAction}
+          onClose={() => isCollectionsPage ? setErrorCollectionAction(null) : setErrorTestAction(null)}
+        />
+      )}
 
       {notification && (
         <NotificationMessage
