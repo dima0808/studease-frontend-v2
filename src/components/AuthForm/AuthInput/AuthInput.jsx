@@ -8,6 +8,8 @@ const AuthInput = ({
   type = 'text',
   register,
   required,
+  onChange,
+  onBlur,
   watch,
   error,
 }) => {
@@ -23,6 +25,8 @@ const AuthInput = ({
       <input
         id={id}
         type={inputType}
+        onChange={onChange}
+        onBlur={onBlur}
         {...register(id, { required })}
         className={classNames('auth-form__input', {
           'auth-form__input--error': error,
