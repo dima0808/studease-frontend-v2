@@ -32,6 +32,7 @@ const defaultValues = {
   openDate: '',
   deadline: '',
   minutesToComplete: '',
+  maximumScore: '',
   questions: [],
   samples: [],
 };
@@ -223,6 +224,18 @@ const CreatePage = () => {
                   rules={{
                     required: 'Minutes to complete is required',
                     min: { value: 1, message: 'Must be at least 1 minute' },
+                    valueAsNumber: true,
+                  }}
+                />
+
+                <FormInput
+                  label="Maximum Score"
+                  name="maximumScore"
+                  type="number"
+                  placeholder="Not required. Calculated automatically if left empty"
+                  register={register}
+                  errors={errors}
+                  rules={{
                     valueAsNumber: true,
                   }}
                 />

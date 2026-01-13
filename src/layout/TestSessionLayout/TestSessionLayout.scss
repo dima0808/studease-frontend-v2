@@ -92,6 +92,26 @@
       row-gap: 15px;
     }
   }
+
+  &__example {
+    font-size: 0.85rem;
+    color: var(--color-gray-dark);
+    display: flex;
+    flex-direction: column;
+    row-gap: 3px;
+    margin-bottom: 10px;
+
+    p {
+      margin: 0;
+      font-weight: 500;
+      color: var(--color-text-gray);
+    }
+
+    p:first-child {
+      font-weight: 700;
+      color: var(--color-text-black);
+    }
+  }
 }
 
 .test-questions {

@@ -90,6 +90,48 @@
 
   .arrow {
     color: var(--color-blue-light);
+    font-size: 25px;
     font-weight: bold;
   }
+}
+
+.display-question-block,
+.display-matchpairs,
+.display-essay {
+  border: 2px solid transparent;
+  transition: border-color 0.3s ease;
+
+  &.is-correct {
+    border-color: #10b981;
+    background: #f0fdf4;
+  }
+  &.is-incorrect {
+    border-color: #ef4444;
+    background: #fef2f2;
+  }
+}
+
+.display-choice-item {
+  &.status-correct {
+    background-color: #d1fae5;
+    border: 1px solid #10b981;
+  }
+  &.status-error {
+    background-color: #fee2e2;
+    border: 1px solid #ef4444;
+  }
+  &.status-missed {
+    border: 2px dashed #10b981;
+    opacity: 0.8;
+  }
+
+  .radio-indicator, .checkbox-indicator {
+    &.correct { background-color: #10b981; border-color: #10b981; }
+    &.incorrect { background-color: #ef4444; border-color: #ef4444; }
+  }
+}
+
+.display-matchpairs__row {
+  &.row-correct { border: 2px solid #10b981; margin-bottom: 4px; border-radius: 8px; }
+  &.row-incorrect { border: 1px solid #ef4444; margin-bottom: 4px; border-radius: 8px; }
 }

@@ -38,9 +38,12 @@ const TestUserForm = ({ name }) => {
       <h1 className="test-intro__title">{name}</h1>
 
       <div className="test-user-form__content">
-        <p className="test-user-form__subtitle">
-          Enter your credential to start the test
-        </p>
+        <div className="test-user-form__example">
+          <p>Example:</p>
+          <p>Group: ІО-25</p>
+          <p>Fullname (Укр літерами): Іванов Іван</p>
+        </div>
+
         <div className="test-user-form__inputs">
           <AuthInput
             id="studentGroup"
@@ -48,7 +51,7 @@ const TestUserForm = ({ name }) => {
             type="text"
             register={(name) =>
               register(name, {
-                required: 'Group is required',
+                required: 'Група є обовʼязковою',
                 pattern: {
                   value: /^\p{L}{2}-\d{2}$/u,
                   message: 'Format: XX-XX (e.g. IO-21)',
@@ -64,16 +67,18 @@ const TestUserForm = ({ name }) => {
             type="text"
             register={(name) =>
               register(name, {
-                required: 'Full name is required',
+                required: 'ПІ є обовʼязковим',
                 pattern: {
-                  value: /^\p{Lu}\p{L}+ \p{Lu}\p{L}+$/u,
-                  message: 'Format: Surname Name (e.g. Ivanov Ivan)',
+                  value: /^[А-ЩЬЮЯЄІЇҐ][а-щьюяєіїґ]+ [А-ЩЬЮЯЄІЇҐ][а-щьюяєіїґ]+$/,
+                  message:
+                    'Укр. літери, формат: Прізвище Імʼя',
                 },
               })
             }
             error={errors.studentName}
             required
           />
+
         </div>
       </div>
 
