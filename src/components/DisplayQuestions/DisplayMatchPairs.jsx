@@ -1,9 +1,7 @@
 import './DisplayChoice.scss';
 
 const DisplayMatchPairs = ({ question, showResults = false }) => {
-  const pairsToDisplay = showResults
-    ? question.answers.filter((a) => a.userSelected)
-    : question.answers.filter((a) => a.isCorrect);
+  const pairsToDisplay = question.answers.filter((a) => a.userSelected)
 
   const isEntirelyCorrect = showResults && question.answers.every(
     (a) => a.isCorrect === a.userSelected
