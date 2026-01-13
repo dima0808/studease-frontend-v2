@@ -45,6 +45,7 @@ const SessionDetailsPage = () => {
           studentName,
           studentGroup,
         }).unwrap();
+        console.log(details.sessions[0]);
         setSessionDetails(details);
         setLoading(false);
       } catch (error) {
@@ -92,6 +93,7 @@ const SessionDetailsPage = () => {
     );
 
   const normalized = normalizeTestSession(sessionDetails.sessions[0]);
+  console.log(normalized);
 
   return (
     <InfoLayout>
@@ -122,16 +124,16 @@ const SessionDetailsPage = () => {
               <p className="test-finished__q-index">Question {index + 1}</p>
 
               {q.type === 'multiple_choices' && (
-                <DisplayMultipleChoice question={q} />
+                <DisplayMultipleChoice question={q} showResults={true}/>
               )}
 
               {q.type === 'single_choice' && (
-                <DisplaySingleChoice question={q} />
+                <DisplaySingleChoice question={q} showResults={true}/>
               )}
 
-              {q.type === 'essay' && <DisplayEssay question={q} />}
+              {q.type === 'essay' && <DisplayEssay question={q} showResults={true}/>}
 
-              {q.type === 'matching' && <DisplayMatchPairs question={q} />}
+              {q.type === 'matching' && <DisplayMatchPairs question={q} showResults={true}/>}
             </div>
           ))}
         </div>

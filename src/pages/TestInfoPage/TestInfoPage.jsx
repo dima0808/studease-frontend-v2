@@ -24,10 +24,6 @@ import { FRONTEND_PORT, HTTP_PROTOCOL, IP } from '@/constants/config';
 import Button from '@/components/Button';
 import Loading from '@/components/Loading';
 import { fadeUp } from '@/constants/motionVariants';
-import DisplaySingleChoice from '@/components/DisplayQuestions/DisplaySingleChoice';
-import DisplayMultipleChoice from '@/components/DisplayQuestions/DisplayMultipleChoice';
-import DisplayEssay from '@/components/DisplayQuestions/DisplayEssay';
-import DisplayMatchPairs from '@/components/DisplayQuestions/DisplayMatchPairs';
 import InfoLayout from '@/layout/InfoLayout';
 
 const TestInfoPage = () => {
@@ -288,61 +284,6 @@ const TestInfoPage = () => {
         ) : (
           <p className="info-layout-page__no-sessions">
             No finished sessions available.
-          </p>
-        )}
-      </Motion.div>
-
-      <Motion.div
-        className="info-layout-page__questions"
-        variants={fadeUp}
-        custom={0.4}
-      >
-        <div className="info-layout-page__section-header">
-          <h2 className="info-layout-page__sessions-title">Test Questions</h2>
-        </div>
-
-        {test.questions && test.questions.length > 0 ? (
-          <Motion.div
-            className="info-layout-page__list-body"
-            variants={{
-              hidden: {},
-              visible: { transition: { staggerChildren: 0.05 } },
-            }}
-          >
-            {test.questions.map((question) => {
-              switch (question.type) {
-                case 'single_choice':
-                  return (
-                    <Motion.div key={question.id} variants={fadeUp}>
-                      <DisplaySingleChoice question={question} />
-                    </Motion.div>
-                  );
-                case 'multiple_choices':
-                  return (
-                    <Motion.div key={question.id} variants={fadeUp}>
-                      <DisplayMultipleChoice question={question} />
-                    </Motion.div>
-                  );
-                case 'essay':
-                  return (
-                    <Motion.div key={question.id} variants={fadeUp}>
-                      <DisplayEssay question={question} />
-                    </Motion.div>
-                  );
-                case 'matching':
-                  return (
-                    <Motion.div key={question.id} variants={fadeUp}>
-                      <DisplayMatchPairs question={question} />
-                    </Motion.div>
-                  );
-                default:
-                  return null;
-              }
-            })}
-          </Motion.div>
-        ) : (
-          <p className="info-layout-page__no-sessions">
-            No questions available.
           </p>
         )}
       </Motion.div>
