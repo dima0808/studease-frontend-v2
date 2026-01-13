@@ -39,22 +39,22 @@ const TestUserForm = ({ name }) => {
 
       <div className="test-user-form__content">
         <div className="test-user-form__example">
-          <p>Example:</p>
-          <p>Group: ІО-25</p>
-          <p>Fullname (Укр літерами): Іванов Іван</p>
+          <p>Приклад заповнення:</p>
+          <p>Група (укр. літери): ІО-25</p>
+          <p>ПІ (укр. літери): Іванов Іван</p>
         </div>
 
         <div className="test-user-form__inputs">
           <AuthInput
             id="studentGroup"
-            label="Group"
+            label="Група"
             type="text"
             register={(name) =>
               register(name, {
                 required: 'Група є обовʼязковою',
                 pattern: {
-                  value: /^\p{L}{2}-\d{2}$/u,
-                  message: 'Format: XX-XX (e.g. IO-21)',
+                  value: /^[А-ЩЬЮЯЄІЇҐ]{2}-\d{2}$/,
+                  message: 'Формат: ХХ-00 (тільки укр. літери, напр. ІО-25)',
                 },
               })
             }
@@ -63,7 +63,7 @@ const TestUserForm = ({ name }) => {
           />
           <AuthInput
             id="studentName"
-            label="Full name"
+            label="Прізвище та Імʼя"
             type="text"
             register={(name) =>
               register(name, {
@@ -78,7 +78,6 @@ const TestUserForm = ({ name }) => {
             error={errors.studentName}
             required
           />
-
         </div>
       </div>
 
