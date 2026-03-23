@@ -40,7 +40,7 @@ export const getQuestionsByTestId = createAsyncThunk(
   'tests/getQuestionsByTestId',
   async (testId, { rejectWithValue }) => {
     try {
-      const { data } = await api.get('/admin/tests/' + testId + '/questions');
+      const { data } = await api.get('/admin/questions/by-test/' + testId);
       return data;
     } catch {
       return rejectWithValue('Failed to fetch questions');
@@ -52,7 +52,7 @@ export const getSamplesByTestId = createAsyncThunk(
   'tests/getSamplesByTestId',
   async (testId, { rejectWithValue }) => {
     try {
-      const { data } = await api.get('/admin/tests/' + testId + '/samples');
+      const { data } = await api.get('/admin/samples/' + testId);
       return data;
     } catch {
       return rejectWithValue('Failed to fetch samples');
@@ -65,7 +65,7 @@ export const getFinishedSessionsByTestId = createAsyncThunk(
   async ({ testId, studentName, studentGroup }, { rejectWithValue }) => {
     try {
       const { data } = await api.get(
-        '/admin/tests/' + testId + '/finishedSessions',
+        '/admin/sessions/' + testId,
         {
           params: {
             studentName,

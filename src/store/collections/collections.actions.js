@@ -46,7 +46,7 @@ export const getQuestionsByCollectionId = createAsyncThunk(
   async (collectionId, { rejectWithValue }) => {
     try {
       const { data } = await api.get(
-        '/admin/collections/' + collectionId + '/questions',
+        '/admin/questions/by-collection/' + collectionId,
       );
       return data;
     } catch {
