@@ -7,8 +7,13 @@ import { useLocation } from 'react-router-dom';
 import { ROUTES_NAV } from '@/constants/routes';
 
 const ActionMenu = (props) => {
-  const { handleDelete, navigateToClone, navigateToInfo, handleCopyLink } =
-    props;
+  const {
+    handleDelete,
+    navigateToClone,
+    navigateToInfo,
+    handleCopyLink,
+    handleExport,
+  } = props;
   const [open, setOpen] = useState(false);
   const { pathname } = useLocation();
 
@@ -119,7 +124,14 @@ const ActionMenu = (props) => {
               }}
               iconName="CloneIcon"
             />
-            <Button disabled text="Export" iconName="ExportIcon" />
+            <Button
+              text="Export"
+              onClick={() => {
+                handleExport();
+                setOpen(false);
+              }}
+              iconName="ExportIcon"
+            />
             <Button
               onClick={handleDelete}
               text="Delete"

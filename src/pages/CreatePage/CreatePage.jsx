@@ -51,7 +51,8 @@ const CreatePage = () => {
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState('');
   const [showAIGenerationBlock, setShowAIGenerationBlock] = useState(false);
-  const { pathname } = useLocation();
+  const location = useLocation();
+  const { pathname } = location;
   const isTest = pathname === `/${ROUTES.CREATE_TEST}`;
 
   const {
@@ -79,6 +80,27 @@ const CreatePage = () => {
     control,
     name: 'samples',
   });
+
+  useEffect(() => {
+    const importedData = location.state?.importData;
+    const importedKind = location.state?.importKind;
+
+    if (!importedData) return;
+
+    const expectedKind = isTest ? 'test' : 'collection';
+
+    if (importedKind !== expectedKind) {
+      setErrorMessage(`Imported file is not a ${expectedKind}`);
+      navigate(pathname, { replace: true, state: null });
+      return;
+    }
+
+    reset({
+      ...defaultValues,
+      ...importedData,
+    });
+    navigate(pathname, { replace: true, state: null });
+  }, [isTest, location.state, navigate, pathname, reset]);
 
   useEffect(() => {
     if (!cloneId) return;

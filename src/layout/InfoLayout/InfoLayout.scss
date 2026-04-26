@@ -13,12 +13,31 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    @include tablet {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 18px;
+    }
   }
 
   &__title-container {
     display: flex;
     align-items: center;
     gap: 20px;
+  }
+
+  &__header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+
+    @include mobile {
+      align-items: stretch;
+      flex-direction: column;
+      width: 100%;
+    }
   }
 
   &__title {
