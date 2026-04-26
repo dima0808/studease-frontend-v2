@@ -25,12 +25,16 @@ import Button from '@/components/Button';
 import Loading from '@/components/Loading';
 import { fadeUp } from '@/constants/motionVariants';
 import InfoLayout from '@/layout/InfoLayout';
+import {
+  exportTestResultsCsv,
+  exportTestResultsExcel,
+} from '@/utils/exportTestResults';
 
 const TestInfoPage = () => {
   const { testId } = useParams();
   const [test, setTest] = useState(null);
   const [copied, setCopied] = useState(false);
-  const { getFullTestById, getFinishedSessionsByTestId } = useActions();
+  const { getFullTestById, getFinishedSessionsByTestId, getTestById } = useActions();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -41,10 +45,8 @@ const TestInfoPage = () => {
     if (testId) {
       (async () => {
         try {
-          const testData = await getFullTestById(testId).unwrap();
-          const finishedSessions = await getFinishedSessionsByTestId({
-            testId,
-          }).unwrap();
+          const testData = await getTestById(testId).unwrap();
+          const finishedSessions = await getFinishedSessionsByTestId({ testId }).unwrap();
 
           const detailedTestData = {
             ...testData,
@@ -104,6 +106,22 @@ const TestInfoPage = () => {
     return 0;
   });
 
+  const handleExportResultsCsv = () => {
+    exportTestResultsCsv({
+      testId,
+      testName: test.name,
+      sessions: sortedSessions,
+    });
+  };
+
+  const handleExportResultsExcel = () => {
+    exportTestResultsExcel({
+      testId,
+      testName: test.name,
+      sessions: sortedSessions,
+    });
+  };
+
   const SortIcon = ({ field }) => {
     if (sortField !== field)
       return <FiChevronUp className="sort-icon disabled" />;
@@ -137,12 +155,28 @@ const TestInfoPage = () => {
           <h1 className="info-layout-page__title">{test.name}</h1>
         </div>
 
-        <Button
-          className="info-layout-page__copy-link-button"
-          text={copied ? 'Copied!' : 'Copy Test Link'}
-          onClick={handleCopyLink}
-          iconName="LinkIcon"
-        />
+        <div className="info-layout-page__header-actions">
+          <Button
+            className="info-layout-page__copy-link-button"
+            text={copied ? 'Copied!' : 'Copy Test Link'}
+            onClick={handleCopyLink}
+            iconName="LinkIcon"
+          />
+          <Button
+            className="info-layout-page__copy-link-button"
+            text="Export CSV"
+            onClick={handleExportResultsCsv}
+            iconName="ExportIcon"
+            disabled={sortedSessions.length === 0}
+          />
+          <Button
+            className="info-layout-page__copy-link-button"
+            text="Export XLS"
+            onClick={handleExportResultsExcel}
+            iconName="ExportIcon"
+            disabled={sortedSessions.length === 0}
+          />
+        </div>
       </Motion.div>
 
       <Motion.div

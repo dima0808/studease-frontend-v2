@@ -8,6 +8,10 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { ROUTES, ROUTES_NAV } from '@/constants/routes';
 import { FRONTEND_PORT, HTTP_PROTOCOL, IP } from '@/constants/config';
 import NotificationMessage from '@/components/NotificationMessage';
+import {
+  createTransferPayload,
+  downloadTransferPayload,
+} from '@/utils/jsonTransfer';
 
 const CardActions = (props) => {
   const { id, name, isSelected, wide } = props;
@@ -24,7 +28,9 @@ const CardActions = (props) => {
     deleteTestById,
     deleteCollectionById,
     setErrorTestAction,
-    setErrorCollectionAction
+    setErrorCollectionAction,
+    getFullTestById,
+    getFullCollectionById,
   } = useActions();
 
   const { pathname } = useLocation();
@@ -64,6 +70,22 @@ const CardActions = (props) => {
     }
   };
 
+  const handleExport = async () => {
+    try {
+      const kind = isCollectionsPage ? 'collection' : 'test';
+      const data = isCollectionsPage
+        ? await getFullCollectionById(id).unwrap()
+        : await getFullTestById(id).unwrap();
+      const payload = createTransferPayload(kind, data);
+
+      downloadTransferPayload(kind, payload, name);
+      setNotification(`"${name}" exported successfully!`);
+    } catch (error) {
+      console.error('Failed to export:', error);
+      setNotification('Error exporting data!');
+    }
+  };
+
   return (
     <>
       {actionMode === 'select' ? (
@@ -99,8 +121,8 @@ const CardActions = (props) => {
             iconName="CloneIcon"
           />
           <Button
-            disabled
             text="Export"
+            onClick={handleExport}
             theme="action"
             hidden={true}
             iconName="ExportIcon"
@@ -119,6 +141,7 @@ const CardActions = (props) => {
           navigateToInfo={navigateToInfo}
           navigateToClone={navigateToClone}
           handleDelete={handleDelete}
+          handleExport={handleExport}
           confirmDelete={confirmDelete}
           id={id}
           name={name}

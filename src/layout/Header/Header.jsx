@@ -10,8 +10,14 @@ import { useActions } from '@/hooks/useActions';
 import { filterArr } from '@/utils/filterArr';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ROUTES, ROUTES_NAV } from '@/constants/routes';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import ConfirmDeleteModal from '@/components/ConfirmDeleteModal';
+import NotificationMessage from '@/components/NotificationMessage';
+import {
+  createTransferBundlePayload,
+  downloadTransferPayload,
+  parseTransferFile,
+} from '@/utils/jsonTransfer';
 
 const Header = () => {
   const { viewMode, sortBy, search } = useSelector((state) => state.filter);
@@ -26,8 +32,17 @@ const Header = () => {
     setSortBy,
     deleteTestsByIds,
     deleteCollectionsByIds,
+    getFullTestById,
+    getFullCollectionById,
+    createTest,
+    createCollection,
+    getAllTests,
+    getAllCollections,
   } = useActions();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [notification, setNotification] = useState(null);
+  const [notificationType, setNotificationType] = useState(null);
+  const importInputRef = useRef(null);
 
   const navigate = useNavigate();
 
@@ -43,6 +58,10 @@ const Header = () => {
   const deleteData = isCollectionsPage
     ? deleteCollectionsByIds
     : deleteTestsByIds;
+  const createData = isCollectionsPage ? createCollection : createTest;
+  const getFullData = isCollectionsPage ? getFullCollectionById : getFullTestById;
+  const refreshData = isCollectionsPage ? getAllCollections : getAllTests;
+  const importKind = isCollectionsPage ? 'collection' : 'test';
 
   const filteredData = filterArr(data, { sortBy, search });
 
@@ -57,6 +76,59 @@ const Header = () => {
     deleteData(selectedItems);
     clearSelection();
     setIsModalOpen(false);
+  };
+
+  const showNotification = (message, type = null) => {
+    setNotification(message);
+    setNotificationType(type);
+  };
+
+  const handleExportSelected = async () => {
+    try {
+      const items = await Promise.all(
+        selectedItems.map((item) => getFullData(item.id).unwrap()),
+      );
+      const payload = createTransferBundlePayload(importKind, items);
+
+      downloadTransferPayload(importKind, payload, `selected-${items.length}`);
+      showNotification(`${items.length} ${importKind}s exported successfully!`);
+    } catch (error) {
+      console.error('Failed to export selected items:', error);
+      showNotification('Error exporting selected data!', 'error');
+    }
+  };
+
+  const handleImportFile = async (event) => {
+    const file = event.target.files?.[0];
+    event.target.value = '';
+
+    if (!file) return;
+
+    try {
+      const result = await parseTransferFile(file, importKind);
+
+      if (result.items.length === 1) {
+        navigate(
+          `/${isCollectionsPage ? ROUTES.CREATE_COLLECTION : ROUTES.CREATE_TEST}`,
+          {
+            state: {
+              importData: result.items[0],
+              importKind,
+            },
+          },
+        );
+        return;
+      }
+
+      await Promise.all(result.items.map((item) => createData(item).unwrap()));
+      await refreshData();
+      showNotification(
+        `${result.items.length} ${importKind}s imported successfully!`,
+      );
+    } catch (error) {
+      console.error('Failed to import file:', error);
+      showNotification(error.message || 'Error importing file!', 'error');
+    }
   };
 
   return (
@@ -108,7 +180,12 @@ const Header = () => {
                   }
                 }}
               />
-              <Button disabled={true} text="Export" iconName="ExportIcon" />
+              <Button
+                disabled={selectedItems.length === 0}
+                text="Export"
+                onClick={handleExportSelected}
+                iconName="ExportIcon"
+              />
               <Button
                 theme="red"
                 disabled={selectedItems.length === 0}
@@ -119,7 +196,18 @@ const Header = () => {
             </>
           ) : (
             <>
-              <Button disabled={true} text="Import" iconName="ImportIcon" />
+              <Button
+                text="Import"
+                onClick={() => importInputRef.current?.click()}
+                iconName="ImportIcon"
+              />
+              <input
+                ref={importInputRef}
+                type="file"
+                accept="application/json,.json"
+                hidden
+                onChange={handleImportFile}
+              />
               <Button
                 onClick={() =>
                   navigate(
@@ -137,11 +225,21 @@ const Header = () => {
       </div>
       <ConfirmDeleteModal
         isOpen={isModalOpen}
-        title={pathname === isCollectionsPage ? 'collections' : 'tests'}
+        title={isCollectionsPage ? 'collections' : 'tests'}
         onClose={() => setIsModalOpen(false)}
         onConfirm={handleDeleteSelected}
         data={selectedItems}
       />
+      {notification && (
+        <NotificationMessage
+          type={notificationType}
+          message={notification}
+          onClose={() => {
+            setNotification(null);
+            setNotificationType(null);
+          }}
+        />
+      )}
     </div>
   );
 };
