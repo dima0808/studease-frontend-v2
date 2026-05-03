@@ -28,6 +28,7 @@ const TestQuestions = () => {
   const { getNextQuestion, finishTestSession, forceEndTestSession } =
     useActions();
   const [seconds, setSeconds] = useState(0);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const methods = useForm({ defaultValues: { answers: [] } });
   const {
@@ -106,6 +107,8 @@ const TestQuestions = () => {
   }
 
   const onSubmit = (data) => {
+    if (isSubmitting) return;
+
     const answerIds = Array.isArray(data.answers)
       ? data.answers
       : [data.answers];
@@ -117,11 +120,13 @@ const TestQuestions = () => {
       answerContent,
     };
 
-    if (testSession.currentQuestionIndex + 1 < testInfo.questionsCount) {
-      getNextQuestion(payload);
-    } else {
-      finishTestSession(payload);
-    }
+    const submitAction =
+      testSession.currentQuestionIndex + 1 < testInfo.questionsCount
+        ? getNextQuestion
+        : finishTestSession;
+
+    setIsSubmitting(true);
+    submitAction(payload).finally(() => setIsSubmitting(false));
   };
 
   return (
@@ -201,6 +206,7 @@ const TestQuestions = () => {
                   : 'Finish'
               }
               type="submit"
+              disabled={isSubmitting}
             />
           </Motion.div>
         </AnimatePresence>
