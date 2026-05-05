@@ -5,6 +5,15 @@ import { useActions } from '@/hooks/useActions';
 import Button from '@/components/Button';
 import { useSelector } from 'react-redux';
 
+const UKRAINIAN_LETTERS = 'А-ЩЬЮЯЄІЇҐа-щьюяєіїґ';
+const GROUP_PATTERN = new RegExp(
+  `^[А-ЩЬЮЯЄІЇҐ]{2}-[${UKRAINIAN_LETTERS}]?\\d{2}[${UKRAINIAN_LETTERS}]?$`,
+);
+const NAME_PART = `[А-ЩЬЮЯЄІЇҐ][${UKRAINIAN_LETTERS}]*(?:[-'’][${UKRAINIAN_LETTERS}]+)*`;
+const STUDENT_NAME_PATTERN = new RegExp(
+  `^${NAME_PART}(?:\\s+${NAME_PART}){1,2}$`,
+);
+
 const TestUserForm = ({ name }) => {
   const { credentials, testInfo } = useSelector((state) => state.testSession);
 
@@ -40,8 +49,8 @@ const TestUserForm = ({ name }) => {
       <div className="test-user-form__content">
         <div className="test-user-form__example">
           <p>Приклад заповнення:</p>
-          <p>Група (укр. літери): ІО-25</p>
-          <p>ПІ (укр. літери): Іванов Іван</p>
+          <p>Група: ІО-25, ІО-25з або ІО-м25і</p>
+          <p>ПІБ: Водоп&apos;янов Іван або Іваненко Іван Іванович</p>
         </div>
 
         <div className="test-user-form__inputs">
@@ -52,9 +61,11 @@ const TestUserForm = ({ name }) => {
             register={(name) =>
               register(name, {
                 required: 'Група є обовʼязковою',
+                setValueAs: (value) => value.trim(),
                 pattern: {
-                  value: /^[А-ЩЬЮЯЄІЇҐ]{2}-\d{2}$/,
-                  message: 'Формат: ХХ-00 (тільки укр. літери, напр. ІО-25)',
+                  value: GROUP_PATTERN,
+                  message:
+                    'Формат групи: ІО-25, ІО-25з або ІО-м25і',
                 },
               })
             }
@@ -63,15 +74,16 @@ const TestUserForm = ({ name }) => {
           />
           <AuthInput
             id="studentName"
-            label="Прізвище та Імʼя"
+            label="Прізвище та імʼя"
             type="text"
             register={(name) =>
               register(name, {
-                required: 'ПІ є обовʼязковим',
+                required: 'ПІБ є обовʼязковим',
+                setValueAs: (value) => value.trim().replace(/\s+/g, ' '),
                 pattern: {
-                  value: /^[А-ЩЬЮЯЄІЇҐ][а-щьюяєіїґ]+ [А-ЩЬЮЯЄІЇҐ][а-щьюяєіїґ]+$/,
+                  value: STUDENT_NAME_PATTERN,
                   message:
-                    'Укр. літери, формат: Прізвище Імʼя',
+                    'Використовуйте українські літери: Прізвище Імʼя або Прізвище Імʼя По батькові',
                 },
               })
             }
