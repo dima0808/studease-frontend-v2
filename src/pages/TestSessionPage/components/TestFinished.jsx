@@ -1,13 +1,22 @@
 import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
 import DisplayMultipleChoice from '@/components/DisplayQuestions/DisplayMultipleChoice';
 import DisplaySingleChoice from '@/components/DisplayQuestions/DisplaySingleChoice';
 import DisplayEssay from '@/components/DisplayQuestions/DisplayEssay';
 import DisplayMatchPairs from '@/components/DisplayQuestions/DisplayMatchPairs';
 import { normalizeTestSession } from '@/utils/normalizeTestSession';
+import { clearAttempt } from '@/utils/attemptToken';
 
 const TestFinished = () => {
   const { testSession } = useSelector((state) => state.testSession);
+  const { testId } = useParams();
+
+  // The attempt is over and its results are on screen — the token is spent.
+  useEffect(() => {
+    clearAttempt(testId);
+  }, [testId]);
 
   const normalized = normalizeTestSession(testSession);
 

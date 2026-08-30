@@ -4,6 +4,7 @@ import AuthInput from '@/components/AuthForm/AuthInput';
 import { useActions } from '@/hooks/useActions';
 import Button from '@/components/Button';
 import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 const UKRAINIAN_LETTERS = 'А-ЩЬЮЯЄІЇҐа-щьюяєіїґ';
 const GROUP_PATTERN = new RegExp(
@@ -15,7 +16,8 @@ const STUDENT_NAME_PATTERN = new RegExp(
 );
 
 const TestUserForm = ({ name }) => {
-  const { credentials, testInfo } = useSelector((state) => state.testSession);
+  const { credentials } = useSelector((state) => state.testSession);
+  const { testId } = useParams();
 
   const {
     register,
@@ -29,10 +31,7 @@ const TestUserForm = ({ name }) => {
 
   const handleStart = (data) => {
     setCredentials(data);
-    startTestSession({
-      testId: testInfo.id,
-      credentials: data,
-    });
+    startTestSession({ testId, credentials: data });
     setStep(3);
   };
 
@@ -64,8 +63,7 @@ const TestUserForm = ({ name }) => {
                 setValueAs: (value) => value.trim(),
                 pattern: {
                   value: GROUP_PATTERN,
-                  message:
-                    'Формат групи: ІО-25, ІО-25з або ІО-м25і',
+                  message: 'Формат групи: ІО-25, ІО-25з або ІО-м25і',
                 },
               })
             }

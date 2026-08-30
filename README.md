@@ -1,12 +1,43 @@
-# React + Vite
+# StudEase frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React + Vite single-page app for the StudEase test platform.
 
-Currently, two official plugins are available:
+## Requirements
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+[Bun](https://bun.sh) 1.2+ — it is the package manager and the script runner for
+this project. `bun.lock` is committed; there is no `package-lock.json`.
 
-## Expanding the ESLint configuration
+```sh
+curl -fsSL https://bun.sh/install | bash   # macOS / Linux
+powershell -c "irm bun.sh/install.ps1 | iex"  # Windows
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Getting started
+
+```sh
+bun install
+bun run dev
+```
+
+| Script | What it does |
+|---|---|
+| `bun run dev` | Vite dev server with HMR |
+| `bun run build` | Production build into `dist/` |
+| `bun run preview` | Serve the production build on port 3000 |
+| `bun run lint` | ESLint over the repo |
+| `bun run format` | Prettier write |
+
+## Environment
+
+Vite reads `VITE_`-prefixed variables from `.env*` files (see
+`.env.production`). `src/constants/config.js` composes them into `API_URL` and
+`WS_URL`.
+
+## Student test flow
+
+The student-facing API is attempt-token based. `POST /tests/{testId}/start`
+returns an `attemptToken` **once**; it is kept in `sessionStorage` keyed by
+`testId` (`src/utils/attemptToken.js`), attached to every `/tests/{testId}/…`
+request by the axios interceptor in `src/api/axios.js`, and presented on the
+STOMP `CONNECT`/`SUBSCRIBE` frames for `/topic/testSession/{sessionKey}`.
+See `FRONTEND_HANDOFF.md` for the full contract.

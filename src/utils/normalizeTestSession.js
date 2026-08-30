@@ -9,7 +9,9 @@ export const normalizeTestSession = (session) => {
       content: question.content,
       points: question.points,
       type: question.type,
-      answers: question.answers.map((a) => ({
+      // Essay questions come back with an empty `answers` array — the
+      // student's own text round-trips through `answerContent` instead.
+      answers: (question.answers ?? []).map((a) => ({
         id: a.id,
         isCorrect: a.isCorrect,
         userSelected: answerIds?.includes(a.id) ?? false,

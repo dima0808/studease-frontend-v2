@@ -6,23 +6,43 @@ import {
   getTestSessionById,
   startTestSession,
 } from '@/store/testSession/testSession.actions';
-import Cookies from 'js-cookie';
+import {
+  clearIdentity,
+  readIdentity,
+  saveIdentity,
+} from '@/utils/attemptToken';
+
+const STEP = {
+  INTRO: 1,
+  FORM: 2,
+  QUESTIONS: 3,
+  FINISHED: 4,
+};
 
 const initialState = {
-  step: 1,
+  step: STEP.INTRO,
   testInfo: null,
+  // Only populated once the attempt ends (`finish` or a `FORCE_END` message).
   testSession: null,
-  credentials: {
-    studentName: Cookies.get('studentName') || '',
-    studentGroup: Cookies.get('studentGroup') || '',
-  },
-  question: null,
+  // Form prefill only — identity is no longer what authenticates a student.
+  credentials: readIdentity(),
+  // The `CurrentQuestionDto`: { responseEntryId, questionNumber, totalQuestions, question }
+  currentQuestion: null,
+  sessionKey: null,
+  endsAt: null,
   isLoading: false,
   error: null,
-  errorStartTest: null,
+  attemptError: null,
   isLoadingTestSession: false,
-  answerIds: [],
-  answerContent: null,
+};
+
+const endAttempt = (state, testSession) => {
+  state.step = STEP.FINISHED;
+  state.testSession = testSession;
+  state.currentQuestion = null;
+  state.isLoadingTestSession = false;
+  state.credentials = { studentName: '', studentGroup: '' };
+  clearIdentity();
 };
 
 const testSessionSlice = createSlice({
@@ -34,31 +54,13 @@ const testSessionSlice = createSlice({
     },
     setCredentials: (state, action) => {
       state.credentials = action.payload;
-      Cookies.set('studentName', action.payload.studentName);
-      Cookies.set('studentGroup', action.payload.studentGroup);
+      saveIdentity(action.payload);
     },
-    toggleAnswerId: (state, action) => {
-      const answerId = action.payload.answerId;
-      const isSingleChoice = action.payload.isSingleChoice;
-      if (isSingleChoice) {
-        state.answerIds = [answerId];
-      } else {
-        if (state.answerIds.includes(answerId)) {
-          state.answerIds = state.answerIds.filter((id) => id !== answerId);
-        } else {
-          state.answerIds.push(answerId);
-        }
-      }
+    clearAttemptError: (state) => {
+      state.attemptError = null;
     },
     forceEndTestSession: (state, action) => {
-      state.step = 4;
-      state.testSession = action.payload;
-      state.credentials = {
-        studentName: '',
-        studentGroup: '',
-      };
-      Cookies.remove('studentName');
-      Cookies.remove('studentGroup');
+      endAttempt(state, action.payload);
     },
   },
 
@@ -77,40 +79,52 @@ const testSessionSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       })
-      .addCase(getCurrentQuestion.rejected, (state) => {
-        state.step = 1;
-      })
       .addCase(finishTestSession.fulfilled, (state, action) => {
-        state.step = 4;
-        state.testSession = action.payload;
-        state.credentials = {
-          studentName: '',
-          studentGroup: '',
-        };
-        Cookies.remove('studentName');
-        Cookies.remove('studentGroup');
+        endAttempt(state, action.payload);
       })
       .addCase(startTestSession.pending, (state) => {
-        state.errorStartTest = null;
+        state.attemptError = null;
         state.isLoadingTestSession = true;
-      })
-      .addCase(startTestSession.rejected, (state, action) => {
-        console.log(action.payload);
-        state.errorStartTest = action.payload;
-        state.isLoadingTestSession = false;
       })
       .addMatcher(
         isFulfilled(startTestSession, getCurrentQuestion, getNextQuestion),
         (state, action) => {
-          state.step = 3;
-          state.question = action.payload.data;
-          state.testSession = action.payload.testSession;
+          const { currentQuestion, sessionKey, endsAt } = action.payload;
+          state.step = STEP.QUESTIONS;
+          state.currentQuestion = currentQuestion;
           state.isLoadingTestSession = false;
+          state.attemptError = null;
+          if (sessionKey) state.sessionKey = sessionKey;
+          if (endsAt) state.endsAt = endsAt;
+        },
+      )
+      .addMatcher(
+        isRejected(
+          startTestSession,
+          getCurrentQuestion,
+          getNextQuestion,
+          finishTestSession,
+        ),
+        (state, action) => {
+          const { status, message } = action.payload ?? {};
+          state.isLoadingTestSession = false;
+          state.attemptError = message ?? null;
+
+          // The token is unusable — there is nothing to resume, so send the
+          // student back to the start screen.
+          if (status === 401) {
+            state.step = STEP.INTRO;
+            state.currentQuestion = null;
+            state.sessionKey = null;
+            state.endsAt = null;
+          }
         },
       );
   },
 });
 
 export const { actions: testSessionActions } = testSessionSlice;
+
+export { STEP };
 
 export default testSessionSlice.reducer;
