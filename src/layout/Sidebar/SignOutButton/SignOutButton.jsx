@@ -1,4 +1,4 @@
-import SingOutIcon from '@/components/icons/SingOutIcon';
+import { LogOut } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useActions } from '@/hooks/useActions';
 import { motion as Motion } from 'framer-motion';
@@ -11,11 +11,11 @@ const SignOutButton = (props) => {
     <Link
       to="/"
       onClick={() => logout()}
-      title={isCollapsed && 'Sign out'}
+      title={isCollapsed ? 'Sign out' : undefined}
       className="sidebar__button"
       type="button"
     >
-      <SingOutIcon />
+      <LogOut size={16} />
       {!isCollapsed && (
         <Motion.span
           initial={{ opacity: 0, x: -20 }}

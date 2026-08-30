@@ -1,256 +1,527 @@
+// The attempt: a bar, the work, a footer. Everything on the ground, nothing
+// in a card, 64px gutters — 22px on a phone.
 .test-session-layout {
   display: flex;
-  align-items: center;
-  height: 100vh;
   flex-direction: column;
-  justify-content: center;
+  min-height: 100vh;
+}
 
-  &:has(.test-finished) {
-    display: block;
+.attempt {
+  &__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    column-gap: 24px;
+    padding: 22px var(--gutter-page);
+
+    &--ruled {
+      border-bottom: var(--border-strong);
+    }
+
+    @include mobile {
+      padding: 16px var(--gutter-tight);
+    }
+  }
+
+  &__student {
+    @include tabular-nums;
+    font-size: 13px;
+    color: var(--color-neutral-700);
+  }
+
+  &__saved {
+    // On a phone the bar has room for the clock and nothing else.
+    @include mobile {
+      display: none;
+    }
+
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-neutral-600);
+  }
+
+  &__bar-right {
+    display: flex;
+    align-items: center;
+    column-gap: 26px;
+  }
+
+  &__body {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    padding: 0 var(--gutter-page);
+
+    @include mobile {
+      align-items: flex-start;
+      padding: 22px var(--gutter-tight);
+    }
+  }
+
+  &__content {
+    width: 100%;
+    max-width: 780px;
+  }
+
+  &__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    column-gap: 40px;
+
+    padding: 20px var(--gutter-page);
+    border-top: var(--border-strong);
+
+    @include mobile {
+      flex-direction: column;
+      align-items: stretch;
+      row-gap: 16px;
+      padding: 16px var(--gutter-tight) 30px;
+    }
+  }
+
+  &__kicker {
+    @include kicker;
+    margin: 0;
+    color: var(--color-neutral-700);
   }
 }
 
+// ── Intro ────────────────────────────────────────────────────────────────
 .test-intro {
-  display: flex;
-  flex-direction: column;
-  width: 673px;
-  min-height: 287px;
-  border-radius: 34px;
-  background-color: var(--color-white-dark);
-  border: var(--border);
-  padding: 58px;
-
-  @include mobile-above {
-    row-gap: 25px;
-  }
-
-  @include mobile {
-    justify-content: space-between;
-    background-color: transparent;
-    height: 100%;
-    border: none;
-    width: 100%;
-    padding-inline: 30px;
-    padding-block: 130px;
-  }
+  width: 100%;
+  max-width: 760px;
 
   &__title {
-    color: var(--color-text-black);
+    margin: 16px 0 0;
+    max-width: 22ch;
+    font-size: 58px;
+    font-weight: var(--font-weight-bold);
+    letter-spacing: -0.04em;
+    line-height: 1.02;
+    color: var(--color-text);
+
+    @include mobile {
+      font-size: 34px;
+      letter-spacing: -0.035em;
+    }
+  }
+
+  &__spec {
+    margin-top: 38px;
+    border-top: var(--border-strong);
+  }
+
+  &__text {
+    margin: 30px 0 0;
+    max-width: 56ch;
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--color-neutral-800);
+
+    @include mobile {
+      font-size: 15px;
+    }
+  }
+
+  &__notice {
+    margin-top: 18px;
   }
 
   &__actions {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-  }
-}
-
-.test-user-form {
-  display: flex;
-  flex-direction: column;
-  row-gap: 25px;
-  width: 673px;
-  min-height: 287px;
-  border-radius: 34px;
-  background-color: var(--color-white-dark);
-  border: var(--border);
-  padding: 58px;
-
-  @include mobile {
-    justify-content: space-between;
-    background-color: transparent;
-    height: 100%;
-    border: none;
-    width: 100%;
-    padding-inline: 30px;
-    padding-block: 130px;
-  }
-
-  &__title {
-    font-size: 1.3rem;
-    font-weight: 600;
-  }
-
-  &__subtitle {
-    margin-bottom: 15px;
-  }
-
-  &__content {
-    background-color: var(--color-white);
-    border: var(--border);
-    padding: 15px;
-    border-radius: 15px;
-  }
-
-  &__inputs {
-    display: grid;
-    grid-template-columns: 180px 1fr;
-    column-gap: 10px;
+    column-gap: 22px;
+    margin-top: 40px;
 
     @include mobile {
-      grid-template-columns: 1fr;
-      row-gap: 15px;
-    }
-  }
+      flex-direction: column;
+      align-items: stretch;
+      row-gap: 16px;
+      text-align: center;
 
-  &__example {
-    font-size: 0.85rem;
-    color: var(--color-gray-dark);
-    display: flex;
-    flex-direction: column;
-    row-gap: 3px;
-    margin-bottom: 10px;
-
-    p {
-      margin: 0;
-      font-weight: 500;
-      color: var(--color-text-gray);
-    }
-
-    p:first-child {
-      font-weight: 700;
-      color: var(--color-text-black);
-    }
-  }
-}
-
-.test-questions {
-  max-width: 700px;
-  width: 100%;
-  min-height: 287px;
-  border-radius: 34px;
-  outline: var(--border);
-  padding: 58px;
-  margin: 0 auto;
-
-  @include mobile {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    outline: none;
-    height: 100%;
-    width: 100%;
-    padding-inline: 30px;
-    padding-block: 130px;
-  }
-
-  &.error {
-    outline: 2px solid var(--color-red-dark);
-
-    @include mobile {
-      outline: none;
-    }
-  }
-
-  .progress-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 8px;
-    background: #e0e0e0;
-    border-radius: 4px;
-    overflow: hidden;
-    margin-bottom: 12px;
-
-    .progress-bar {
-      height: 100%;
-      background: linear-gradient(90deg, #3b82f6, #06b6d4);
-      transition: width 0.3s ease;
-    }
-  }
-
-  .progress-text {
-    font-size: 14px;
-    color: #555;
-    margin-bottom: 16px;
-  }
-
-  .options {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-
-    button {
-      padding: 10px;
-      border: none;
-      border-radius: 8px;
-      background: #f3f4f6;
-      cursor: pointer;
-      transition: background 0.2s;
-
-      &:hover {
-        background: #dbeafe;
+      .button {
+        height: 56px;
+        justify-content: center;
       }
     }
   }
 }
 
-.question-type {
-  text-align: left;
-  font-weight: 500;
-  font-size: 14px;
-  font-style: italic;
-
-  &.error {
-    color: var(--color-red-dark);
-  }
-}
-
-.progress-info {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.question-block__button {
-  float: right;
-}
-
-.test-finished {
-  margin: 0 auto;
-  padding: 40px 20px;
-  max-width: 900px;
-
-  &__header {
-    margin-bottom: 30px;
-  }
-
-  &__title {
-    font-size: 36px;
-    font-weight: 700;
-    color: #292929;
-  }
-
-  &__student-info {
+// The spec list: label left, measurement right, one rule per row.
+.attempt-spec {
+  &__row {
     display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin-bottom: 40px;
-    padding: 20px;
-    border: 1px solid #e3e3e3;
-    border-radius: 12px;
-    background: #fafafa;
-  }
+    align-items: baseline;
+    justify-content: space-between;
+    column-gap: 24px;
 
-  &__info-item {
-    display: flex;
-    gap: 10px;
+    padding: 15px 0;
+    border-bottom: var(--border);
 
-    .label {
-      font-weight: 600;
-      color: #555;
+    &:last-child {
+      border-bottom: var(--border-strong);
     }
   }
 
-  &__questions {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
+  &__label {
+    font-size: 15px;
+    color: var(--color-neutral-700);
+
+    @include mobile {
+      font-size: 14px;
+    }
   }
 
-  &__q-index {
-    font-weight: 500;
-    padding-bottom: 20px;
+  &__value {
+    @include tabular-nums;
+    font-size: 22px;
+    font-weight: var(--font-weight-bold);
+    letter-spacing: -0.02em;
+
+    @include mobile {
+      font-size: 19px;
+    }
+  }
+}
+
+// A neutral text link with a rule under it.
+.attempt-link {
+  font-size: 15px;
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text);
+  border-bottom: var(--border-strong);
+  padding-bottom: 2px;
+  cursor: pointer;
+  background: none;
+  border-left: 0;
+  border-right: 0;
+  border-top: 0;
+
+  @include hover {
+    color: var(--color-accent);
+  }
+
+  &--quiet {
+    color: var(--color-neutral-700);
+    border-bottom: 0;
+  }
+}
+
+// ── Question ─────────────────────────────────────────────────────────────
+.test-questions {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+
+  &__head {
+    display: flex;
+    align-items: baseline;
+    column-gap: 18px;
+  }
+
+  &__index {
+    @include tabular-nums;
+    font-size: 13px;
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.1em;
+    color: var(--color-accent);
+  }
+
+  &__type {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-neutral-600);
+
+    &--error {
+      color: var(--color-accent-700);
+    }
+  }
+
+  &__title {
+    margin: 18px 0 0;
+    max-width: 26ch;
+    font-size: 40px;
+    font-weight: var(--font-weight-bold);
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+
+    @include mobile {
+      font-size: 26px;
+      letter-spacing: -0.025em;
+    }
+  }
+
+  &__answers {
+    margin-top: 40px;
+
+    @include mobile {
+      margin-top: 24px;
+    }
+  }
+
+  &__progress {
+    display: flex;
+    flex-direction: column;
+    row-gap: 9px;
+    width: 300px;
+
+    @include mobile {
+      width: 100%;
+    }
+  }
+
+  &__count {
+    @include tabular-nums;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-neutral-600);
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    column-gap: 20px;
+
+    @include mobile {
+      column-gap: 12px;
+
+      .button {
+        flex: 1;
+        height: 52px;
+        justify-content: center;
+      }
+
+      .attempt-link {
+        flex: none;
+        min-height: 52px;
+      }
+    }
+  }
+}
+
+// ── Finished ─────────────────────────────────────────────────────────────
+.test-finished {
+  width: 100%;
+  max-width: 900px;
+  padding: 20px var(--gutter-page) 0;
+
+  @include mobile {
+    padding: 20px var(--gutter-tight) 0;
+  }
+
+  &__score-row {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    column-gap: 48px;
+    margin-top: 18px;
+
+    @include mobile {
+      flex-direction: column;
+      align-items: flex-start;
+      row-gap: 24px;
+    }
+  }
+
+  &__score {
+    @include tabular-nums;
+    font-size: 96px;
+    font-weight: var(--font-weight-bold);
+    line-height: 0.9;
+    letter-spacing: -0.05em;
+
+    @include mobile {
+      font-size: 64px;
+    }
+
+    span {
+      font-size: 34px;
+      color: var(--color-neutral-500);
+    }
+  }
+
+  &__sentence {
+    margin: 16px 0 0;
+    max-width: 46ch;
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--color-neutral-800);
+  }
+
+  &__facts {
+    flex: none;
+    text-align: right;
+
+    @include mobile {
+      text-align: left;
+    }
+  }
+
+  &__fact-label {
+    font-size: 11px;
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-neutral-600);
+
+    &:not(:first-child) {
+      margin-top: 20px;
+    }
+  }
+
+  &__fact-value {
+    @include tabular-nums;
+    margin: 6px 0 0;
+    font-size: 22px;
+    font-weight: var(--font-weight-bold);
+    letter-spacing: -0.02em;
+  }
+
+  &__rule {
+    height: 2px;
+    margin: 34px 0 0;
+    border: 0;
+    background-color: var(--color-divider);
+  }
+
+  &__breakdown-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 0 12px;
+  }
+
+  &__breakdown-title {
+    @include kicker;
+    margin: 0;
+  }
+
+  &__toggle {
+    border: 0;
+    background: none;
+    padding: 0;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: var(--font-weight-medium);
+    color: var(--color-accent);
+
+    @include hover {
+      color: var(--color-accent-700);
+    }
+  }
+
+  &__list {
+    border-top: var(--border);
+  }
+
+  &__row {
+    display: grid;
+    grid-template-columns: 44px 1fr 88px;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: var(--border);
+  }
+
+  &__row-index {
+    @include tabular-nums;
+    font-size: 14px;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-neutral-600);
+  }
+
+  &__row-text {
+    font-size: 16px;
+    padding-right: 16px;
+  }
+
+  &__row-points {
+    @include tabular-nums;
+    font-size: 17px;
+    font-weight: var(--font-weight-bold);
+    text-align: right;
+  }
+
+  // Lost points are the only thing marked. Being right is the default.
+  &__row--lost {
+    .test-finished__row-index,
+    .test-finished__row-points {
+      color: var(--color-accent);
+    }
+  }
+
+  &__correction {
+    color: var(--color-accent-700);
+    font-weight: var(--font-weight-medium);
+  }
+
+  &__review {
+    display: flex;
+    flex-direction: column;
+    row-gap: 32px;
+    margin-top: 32px;
+  }
+
+  &__footer {
+    display: flex;
+    align-items: center;
+    column-gap: 22px;
+    padding: 20px 0 40px;
+
+    @include mobile {
+      flex-wrap: wrap;
+      row-gap: 16px;
+    }
+  }
+
+  &__footnote {
+    margin-left: auto;
+  }
+}
+
+// ── The name/group step (not redesigned; brought onto the tokens) ────────
+.test-user-form {
+  width: 100%;
+  max-width: 760px;
+
+  &__content {
+    margin-top: 34px;
+    padding-top: 24px;
+    border-top: var(--border-strong);
+  }
+
+  &__example {
+    display: flex;
+    flex-direction: column;
+    row-gap: 3px;
+    margin-bottom: 24px;
+    font-size: 13px;
+    color: var(--color-neutral-700);
+
+    p {
+      margin: 0;
+    }
+
+    p:first-child {
+      font-weight: 700;
+      color: var(--color-text);
+    }
+  }
+
+  &__inputs {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    column-gap: 24px;
+
+    @include mobile {
+      grid-template-columns: 1fr;
+      row-gap: 16px;
+    }
   }
 }

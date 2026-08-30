@@ -1,7 +1,6 @@
 import GenericListPage from '@/components/GenericListPage';
 import TestCard from '@/components/TestCard';
 import { useActions } from '@/hooks/useActions';
-import './TestsPage.scss';
 import { selectTests } from '@/store/tests/tests.slice';
 
 const TestsPage = () => {
@@ -21,6 +20,7 @@ const TestsPage = () => {
           {...test}
         />
       )}
+      columns={['Test', 'Opens', 'Closes', 'Taking now', 'Status', '']}
       hasSort
     />
   );

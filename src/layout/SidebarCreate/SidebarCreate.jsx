@@ -1,3 +1,4 @@
+import Lockup from '@/components/Lockup';
 import { useState } from 'react';
 import { motion as Motion, AnimatePresence } from 'framer-motion';
 import classNames from 'classnames';
@@ -32,7 +33,7 @@ const SidebarCreate = ({
         'sidebar-create--collapsed': isCollapsed,
       })}
     >
-      <h1 className="sidebar-create__title">StudEase</h1>
+      <Lockup className="sidebar-create__title" />
 
       <nav className="sidebar-create__nav">
         <div className="sidebar-create__nav-main">

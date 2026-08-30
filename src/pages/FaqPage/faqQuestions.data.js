@@ -1,57 +1,61 @@
-export const faqQuestion = [
+/**
+ * The student-facing FAQ. English, because the interface is English — if the
+ * app becomes bilingual these strings belong in a locale file, not here.
+ * `**bold**` marks the words a student is looking for on the screen.
+ */
+export const faqQuestions = [
   {
-    question: 'З чого краще проходити тести?',
+    question: 'How does an attempt actually work?',
     answer:
-      'Рекомендується проходити тести з комп’ютера або ноутбука з сучасним браузером (Google Chrome, Microsoft Edge або Firefox). Також можна проходити з планшета, телефона, але на малому екрані можуть некоректно відображатися елементи тесту.',
+      'Questions come one at a time. Answer, press **Next** — **Finish** on the last one — and the server keeps each answer as you go. Nothing is lost if the tab closes.',
   },
   {
-    question: 'Що робити, якщо сторінка тесту зависла або не відкривається?',
+    question: 'What should I take a test on?',
     answer:
-      'Перевірте стабільність свого інтернет-з’єднання і спробуйте оновити сторінку. Якщо проблема не зникла — очистіть кеш браузера або спробуйте зайти з іншого пристрою.',
+      'A laptop or desktop with a current Chrome, Edge or Firefox. Phones and tablets work, but a small screen can make long questions harder to read.',
   },
   {
-    question: 'Як відбувається проходження тесту?',
+    question: 'The page froze or will not open.',
     answer:
-      "Після початку тесту питання з’являються по одному. Ви обираєте або вводите відповідь і натискаєте кнопку 'Next' або 'Finish' для завершення. Після цього система автоматично зберігає ваші результати.",
+      'Check your connection and reload. If it persists, clear the browser cache or try another device — your attempt is on the server, not in the tab.',
   },
   {
-    question: 'Які типи питань можуть бути в тесті?',
+    question: 'Which question types can appear?',
     answer:
-      'Існує кілька типів питань: з однією правильною відповіддю (Single Choice), з кількома варіантами (Multiple Choices), відкриті питання (Essay), а також завдання на співставлення (Matching Pairs).',
+      'Single choice, multiple choice, essay, and matching pairs.',
   },
   {
-    question: 'Чи можна повернутися до попереднього питання?',
-    answer:
-      "У більшості випадків — ні. Тест побудований так, щоб перевірити ваші знання без можливості зміни відповідей. Тому уважно перевіряйте вибір перед натисканням 'Next'.",
+    question: 'Can I go back to a previous question?',
+    answer: 'Usually not. Check your answer before you press **Next**.',
   },
   {
-    question: 'Що робити, якщо закінчився час?',
+    question: 'What happens when the time runs out?',
     answer:
-      'Після завершення таймера тест автоматично завершується. Всі відповіді, які були вибрані, зберігаються.',
+      'The attempt closes itself. Everything you had already answered is kept.',
   },
   {
-    question: 'Чи можна перепройти тест?',
+    question: 'Can I retake a test?',
     answer:
-      'Ні, після завершення тесту повторне проходження можливе лише за дозволом адміністратора або викладача.',
+      'Only if your instructor or an administrator opens a new attempt for you.',
   },
   {
-    question: 'Як побачити свій результат?',
+    question: 'Why can I not see my mark?',
     answer:
-      "Після завершення тесту система може автоматично показати ваш результат або повідомлення про успішне завершення. Якщо цього не сталося — перевірте розділ 'Мої результати' або зверніться до викладача.",
+      'Marks appear only if your instructor turned that on. Otherwise you see your own answers without scoring.',
   },
   {
-    question: 'Що робити, якщо з’являється помилка під час старту тесту?',
+    question: 'What can I see after I finish?',
     answer:
-      'Іноді при слабкому інтернеті або технічних збоях може з’являтися повідомлення про помилку. Просто оновіть сторінку (F5) або перезапустіть тест — система автоматично відновить сесію.',
+      'Your own answers, always. Correct answers and a mark only if your instructor allows it.',
   },
   {
-    question: 'Чому я не бачу свою оцінку після завершення тесту?',
+    question: 'An error appeared when the test started.',
     answer:
-      'Оцінка після проходження тесту відображається лише тоді, якщо викладач увімкнув цю опцію. Якщо опцію не активовано, ви побачите лише свої вибрані відповіді без оцінювання.',
+      'Reload the page. The session is restored from the server, and the clock has not been running against you in the meantime.',
   },
   {
-    question: 'Що я можу побачити після завершення тесту?',
+    question: 'How is my attempt monitored?',
     answer:
-      'Після завершення тесту система зазвичай показує ваші вибрані відповіді. У деяких випадках — якщо це дозволено викладачем — також можуть відображатися правильні відповіді та оцінка.',
+      'Tab switches, copy events and disconnects are logged and sent with your result. Nothing else about your device is recorded.',
   },
 ];

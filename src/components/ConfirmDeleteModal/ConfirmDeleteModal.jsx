@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import { useEffect } from 'react';
 import './ConfirmDeleteModal.scss';
 import Button from '@/components/Button';
+import { Trash2 } from 'lucide-react';
 
 const ConfirmDeleteModal = ({ isOpen, onClose, onConfirm, title, data }) => {
   useEffect(() => {
@@ -42,10 +43,10 @@ const ConfirmDeleteModal = ({ isOpen, onClose, onConfirm, title, data }) => {
         >
           <Motion.div
             className="modal-content"
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.8, opacity: 0 }}
-            transition={{ duration: 0.3 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
             onClick={(e) => e.stopPropagation()}
           >
             <h2 className="modal-title">
@@ -53,7 +54,7 @@ const ConfirmDeleteModal = ({ isOpen, onClose, onConfirm, title, data }) => {
                 ? `Oops! Delete these ${title}?`
                 : `Delete this ${title.slice(0, -1)}?`}
             </h2>
-            <p className="modal-text">Once deleted, there’s no going back.</p>
+            <p className="modal-text">Once deleted, there is no going back.</p>
 
             <ul className="modal-list">
               {data.map((item) => (
@@ -67,9 +68,9 @@ const ConfirmDeleteModal = ({ isOpen, onClose, onConfirm, title, data }) => {
               <Button text="Cancel" onClick={onClose} />
               <Button
                 text="Delete"
-                iconName="RemoveIcon"
+                icon={Trash2}
                 onClick={onConfirm}
-                theme="red"
+                theme="danger"
               />
             </div>
           </Motion.div>

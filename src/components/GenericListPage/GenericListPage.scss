@@ -1,2 +1,36 @@
-.generic-list-page {
+.list-page {
+  padding: 0 var(--gutter-content) 40px;
+
+  &--grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 26px;
+  }
+
+  &--table {
+    display: block;
+  }
+
+  // The header row that names the columns beneath it.
+  &__head {
+    display: grid;
+    align-items: end;
+    padding: 14px 0 10px;
+    border-bottom: var(--border-strong);
+
+    font-size: 11px;
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-neutral-700);
+  }
+}
+
+.tests-page__head {
+  grid-template-columns: 1fr 132px 132px 96px 92px 190px;
+}
+
+.collections-page__head {
+  grid-template-columns: 1fr 130px 150px 100px 190px;
 }

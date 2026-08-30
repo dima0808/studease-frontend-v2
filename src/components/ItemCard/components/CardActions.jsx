@@ -1,4 +1,5 @@
 import Button from '@/components/Button';
+import { Check, Copy, Download, Info, Link2, Trash2 } from 'lucide-react';
 import ActionMenu from '@/components/ItemCard/components/ActionMenu';
 import { useSelector } from 'react-redux';
 import { useActions } from '@/hooks/useActions';
@@ -89,50 +90,59 @@ const CardActions = (props) => {
   return (
     <>
       {actionMode === 'select' ? (
-        <input
-          type="checkbox"
-          className="item-card__checkbox"
-          checked={isSelected}
-          onChange={() => toggleItem({ id, name })}
-        />
+        <label className="item-card__select" title={`Select ${name}`}>
+          <input
+            type="checkbox"
+            className="item-card__checkbox"
+            checked={isSelected}
+            onChange={() => toggleItem({ id, name })}
+          />
+          <Check className="item-card__check" size={13} strokeWidth={3.2} />
+        </label>
       ) : wide ? (
         <div className="item-card__actions--wide">
           {pathname === ROUTES_NAV.TESTS.href && (
             <Button
-              text="Copy Link"
+              text="Copy link"
               onClick={handleCopyLink}
-              iconName="LinkIcon"
-              theme="action"
+              icon={Link2}
+              iconSize={15}
+              size="sm"
               hidden={true}
             />
           )}
           <Button
             text="Info"
             onClick={navigateToInfo}
-            theme="action"
+            icon={Info}
+            iconSize={15}
+            size="sm"
             hidden={true}
-            iconName="InfoIcon"
           />
           <Button
             text="Clone"
             onClick={() => navigateToClone()}
-            theme="action"
+            icon={Copy}
+            iconSize={15}
+            size="sm"
             hidden={true}
-            iconName="CloneIcon"
           />
           <Button
             text="Export"
             onClick={handleExport}
-            theme="action"
+            icon={Download}
+            iconSize={15}
+            size="sm"
             hidden={true}
-            iconName="ExportIcon"
           />
           <Button
             text="Delete"
             onClick={handleDelete}
-            theme="action"
+            icon={Trash2}
+            iconSize={15}
+            size="sm"
             hidden={true}
-            iconName="RemoveIcon"
+            className="item-card__action--destructive"
           />
         </div>
       ) : (

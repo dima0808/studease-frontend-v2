@@ -1,0 +1,18 @@
+.lockup {
+  display: inline-flex;
+  align-items: center;
+  column-gap: 11px;
+
+  &__mark {
+    flex: none;
+    color: var(--color-accent);
+  }
+
+  &__type {
+    font-weight: var(--font-weight-bold);
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    line-height: 1;
+    color: var(--color-text);
+  }
+}

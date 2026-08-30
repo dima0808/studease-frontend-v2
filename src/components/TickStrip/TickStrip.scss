@@ -1,0 +1,34 @@
+.tick-strip {
+  display: flex;
+  align-items: flex-end;
+  column-gap: 3px;
+  height: 14px;
+
+  &__tick {
+    flex: 1;
+
+    &--answered {
+      height: 10px;
+      background-color: var(--color-neutral-900);
+    }
+
+    &--current {
+      height: 14px;
+      background-color: var(--color-accent);
+    }
+
+    &--unanswered {
+      height: 6px;
+      background-color: var(--color-neutral-400);
+    }
+
+    &--uniform {
+      height: 8px;
+      background-color: var(--color-neutral-500);
+    }
+  }
+
+  &--uniform {
+    height: 8px;
+  }
+}

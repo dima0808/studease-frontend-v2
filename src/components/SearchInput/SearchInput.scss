@@ -1,54 +1,51 @@
+// No box: a rule under the field, which goes accent when it has focus.
 .search-input {
   display: flex;
   align-items: center;
-  border: var(--border-strong);
-  width: 305px;
-  height: 40px;
-  border-radius: 12px;
-  padding-inline: 10px;
-  background-color: #fff;
+  column-gap: 9px;
 
-  &__icon {
-    margin-right: 10px;
-  }
+  width: 250px;
+  padding: 8px 2px;
+  border-bottom: var(--border-strong);
+
+  transition: border-color var(--transition-duration);
 
   &:focus-within {
-    border: 1px solid var(--color-blue);
+    border-bottom-color: var(--color-accent);
+  }
+
+  &__icon {
+    flex: none;
+    color: var(--color-neutral-600);
   }
 
   &__field {
-    margin-right: 10px;
+    flex: 1;
+    min-width: 0;
     border: none;
     outline: none;
-    flex: 1;
     background: transparent;
-    color: #292929;
-    font-size: 15px;
-    font-weight: 500;
-
-    &:focus {
-      .search-input {
-        border: 1px solid var(--color-blue) !important;
-      }
-    }
+    color: var(--color-text);
+    font-family: var(--font-family-base);
+    font-size: 14px;
 
     &::placeholder {
-      color: #727272;
-      font-size: 15px;
-      font-weight: 500;
+      color: var(--color-neutral-600);
+      font-size: 14px;
     }
   }
 
   &__clear {
     display: inline-flex;
     align-items: center;
-    justify-content: end;
     padding: 0;
     border: none;
     background: transparent;
+    color: var(--color-neutral-600);
+    cursor: pointer;
 
     @include hover {
-      color: var(--color-blue);
+      color: var(--color-accent);
     }
   }
 }

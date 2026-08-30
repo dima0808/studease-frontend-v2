@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form';
-import { useNavigate, useOutletContext } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import AuthButton from '@/components/AuthForm/AuthButton';
 import AuthInput from '@/components/AuthForm/AuthInput';
 import { useSelector } from 'react-redux';
@@ -20,18 +20,16 @@ const RegisterForm = () => {
 
   const { isLoading, error } = useSelector((state) => state.auth);
 
-  const { handleShowSplash } = useOutletContext();
-
   const handleRegister = async (data) => {
     await registerUser(data).unwrap();
-    handleShowSplash(() => navigate(`/${ROUTES.TESTS}`));
+    navigate(`/${ROUTES.TESTS}`);
   };
 
   return (
     <form className="auth-form" onSubmit={handleSubmit(handleRegister)}>
       <AuthInput
         id="email"
-        label="Email"
+        label="University email"
         type="text"
         register={(name) =>
           register(name, {

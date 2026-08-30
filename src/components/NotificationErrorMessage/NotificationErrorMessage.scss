@@ -7,14 +7,13 @@
   align-items: center;
   gap: 8px;
 
-  background: var(--color-red-light);
-  color: var(--color-red-dark);
+  background: var(--color-accent-100);
+  color: var(--color-accent);
 
   padding: 12px 20px;
-  border-radius: 10px;
   font-size: 14px;
-  font-weight: 500;
-  border: 1px solid var(--color-red-dark);
+  font-weight: var(--font-weight-medium);
+  border: 1px solid var(--color-accent);
 
   z-index: 9999;
   pointer-events: none;

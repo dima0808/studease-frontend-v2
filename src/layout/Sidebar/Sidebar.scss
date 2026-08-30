@@ -1,122 +1,108 @@
 .sidebar {
-  --border: 1px solid #cecece;
-
   position: sticky;
   top: 0;
-  max-width: 333px;
-  width: 100%;
   height: 100vh;
+
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  background-color: #f8f8f8;
-  outline: 1px solid #cecece;
-  color: var(--color-white-light);
-  padding: 72px 26px 67px 26px;
-  border-radius: 0 var(--border-radius-large) var(--border-radius-large) 0;
-  transition:
-    max-width 0.3s ease,
-    padding 0.3s ease;
 
-  &__title {
-    text-align: center;
-    font-size: 48px;
-    font-weight: 700;
-    background: linear-gradient(270deg, #2d96ff 4.4%, #00e2a6 92.9%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    transition: opacity 0.3s ease;
-  }
+  padding: 26px 22px 22px;
+  background-color: var(--color-surface);
+  border-right: var(--border-strong);
+  color: var(--color-text);
 
-  &__nav {
-    margin-bottom: auto;
+  transition: padding var(--transition-duration) ease;
 
-    &-main {
-      margin-top: 39px;
-      padding-block: 29px;
-      border-top: var(--border);
-      border-bottom: var(--border);
-      display: flex;
-      flex-direction: column;
-      row-gap: 15px;
+  &__rule {
+    height: 2px;
+    width: 100%;
+    margin: 0;
+    border: 0;
+    background-color: var(--color-divider);
+
+    &--strong {
+      height: 2px;
     }
 
-    &-secondary {
-      padding-block: 29px;
-      display: flex;
-      flex-direction: column;
-      row-gap: 15px;
+    &--lockup {
+      margin: 22px 0 18px;
     }
   }
 
-  &__button {
-    border: none;
-    display: inline-flex;
-    column-gap: 10px;
-    align-items: center;
-    justify-content: start;
-    background-color: transparent;
-    color: #292929;
-    font-weight: 500;
-
-    @include hover {
-      color: var(--color-blue);
-    }
-
-    .sidebar--collapsed & {
-      justify-content: center;
-    }
+  &__foot {
+    margin-top: auto;
   }
 
   &__actions {
-    margin-top: 20px;
-    border-top: var(--border);
-    padding-top: 20px;
     display: flex;
-    flex-direction: column;
-    gap: 10px;
+    align-items: center;
+    column-gap: 8px;
+    margin-top: 16px;
+  }
+
+  &__footnote {
+    margin-top: 18px;
+  }
+
+  // Sign out: a flush-left secondary button that fills the row.
+  &__button {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-start;
+    column-gap: 9px;
+
+    height: 40px;
+    padding-inline: 13px;
+
+    border: var(--border);
+    background-color: transparent;
+    color: var(--color-text);
+
+    font-size: 14px;
+    font-weight: var(--font-weight-bold);
+
+    @include hover {
+      background-color: var(--wash-ink-7);
+    }
+
+    // Stacked in the collapsed rail, so it must not flex to nothing.
+    .sidebar--collapsed & {
+      flex: none;
+      justify-content: center;
+      padding-inline: 0;
+    }
   }
 
   &__toggle {
-    position: absolute;
+    flex: none;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    top: 15px;
-    right: 15px;
     width: 40px;
     height: 40px;
-    background-color: var(--color-white);
-    border: 1px solid #cecece;
-    color: var(--color-text-black);
-    border-radius: var(--border-radius-small);
+
+    border: var(--border);
+    background-color: transparent;
+    color: var(--color-text);
     cursor: pointer;
 
     @include hover {
-      background-color: #eceff5;
-    }
-
-    img {
-      transition: all ease-in var(--transition-duration);
-    }
-
-    &--right {
-      transform: rotate(180deg);
+      background-color: var(--wash-ink-7);
     }
   }
 
   &--collapsed {
-    max-width: 80px;
-    padding: 40px 10px;
+    padding: 26px 14px 22px;
 
-    .sidebar__title {
-      opacity: 0;
-      pointer-events: none;
+    .sidebar__lockup {
+      justify-content: center;
     }
 
-    //    .menu-item__title {
-    //      display: none;
-    //    }
+    .sidebar__actions {
+      flex-direction: column;
+      align-items: stretch;
+      row-gap: 8px;
+    }
   }
 }

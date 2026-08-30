@@ -1,9 +1,9 @@
+// The essay field keeps the structure it had, on the tokens: a square box on
+// the surface with a 1px rule, accent when it has focus.
 .essay-block {
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 700px;
-  margin: 20px auto;
 
   .textarea-wrapper {
     position: relative;
@@ -12,32 +12,41 @@
     textarea {
       width: 100%;
       min-height: 220px;
-      max-height: 400px;
+      max-height: 460px;
       resize: vertical;
-      border: 2px solid #e5e7eb;
-      border-radius: 16px;
+
       padding: 18px 20px;
-      font-size: 16px;
+      border: var(--border);
+
+      background-color: var(--color-surface);
+      color: var(--color-text);
+      caret-color: var(--color-accent);
+
+      font-family: var(--font-family-base);
+      font-size: 17px;
       line-height: 1.6;
-      color: #111827;
-      background-color: #f9fafb;
-      outline: none;
-      transition: all 0.2s ease;
+
+      transition: border-color var(--transition-duration);
 
       &:focus {
-        background-color: #fff;
-        border-color: #3b82f6;
-        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+        border-color: var(--color-accent);
+      }
+
+      &:focus-visible {
+        outline-offset: 0;
       }
 
       &::placeholder {
-        color: #9ca3af;
-        font-style: italic;
+        color: var(--color-neutral-500);
       }
 
       &.error {
-        border-color: var(--color-red-dark);
-        background-color: var(--color-red-light);
+        border-color: var(--color-accent);
+      }
+
+      @include mobile {
+        font-size: 16px;
+        min-height: 180px;
       }
     }
   }

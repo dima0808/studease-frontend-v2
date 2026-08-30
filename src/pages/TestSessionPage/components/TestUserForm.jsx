@@ -3,6 +3,7 @@ import { motion as Motion } from 'framer-motion';
 import AuthInput from '@/components/AuthForm/AuthInput';
 import { useActions } from '@/hooks/useActions';
 import Button from '@/components/Button';
+import AttemptBar from '@/pages/TestSessionPage/components/AttemptBar';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
@@ -36,14 +37,18 @@ const TestUserForm = ({ name }) => {
   };
 
   return (
-    <Motion.form
-      className="test-user-form"
-      onSubmit={handleSubmit(handleStart)}
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, ease: 'easeOut' }}
-    >
-      <h1 className="test-intro__title">{name}</h1>
+    <>
+      <AttemptBar />
+      <div className="attempt__body">
+        <Motion.form
+          className="test-user-form"
+          onSubmit={handleSubmit(handleStart)}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: 'easeOut' }}
+        >
+          <p className="attempt__kicker">Who is taking this attempt</p>
+          <h1 className="test-intro__title">{name}</h1>
 
       <div className="test-user-form__content">
         <div className="test-user-form__example">
@@ -91,11 +96,18 @@ const TestUserForm = ({ name }) => {
         </div>
       </div>
 
-      <div className="test-intro__actions">
-        <Button onClick={() => setStep(1)} text="Back" />
-        <Button theme="primary" text="Start" type="submit" />
+          <div className="test-intro__actions">
+            <Button onClick={() => setStep(1)} text="Back" size="lg" />
+            <Button
+              theme="primary"
+              size="lg"
+              text="Start the attempt"
+              type="submit"
+            />
+          </div>
+        </Motion.form>
       </div>
-    </Motion.form>
+    </>
   );
 };
 

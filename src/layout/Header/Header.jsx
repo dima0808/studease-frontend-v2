@@ -4,6 +4,7 @@ import { ACTION_OPTIONS, VIEW_OPTIONS } from '@/constants/toggleOptions';
 import TabsFilter from '@/components/TabsFilter';
 import { COLLECTIONS_TAB_FILTERS, TAB_FILTERS } from '@/constants/tabFilters';
 import Button from '@/components/Button';
+import { Download, Plus, Trash2, Upload } from 'lucide-react';
 import SearchInput from '@/components/SearchInput';
 import { useSelector } from 'react-redux';
 import { useActions } from '@/hooks/useActions';
@@ -131,47 +132,38 @@ const Header = () => {
     }
   };
 
+  const page = isCollectionsPage ? 'collections' : 'tests';
+  const kicker = isCollectionsPage ? 'Question banks' : 'Your library';
+  const title = isCollectionsPage ? 'Collections' : 'Tests';
+
+  const counts = isCollectionsPage
+    ? {
+        all: data.length,
+        inuse: data.filter((item) => item.usedInTests > 0).length,
+        notinuse: data.filter((item) => item.usedInTests === 0).length,
+      }
+    : {
+        all: data.length,
+        active: data.filter((item) => item.isActive).length,
+        unactive: data.filter((item) => !item.isActive).length,
+      };
+
   return (
     <div className="header">
-      <div className="header__wrapper">
-        <h1 className="header__title">
-          Your{' '}
-          {ROUTES_NAV[
-            pathname.toUpperCase().replace('/', '')
-          ].title.toLowerCase()}
-        </h1>
-        <div className="header__view">
-          <ToggleButton
-            mode={viewMode}
-            setMode={setViewMode}
-            options={VIEW_OPTIONS}
-          />
-          <ToggleButton
-            mode={actionMode}
-            setMode={setActionMode}
-            options={ACTION_OPTIONS}
-          />
+      <div className="header__row">
+        <div className="header__heading">
+          <p className="header__kicker">{kicker}</p>
+          <h1 className="header__title">{title}</h1>
         </div>
-      </div>
-      <div className="header__wrapper">
-        {pathname !== ROUTES_NAV.COLLECTIONS.href ? (
-          <TabsFilter
-            activeIndex={sortBy}
-            handelActiveIndex={handelActiveIndex}
-            options={TAB_FILTERS}
-          />
-        ) : (
-          <TabsFilter
-            activeIndex={sortBy}
-            handelActiveIndex={handelActiveIndex}
-            options={COLLECTIONS_TAB_FILTERS}
-          />
-        )}
-        <div className="header__view">
+
+        <div className="header__actions">
           {actionMode === 'select' ? (
             <>
+              <span className="header__selected">
+                {selectedItems.length} selected
+              </span>
               <Button
-                text={selectedItems.length > 0 ? 'Unselect All' : 'Select All'}
+                text={selectedItems.length > 0 ? 'Unselect all' : 'Select all'}
                 onClick={() => {
                   if (selectedItems.length > 0) {
                     clearSelection();
@@ -184,22 +176,23 @@ const Header = () => {
                 disabled={selectedItems.length === 0}
                 text="Export"
                 onClick={handleExportSelected}
-                iconName="ExportIcon"
+                icon={Download}
               />
               <Button
-                theme="red"
+                theme="danger"
                 disabled={selectedItems.length === 0}
                 onClick={() => setIsModalOpen(true)}
                 text="Delete"
-                iconName="RemoveIcon"
+                icon={Trash2}
               />
             </>
           ) : (
             <>
+              <SearchInput placeholder={`Search ${page}`} />
               <Button
                 text="Import"
                 onClick={() => importInputRef.current?.click()}
-                iconName="ImportIcon"
+                icon={Upload}
               />
               <input
                 ref={importInputRef}
@@ -216,11 +209,32 @@ const Header = () => {
                 }
                 theme="primary"
                 text={`Create a ${isCollectionsPage ? 'collection' : 'test'}`}
-                iconName="CreateIcon"
+                icon={Plus}
+                iconSize={16}
               />
             </>
           )}
-          <SearchInput placeholder="Search" />
+        </div>
+      </div>
+
+      <div className="header__row header__row--tabs">
+        <TabsFilter
+          activeIndex={sortBy}
+          handelActiveIndex={handelActiveIndex}
+          options={isCollectionsPage ? COLLECTIONS_TAB_FILTERS : TAB_FILTERS}
+          counts={counts}
+        />
+        <div className="header__toggles">
+          <ToggleButton
+            mode={viewMode}
+            setMode={setViewMode}
+            options={VIEW_OPTIONS}
+          />
+          <ToggleButton
+            mode={actionMode}
+            setMode={setActionMode}
+            options={ACTION_OPTIONS}
+          />
         </div>
       </div>
       <ConfirmDeleteModal

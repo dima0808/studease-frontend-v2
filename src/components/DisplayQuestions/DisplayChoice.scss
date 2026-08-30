@@ -1,137 +1,167 @@
-.display-question-header {
-  display: flex;
-  justify-content: flex-start;
-  margin-bottom: 8px;
-}
-
-.display-question-type {
-  background: var(--color-blue-light);
-  color: var(--color-text-black);
-  font-size: 13px;
-  font-weight: 600;
-  padding: 4px 10px;
-  border-radius: 8px;
-  letter-spacing: 0.5px;
-}
-
+// The review. There is no green: being right is the default and carries no
+// colour; lost points are accent; a missed correct answer is a dashed rule,
+// because the student did nothing wrong there. Every state is also carried by
+// a word or a number, so hue alone never holds the meaning.
 .display-question-block,
 .display-matchpairs,
 .display-essay {
-  border: var(--border);
-  border-radius: 12px;
-  padding: 20px;
-  margin-bottom: 20px;
-  background: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  padding: 0 0 24px;
+  border-top: var(--border-strong);
+  padding-top: 18px;
+  background: transparent;
+}
+
+.display-question-header {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 10px;
+}
+
+.display-question-type {
+  padding: 0;
+  background: transparent;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-neutral-600);
 }
 
 .display-question-title {
-  font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 15px;
-  color: #292929;
+  margin: 0 0 16px;
+  font-size: 20px;
+  font-weight: var(--font-weight-bold);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: var(--color-text);
 }
 
 .display-choice-list {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: var(--border);
 }
 
 .display-choice-item {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 6px 8px;
-  border-radius: 8px;
-  transition: 0.2s;
-  font-size: 15px;
+  column-gap: 16px;
+  padding: 13px 10px;
+  border-bottom: var(--border);
+  font-size: 16px;
 
-  &.selected {
-    font-weight: 700;
-    color: var(--color-text-black);
+  .choice-letter {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+
+    width: 26px;
+    height: 26px;
+    border: var(--border);
+
+    font-size: 12px;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-neutral-700);
   }
 
-  .radio-indicator,
-  .checkbox-indicator {
-    width: 16px;
-    height: 16px;
-    border: 2px solid var(--color-blue);
-    border-radius: 50%;
+  // What the student chose: the row fills and the label goes bold.
+  &.is-selected {
+    background-color: var(--color-surface);
 
-    &.checked {
-      background: rgba(59, 130, 246, 0.6);
+    .label-text {
+      font-weight: 700;
+    }
+
+    .choice-letter {
+      background-color: var(--color-neutral-900);
+      border-color: var(--color-neutral-900);
+      color: var(--color-bg);
     }
   }
 
-  .checkbox-indicator {
-    border-radius: 4px;
+  // Chosen and wrong — the only thing marked in the accent.
+  &.status-error {
+    .choice-letter {
+      background-color: var(--color-accent);
+      border-color: var(--color-accent);
+      color: var(--color-bg);
+    }
+
+    .label-text {
+      color: var(--color-accent-700);
+    }
+  }
+
+  // The answer that was right and went unchosen.
+  &.status-missed {
+    border-bottom: 2px dashed var(--color-divider);
+
+    .choice-letter {
+      border: 2px dashed var(--color-divider);
+    }
+  }
+
+  .label-text {
+    flex: 1;
+    line-height: 1.45;
+  }
+
+  &__note {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-neutral-600);
   }
 }
 
 .display-matchpairs__table {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  border-top: var(--border);
 }
 
 .display-matchpairs__row {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 32px 1fr;
   align-items: center;
-  gap: 10px;
+  column-gap: 12px;
+  padding: 12px 0;
+  border-bottom: var(--border);
 
   .left,
   .right {
-    background: #f6f6f6;
-    padding: 6px 10px;
-    border-radius: 8px;
-    flex: 1;
+    font-size: 16px;
+    line-height: 1.4;
   }
 
   .arrow {
-    color: var(--color-blue-light);
-    font-size: 25px;
-    font-weight: bold;
+    font-size: 18px;
+    font-weight: 700;
+    text-align: center;
+    color: var(--color-neutral-500);
+  }
+
+  &.row-incorrect {
+    .arrow,
+    .right {
+      color: var(--color-accent-700);
+    }
   }
 }
 
-.display-question-block,
-.display-matchpairs,
-.display-essay {
-  border: 2px solid transparent;
-  transition: border-color 0.3s ease;
+.display-essay__answer {
+  padding: 16px;
+  border: var(--border);
+  background: var(--color-surface);
+  font-size: 16px;
+  line-height: 1.6;
 
-  &.is-correct {
-    border-color: #10b981;
-    background: #f0fdf4;
+  p {
+    margin: 0;
   }
-  &.is-incorrect {
-    border-color: #ef4444;
-    background: #fef2f2;
-  }
-}
-
-.display-choice-item {
-  &.status-correct {
-    background-color: #d1fae5;
-    border: 1px solid #10b981;
-  }
-  &.status-error {
-    background-color: #fee2e2;
-    border: 1px solid #ef4444;
-  }
-  &.status-missed {
-    border: 2px dashed #10b981;
-    opacity: 0.8;
-  }
-
-  .radio-indicator, .checkbox-indicator {
-    &.correct { background-color: #10b981; border-color: #10b981; }
-    &.incorrect { background-color: #ef4444; border-color: #ef4444; }
-  }
-}
-
-.display-matchpairs__row {
-  &.row-correct { border: 2px solid #10b981; margin-bottom: 4px; border-radius: 8px; }
-  &.row-incorrect { border: 1px solid #ef4444; margin-bottom: 4px; border-radius: 8px; }
 }

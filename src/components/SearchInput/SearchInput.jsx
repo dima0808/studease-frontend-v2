@@ -1,5 +1,4 @@
-import SearchIcon from '@/components/icons/SearchIcon';
-import { MdClear } from 'react-icons/md';
+import { Search, X } from 'lucide-react';
 import { useSelector } from 'react-redux';
 import { useActions } from '@/hooks/useActions';
 import useDebounce from '@/hooks/useDebounce';
@@ -20,7 +19,7 @@ const SearchInput = ({ placeholder }) => {
 
   return (
     <div className="search-input">
-      <SearchIcon className="search-input__icon" />
+      <Search size={16} className="search-input__icon" />
       <input
         type="text"
         className="search-input__field"
@@ -35,7 +34,7 @@ const SearchInput = ({ placeholder }) => {
           className="search-input__clear"
           onClick={() => setValue('')}
         >
-          <MdClear size={20} className="search-input__clear-icon" />
+          <X size={15} />
         </button>
       )}
     </div>

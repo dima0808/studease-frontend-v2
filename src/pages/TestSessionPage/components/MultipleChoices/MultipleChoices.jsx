@@ -1,5 +1,6 @@
 import { useFormContext } from 'react-hook-form';
-import '../Essay/Essay.scss';
+import { answerLetter } from '@/utils/answerLetter';
+import '../SingleChoice/Choice.scss';
 
 const MultipleChoices = ({ question }) => {
   const { register, watch } = useFormContext();
@@ -8,7 +9,7 @@ const MultipleChoices = ({ question }) => {
   return (
     <div className="question-block">
       <ul className="choice-list">
-        {question.answers.map((answer) => (
+        {question.answers.map((answer, index) => (
           <li
             key={answer.id}
             className={`choice-item ${selected.includes(String(answer.id)) ? 'active' : ''}`}
@@ -19,11 +20,10 @@ const MultipleChoices = ({ question }) => {
                 value={answer.id}
                 {...register('answers', {
                   validate: (value) =>
-                    (value && value.length > 0) ||
-                    'Оберіть хоча б одну відповідь',
+                    (value && value.length > 0) || 'Choose an answer to continue',
                 })}
               />
-              <span className="checkmark checkbox"></span>
+              <span className="choice-letter">{answerLetter(index)}</span>
               <span className="label-text">{answer.content}</span>
             </label>
           </li>

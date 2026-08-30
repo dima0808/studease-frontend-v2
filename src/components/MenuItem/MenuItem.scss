@@ -1,31 +1,58 @@
 .menu-item {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  column-gap: 10px;
-  padding: 18px 21px;
-  border-radius: var(--border-radius-large);
-  font-weight: 600;
+  column-gap: 12px;
+  padding: 13px 14px;
+
+  font-size: 15px;
+  font-weight: var(--font-weight-medium);
+  color: var(--color-neutral-800);
+
   transition:
-    background-color 0.2s ease,
-    color 0.2s ease;
-  color: var(--color-text-black);
+    background-color var(--transition-duration),
+    color var(--transition-duration);
 
   @include hover {
-    background-color: #eceff5;
-    color: var(--color-blue);
+    background-color: var(--wash-ink-7);
+    color: var(--color-text);
   }
 
   &__icon {
-    width: 20px;
-    height: 20px;
+    flex: none;
   }
 
+  &__count {
+    @include tabular-nums;
+    margin-left: auto;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--color-neutral-600);
+  }
+
+  &__flag {
+    margin-left: auto;
+    font-size: 10px;
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-accent-700);
+  }
+
+  // Active is an ink block. Not a tint, not a border, not a radius.
   &--active {
-    padding: 17px 20px;
-    border: 1px solid #dadada;
-    background-color: #eceff5;
-    color: var(--color-blue);
+    background-color: var(--color-text);
+    color: var(--color-bg);
+    font-weight: 700;
     pointer-events: none;
-    cursor: none;
+
+    .menu-item__count {
+      color: inherit;
+      opacity: 0.75;
+    }
+
+    .menu-item__flag {
+      color: inherit;
+      opacity: 0.75;
+    }
   }
 }

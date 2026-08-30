@@ -10,6 +10,9 @@ import MultipleChoices from '../components/MultipleChoices';
 import Essay from '../components/Essay';
 import SingleChoice from '@/pages/TestSessionPage/components/SingleChoice';
 import Button from '@/components/Button';
+import TickStrip from '@/components/TickStrip';
+import AttemptBar from '@/pages/TestSessionPage/components/AttemptBar';
+import { ArrowRight } from 'lucide-react';
 import classNames from 'classnames';
 import { motion as Motion, AnimatePresence } from 'framer-motion';
 import image from '@/assets/icons/error.svg';
@@ -21,11 +24,13 @@ import { useAttemptCountdown } from '@/hooks/useAttemptCountdown';
 import NotificationErrorMessage from '@/components/NotificationErrorMessage';
 
 const QUESTION_TYPE_LABEL = {
-  single_choice: 'Single Choice',
-  multiple_choices: 'Multiple Choices',
-  matching: 'Matching',
+  single_choice: 'Single choice',
+  multiple_choices: 'Multiple choice',
+  matching: 'Matching pairs',
   essay: 'Essay',
 };
+
+const pad = (value) => String(value).padStart(2, '0');
 
 const TestQuestions = () => {
   const {
@@ -160,6 +165,32 @@ const TestQuestions = () => {
     submitAction(payload).finally(() => setIsSubmitting(false));
   };
 
+  // Skipping is answering with nothing — the server keeps the entry unanswered
+  // so the question can come back to the student later.
+  const onSkip = () => {
+    if (isSubmitting || isLastQuestion) return;
+
+    setIsSubmitting(true);
+    getNextQuestion({
+      testId,
+      responseEntryId: currentQuestion.responseEntryId,
+      answerIds: [],
+      answerContent: null,
+    }).finally(() => setIsSubmitting(false));
+  };
+
+  const hasError = !!errors.answers || !!errors.answerContent;
+  const answered = Math.max(questionNumber - 1, 0);
+  const toGo = Math.max(totalQuestions - answered, 0);
+
+  const typeLine = hasError
+    ? errors.answerContent?.message ||
+      errors.answers?.message ||
+      'Choose an answer to continue'
+    : `${QUESTION_TYPE_LABEL[question.type] ?? 'Question'}${
+        question.points ? ` · ${question.points} points` : ''
+      }`;
+
   return (
     <FormProvider {...methods}>
       {/* A submission that failed without costing us the attempt — a rejected
@@ -170,77 +201,96 @@ const TestQuestions = () => {
         onClose={clearAttemptError}
         duration={5000}
       />
-      <form
-        className={classNames('test-questions', {
-          error: !!errors.answers || !!errors.answerContent,
-        })}
-        onSubmit={handleSubmit(onSubmit)}
-      >
-        <div className="progress-container">
-          <div
-            className="progress-bar"
-            style={{
-              width: `${
-                totalQuestions
-                  ? Math.round(((questionNumber - 1) * 100) / totalQuestions)
-                  : 0
-              }%`,
-            }}
-          />
+      <form className="test-questions" onSubmit={handleSubmit(onSubmit)}>
+        <AttemptBar ruled>
+          <div className="attempt__bar-right">
+            <span className="attempt__saved">Saved just now</span>
+            <Timer seconds={seconds} />
+          </div>
+        </AttemptBar>
+
+        <div className="attempt__body">
+          <div className="attempt__content">
+            <div className="test-questions__head">
+              <span className="test-questions__index">
+                {pad(questionNumber)} / {pad(totalQuestions)}
+              </span>
+              <span
+                className={classNames('test-questions__type', {
+                  'test-questions__type--error': hasError,
+                })}
+              >
+                {typeLine}
+              </span>
+            </div>
+
+            <AnimatePresence
+              mode="wait"
+              onExitComplete={() => {
+                reset({ answers: [], answerContent: null });
+              }}
+            >
+              <Motion.div
+                key={currentQuestion.responseEntryId}
+                initial={{ opacity: 0, x: 100 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -100 }}
+                transition={{ duration: 0.2, ease: 'easeOut' }}
+              >
+                <h2 className="test-questions__title">{question.content}</h2>
+
+                <div className="test-questions__answers">
+                  {question.type === 'single_choice' && (
+                    <SingleChoice question={question} />
+                  )}
+                  {question.type === 'multiple_choices' && (
+                    <MultipleChoices question={question} />
+                  )}
+                  {question.type === 'essay' && <Essay question={question} />}
+                  {question.type === 'matching' && (
+                    <MatchPairs question={question} />
+                  )}
+                </div>
+              </Motion.div>
+            </AnimatePresence>
+          </div>
         </div>
 
-        <Timer seconds={seconds} />
+        <div className="attempt__footer">
+          <div className="test-questions__progress">
+            <TickStrip
+              total={totalQuestions}
+              answered={answered}
+              current={questionNumber}
+            />
+            <span className="test-questions__count">
+              {answered} answered · {toGo} to go
+            </span>
+          </div>
 
-        <div className="progress-info">
-          <p
-            className={classNames('question-type', {
-              error: !!errors.answers || !!errors.answerContent,
-            })}
-          >
-            {errors.answerContent
-              ? errors.answerContent.message
-              : errors.answers
-                ? 'Please select an answer'
-                : (QUESTION_TYPE_LABEL[question.type] ?? 'Question')}
-          </p>
-          <p className="progress-text">
-            Question {questionNumber} of {totalQuestions}
-          </p>
-        </div>
-
-        <AnimatePresence
-          mode="wait"
-          onExitComplete={() => {
-            reset({ answers: [], answerContent: null });
-          }}
-        >
-          <Motion.div
-            key={currentQuestion.responseEntryId}
-            initial={{ opacity: 0, x: 100 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -100 }}
-            transition={{ duration: 0.2, ease: 'easeOut' }}
-          >
-            <h3>{question.content}</h3>
-
-            {question.type === 'single_choice' && (
-              <SingleChoice question={question} />
+          <div className="test-questions__actions">
+            {!isLastQuestion && (
+              <button
+                type="button"
+                className="attempt-link attempt-link--quiet"
+                onClick={onSkip}
+                disabled={isSubmitting}
+              >
+                Skip for now
+              </button>
             )}
-            {question.type === 'multiple_choices' && (
-              <MultipleChoices question={question} />
-            )}
-            {question.type === 'essay' && <Essay question={question} />}
-            {question.type === 'matching' && <MatchPairs question={question} />}
-
             <Button
-              className="question-block__button"
               theme="primary"
-              text={isLastQuestion ? 'Finish' : 'Next'}
+              size="lg"
+              icon={ArrowRight}
+              iconSize={18}
+              iconPosition="end"
+              text={isLastQuestion ? 'Finish' : 'Next question'}
               type="submit"
               disabled={isSubmitting}
             />
-          </Motion.div>
-        </AnimatePresence>
+          </div>
+        </div>
       </form>
     </FormProvider>
   );

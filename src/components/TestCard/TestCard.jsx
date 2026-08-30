@@ -2,9 +2,8 @@ import ItemCard from '@/components/ItemCard';
 import Info from '@/components/ItemCard/components/Info';
 import Status from '@/components/ItemCard/components/Status';
 import CardActions from '@/components/ItemCard/components/CardActions';
-import StartIcon from '@/components/icons/StartIcon';
-import EndIcon from '@/components/icons/EndIcon';
-import GroupIcon from '@/components/icons/GroupIcon';
+import { formatDay, formatShortDate } from '@/utils/formatDate';
+import classNames from 'classnames';
 
 const TestCard = (props) => {
   const {
@@ -15,9 +14,15 @@ const TestCard = (props) => {
     wide,
     openDate,
     deadline,
-    startedSessions,
+    startedSessions = 0,
+    questionsCount,
+    maxScore,
     selectedItems,
   } = props;
+
+  const statusLine = isActive
+    ? `Open${startedSessions ? ` · ${startedSessions} taking now` : ''}`
+    : `Closed ${formatDay(deadline)}`;
 
   return (
     <ItemCard
@@ -25,28 +30,44 @@ const TestCard = (props) => {
       index={index}
       name={name}
       wide={wide}
+      isOpen={isActive}
+      className="item-card--tests"
       selectedItems={selectedItems}
+      statusLine={statusLine}
+      tickTotal={questionsCount}
+      meta={`${questionsCount} questions · ${maxScore} points`}
       extraContent={
-        <>
-          <Info title="Start" description={openDate} icon={StartIcon} />
-          <Info title="Deadline" description={deadline} icon={EndIcon} />
-          <Info
-            title="Taking right now"
-            description={startedSessions}
-            icon={GroupIcon}
-          />
-        </>
+        wide ? (
+          <>
+            <Info title="Opens" description={formatShortDate(openDate)} />
+            <Info title="Closes" description={formatShortDate(deadline)} />
+            <Info
+              title="Taking now"
+              description={startedSessions}
+              className={classNames('item-card__info--count', {
+                'item-card__info--zero': !startedSessions,
+              })}
+            />
+          </>
+        ) : (
+          <>
+            <Info title="Opens" description={formatShortDate(openDate)} />
+            <Info title="Closes" description={formatShortDate(deadline)} />
+            <Info
+              title="Questions"
+              description={`${questionsCount} · ${maxScore} pts`}
+            />
+          </>
+        )
       }
+      status={<Status isActive={isActive} params={['Open', 'Closed']} />}
       actions={
-        <>
-          <Status isActive={isActive} />
-          <CardActions
-            isSelected={selectedItems.some((i) => i.id === id)}
-            name={name}
-            wide={wide}
-            id={id}
-          />
-        </>
+        <CardActions
+          isSelected={selectedItems.some((i) => i.id === id)}
+          name={name}
+          wide={wide}
+          id={id}
+        />
       }
     />
   );

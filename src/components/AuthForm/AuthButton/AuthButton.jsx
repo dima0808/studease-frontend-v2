@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import { ArrowRight } from 'lucide-react';
 
 const AuthButton = (props) => {
   const { title, isLoading } = props;
@@ -6,11 +7,13 @@ const AuthButton = (props) => {
   return (
     <button
       type="submit"
+      disabled={isLoading}
       className={classNames('auth-form__button', {
         'auth-form__button--loading': isLoading,
       })}
     >
-      {title}
+      <span>{isLoading ? 'One moment' : title}</span>
+      <ArrowRight size={18} strokeWidth={2.5} />
     </button>
   );
 };

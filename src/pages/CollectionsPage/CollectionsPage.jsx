@@ -1,7 +1,6 @@
 import GenericListPage from '@/components/GenericListPage';
 import { useActions } from '@/hooks/useActions';
 import CollectionCard from '@/components/CollectionCard';
-import './CollectionsPage.scss';
 import { selectCollections } from '@/store/collections/collections.slice';
 
 const CollectionsPage = () => {
@@ -20,6 +19,7 @@ const CollectionsPage = () => {
           {...collection}
         />
       )}
+      columns={['Collection', 'Questions', 'Used in tests', 'Status', '']}
       hasSort
     />
   );

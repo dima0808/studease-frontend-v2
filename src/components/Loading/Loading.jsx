@@ -9,7 +9,7 @@ const Loading = ({ className, text }) => {
         <span></span>
         <span></span>
       </div>
-      <p className="loading__text">Loading {text}...</p>
+      <p className="loading__text">Loading {text}</p>
     </div>
   );
 };

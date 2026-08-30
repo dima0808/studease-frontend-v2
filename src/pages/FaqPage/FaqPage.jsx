@@ -1,191 +1,34 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './FaqPage.scss';
-import { fadeUp } from '@/constants/motionVariants';
 import Button from '@/components/Button';
-import { FaArrowLeft } from 'react-icons/fa';
-import { motion as Motion } from 'framer-motion';
+import Lockup from '@/components/Lockup';
+import KpiFootnote from '@/components/KpiFootnote';
+import classNames from 'classnames';
 import { useNavigate } from 'react-router-dom';
-import { Check, Clipboard } from 'lucide-react';
+import { ArrowLeft, Check, ChevronDown, Clipboard } from 'lucide-react';
+import { faqQuestions } from './faqQuestions.data';
+import { snippets } from './jsonSnippets.data';
+import { guideCards, questionTypes, RAIL } from './transferGuide.data';
 
-const snippets = {
-  collection: `{
-  "schemaVersion": 1,
-  "kind": "collection",
-  "exportedAt": "2026-04-26T00:00:00.000Z",
-  "data": {
-    "name": "Frontend Basics Collection",
-    "questions": [
-      {
-        "content": "Which hook is used for local state in React?",
-        "points": 1,
-        "type": "single_choice",
-        "answers": [
-          { "content": "useMemo", "isCorrect": false },
-          { "content": "useState", "isCorrect": true },
-          { "content": "useEffect", "isCorrect": false }
-        ]
-      },
-      {
-        "content": "Choose JavaScript primitive types.",
-        "points": 2,
-        "type": "multiple_choices",
-        "answers": [
-          { "content": "string", "isCorrect": true },
-          { "content": "number", "isCorrect": true },
-          { "content": "array", "isCorrect": false },
-          { "content": "boolean", "isCorrect": true }
-        ]
-      },
-      {
-        "content": "Explain what asynchronous code means.",
-        "points": 3,
-        "type": "essay",
-        "answers": []
-      },
-      {
-        "content": "Match HTTP status codes with meanings.",
-        "points": 4,
-        "type": "matching",
-        "answers": [
-          { "leftOption": "200", "rightOption": "OK" },
-          { "leftOption": "201", "rightOption": "Created" },
-          { "leftOption": "404", "rightOption": "Not Found" }
-        ]
-      }
-    ]
-  }
-}`,
-  test: `{
-  "schemaVersion": 1,
-  "kind": "test",
-  "exportedAt": "2026-04-26T00:00:00.000Z",
-  "data": {
-    "name": "JavaScript Checkpoint",
-    "openDate": "20.09.2026 12:00",
-    "deadline": "30.09.2026 12:00",
-    "minutesToComplete": 30,
-    "maximumScore": 10,
-    "questions": [
-      {
-        "content": "What does DOM stand for?",
-        "points": 1,
-        "type": "single_choice",
-        "answers": [
-          { "content": "Document Object Model", "isCorrect": true },
-          { "content": "Data Object Mode", "isCorrect": false }
-        ]
-      }
-    ],
-    "samples": []
-  }
-}`,
-  bundle: `{
-  "schemaVersion": 1,
-  "kind": "collections",
-  "exportedAt": "2026-04-26T00:00:00.000Z",
-  "items": [
-    {
-      "name": "HTML Basics",
-      "questions": []
-    },
-    {
-      "name": "CSS Basics",
-      "questions": []
-    }
-  ]
-}`,
-};
-
-const guideCards = [
-  {
-    title: 'Export одного тесту або колекції',
-    text: 'Відкрийте сторінку Tests або Collections, натисніть меню дій на картці й оберіть Export. Система завантажить JSON-файл, який можна імпортувати назад у StudEase.',
-  },
-  {
-    title: 'Export декількох елементів',
-    text: 'Перемкніть режим дій у Select, виберіть потрібні тести або колекції та натисніть Export. Буде створено bundle-файл з масивом items.',
-  },
-  {
-    title: 'Import одного елемента',
-    text: 'На сторінці Tests або Collections натисніть Import і виберіть JSON. Якщо у файлі один елемент, відкриється форма створення з уже заповненими полями.',
-  },
-  {
-    title: 'Import bundle-файлу',
-    text: 'Якщо файл містить декілька items, система створить їх одразу. Bundle тестів імпортуйте зі сторінки Tests, bundle колекцій - зі сторінки Collections.',
-  },
+const SECTIONS = [
+  { value: 'general', label: 'Taking a test' },
+  { value: 'transfer', label: 'Import & export' },
 ];
 
-const questionTypes = [
-  {
-    type: 'single_choice',
-    description:
-      'Одна правильна відповідь. У answers лише один обʼєкт має isCorrect: true.',
-  },
-  {
-    type: 'multiple_choices',
-    description:
-      'Кілька правильних відповідей. Кожен правильний варіант має isCorrect: true.',
-  },
-  {
-    type: 'essay',
-    description:
-      'Відкрите питання. Для нього залишайте answers порожнім масивом.',
-  },
-  {
-    type: 'matching',
-    description:
-      'Пари для співставлення. У файлі достатньо leftOption і rightOption; неправильні пари не потрібно додавати.',
-  },
-];
-
-const generalFaq = [
-  {
-    question: 'З чого краще проходити тести?',
-    answer:
-      'Рекомендовано проходити тести з компʼютера або ноутбука в сучасному браузері: Google Chrome, Microsoft Edge або Firefox. З телефона чи планшета тест також може працювати, але на малому екрані окремі елементи можуть бути менш зручними.',
-  },
-  {
-    question: 'Що робити, якщо сторінка тесту зависла або не відкривається?',
-    answer:
-      'Перевірте інтернет-зʼєднання й оновіть сторінку. Якщо проблема не зникла, очистіть кеш браузера або спробуйте зайти з іншого пристрою.',
-  },
-  {
-    question: 'Як відбувається проходження тесту?',
-    answer:
-      'Після старту питання зʼявляються по одному. Студент обирає або вводить відповідь і переходить далі. Після завершення система зберігає результат.',
-  },
-  {
-    question: 'Які типи питань можуть бути в тесті?',
-    answer:
-      'Підтримуються питання з однією правильною відповіддю, з кількома правильними відповідями, відкриті питання та завдання на співставлення пар.',
-  },
-  {
-    question: 'Чи можна повернутися до попереднього питання?',
-    answer:
-      'У більшості випадків ні. Тест побудований так, щоб студент уважно перевіряв відповідь перед переходом до наступного питання.',
-  },
-  {
-    question: 'Що робити, якщо закінчився час?',
-    answer:
-      'Після завершення таймера тест автоматично завершується, а вже вибрані або введені відповіді зберігаються.',
-  },
-  {
-    question: 'Чи можна пройти тест повторно?',
-    answer:
-      'Повторне проходження можливе лише за дозволом адміністратора або викладача.',
-  },
-  {
-    question: 'Чому оцінка може не відображатися після завершення тесту?',
-    answer:
-      'Оцінка показується тільки тоді, коли це дозволено налаштуваннями тесту. Якщо оцінку приховано, студент бачить лише інформацію про завершення або свої відповіді.',
-  },
-];
+/** Renders `**bold**` runs — the words a student is hunting for on screen. */
+const RichText = ({ text }) => (
+  <>
+    {text.split(/\*\*(.+?)\*\*/g).map((part, index) =>
+      index % 2 ? <strong key={index}>{part}</strong> : part,
+    )}
+  </>
+);
 
 const CodeExample = ({ id, title, description, code, copiedId, onCopy }) => (
   <section className="faq-page__example">
     <div className="faq-page__example-header">
       <div>
-        <h2>{title}</h2>
+        <h3>{title}</h3>
         <p>{description}</p>
       </div>
       <button
@@ -194,7 +37,7 @@ const CodeExample = ({ id, title, description, code, copiedId, onCopy }) => (
         onClick={() => onCopy(id, code)}
         title="Copy JSON"
       >
-        {copiedId === id ? <Check size={18} /> : <Clipboard size={18} />}
+        {copiedId === id ? <Check size={16} /> : <Clipboard size={16} />}
       </button>
     </div>
     <pre className="faq-page__code">
@@ -207,6 +50,7 @@ const Faq = () => {
   const navigate = useNavigate();
   const [copiedId, setCopiedId] = useState(null);
   const [activeSection, setActiveSection] = useState('general');
+  const [openQuestion, setOpenQuestion] = useState(0);
 
   const handleCopy = async (id, code) => {
     try {
@@ -220,153 +64,147 @@ const Faq = () => {
 
   return (
     <div className="faq-page">
-      <Motion.div
-        className="faq-page__header"
-        variants={fadeUp}
-        initial="hidden"
-        animate="visible"
-        custom={0.1}
-      >
-        <div className="faq-page__title-row">
-          <Button
-            className="info-layout-page__back"
-            text={<FaArrowLeft size={21} />}
-            onClick={() => navigate(-1)}
-          />
-          <div>
-            <h1 className="faq-page__title">FAQ</h1>
-            <p className="faq-page__subtitle">
-              Довідка для проходження тестів і перенесення даних через JSON.
-            </p>
-          </div>
-        </div>
-      </Motion.div>
-
-      <div className="faq-page__switcher" aria-label="FAQ sections">
-        <button
-          type="button"
-          className={activeSection === 'general' ? 'is-active' : ''}
-          onClick={() => setActiveSection('general')}
-        >
-          Загальні запитання про тести
-        </button>
-        <button
-          type="button"
-          className={activeSection === 'transfer' ? 'is-active' : ''}
-          onClick={() => setActiveSection('transfer')}
-        >
-          Інформація про імпорт та експорт тестів
-        </button>
+      <div className="faq-page__bar">
+        <Lockup />
+        <Button
+          text="Back"
+          icon={ArrowLeft}
+          iconSize={16}
+          onClick={() => navigate(-1)}
+        />
       </div>
 
-      {activeSection === 'general' && (
-        <section className="faq-page__general">
-          <div className="faq-page__section-heading">
-            <h2>Загальні питання про тести</h2>
-            <p>Базові правила проходження тестів і типові ситуації.</p>
-          </div>
-          <div className="faq-page__general-list">
-            {generalFaq.map((item, index) => (
-              <Motion.article
-                key={item.question}
-                className="faq-page__general-item"
-                variants={fadeUp}
-                initial="hidden"
-                animate="visible"
-                custom={(index + 3) * 0.08}
+      <div className="faq-page__body">
+        <div className="faq-page__main">
+          <p className="faq-page__kicker">Help</p>
+          <h1 className="faq-page__title">Before you ask</h1>
+
+          <div className="faq-page__tabs">
+            {SECTIONS.map((section) => (
+              <button
+                key={section.value}
+                type="button"
+                className={classNames('faq-page__tab', {
+                  'faq-page__tab--active': activeSection === section.value,
+                })}
+                onClick={() => setActiveSection(section.value)}
               >
-                <h3>{item.question}</h3>
-                <p>{item.answer}</p>
-              </Motion.article>
+                {section.label}
+              </button>
             ))}
           </div>
-        </section>
-      )}
 
-      {activeSection === 'transfer' && (
-        <>
-          <Motion.section
-            className="faq-page__intro"
-            variants={fadeUp}
-            initial="hidden"
-            animate="visible"
-            custom={0.2}
-          >
-            <div>
-              <span className="faq-page__eyebrow">JSON format</span>
-              <h2>
-                Файли мають бути простими, версіонованими і без службових id
-              </h2>
+          {activeSection === 'general' && (
+            <div className="faq-page__list">
+              {faqQuestions.map((item, index) => {
+                const isOpen = openQuestion === index;
+
+                return (
+                  <div className="faq-page__item" key={item.question}>
+                    <button
+                      type="button"
+                      className="faq-page__question"
+                      aria-expanded={isOpen}
+                      onClick={() => setOpenQuestion(isOpen ? null : index)}
+                    >
+                      <span>{item.question}</span>
+                      <ChevronDown
+                        size={18}
+                        strokeWidth={2.4}
+                        className={classNames('faq-page__chevron', {
+                          'faq-page__chevron--open': isOpen,
+                        })}
+                      />
+                    </button>
+                    {isOpen && (
+                      <p className="faq-page__answer">
+                        <RichText text={item.answer} />
+                      </p>
+                    )}
+                  </div>
+                );
+              })}
             </div>
-            <p>
-              StudEase очікує `schemaVersion: 1`, поле `kind` і дані в `data`
-              або `items`. Старі id, статистика сесій, кількість проходжень і
-              обчислювані поля не потрібні: система створить нові записи сама.
-            </p>
-          </Motion.section>
+          )}
 
-          <section className="faq-page__section-heading">
-            <h2>JSON import/export</h2>
-            <p>Як переносити тести й колекції між файлами та StudEase.</p>
-          </section>
+          {activeSection === 'transfer' && (
+            <div className="faq-page__transfer">
+              <p className="faq-page__lede">
+                StudEase expects <code>schemaVersion: 1</code>, a{' '}
+                <code>kind</code>, and the payload in <code>data</code> or{' '}
+                <code>items</code>. Old ids, session counts and anything the
+                server computes are not needed — it creates fresh records.
+              </p>
 
-          <section className="faq-page__cards">
-            {guideCards.map((card, index) => (
-              <Motion.article
-                key={card.title}
-                className="faq-page__card"
-                variants={fadeUp}
-                initial="hidden"
-                animate="visible"
-                custom={(index + 3) * 0.1}
-              >
-                <span>{index + 1}</span>
-                <h2>{card.title}</h2>
-                <p>{card.text}</p>
-              </Motion.article>
-            ))}
-          </section>
+              <div className="faq-page__list">
+                {guideCards.map((card, index) => (
+                  <div className="faq-page__item" key={card.title}>
+                    <div className="faq-page__step">
+                      <span className="faq-page__step-index">
+                        {String(index + 1).padStart(2, '0')}
+                      </span>
+                      <div>
+                        <h3 className="faq-page__step-title">{card.title}</h3>
+                        <p className="faq-page__step-text">{card.text}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
 
-          <section className="faq-page__types">
-            <h2>Типи питань у JSON</h2>
-            <div className="faq-page__type-grid">
-              {questionTypes.map((item) => (
-                <div key={item.type} className="faq-page__type">
-                  <code>{item.type}</code>
-                  <p>{item.description}</p>
-                </div>
-              ))}
+              <h2 className="faq-page__heading">Question types in JSON</h2>
+              <div className="faq-page__list">
+                {questionTypes.map((item) => (
+                  <div className="faq-page__item" key={item.type}>
+                    <div className="faq-page__step">
+                      <code className="faq-page__type">{item.type}</code>
+                      <p className="faq-page__step-text">{item.description}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <h2 className="faq-page__heading">Files, in full</h2>
+              <div className="faq-page__examples">
+                <CodeExample
+                  id="collection"
+                  title="A collection"
+                  description="Carries every supported question type."
+                  code={snippets.collection}
+                  copiedId={copiedId}
+                  onCopy={handleCopy}
+                />
+                <CodeExample
+                  id="test"
+                  title="A test"
+                  description="Dates, minutes to complete, questions, optional samples."
+                  code={snippets.test}
+                  copiedId={copiedId}
+                  onCopy={handleCopy}
+                />
+                <CodeExample
+                  id="bundle"
+                  title="A bundle"
+                  description="The shape for importing or exporting several items."
+                  code={snippets.bundle}
+                  copiedId={copiedId}
+                  onCopy={handleCopy}
+                />
+              </div>
             </div>
-          </section>
+          )}
+        </div>
 
-          <div className="faq-page__examples">
-            <CodeExample
-              id="collection"
-              title="Приклад колекції"
-              description="Містить усі підтримувані типи питань."
-              code={snippets.collection}
-              copiedId={copiedId}
-              onCopy={handleCopy}
-            />
-            <CodeExample
-              id="test"
-              title="Приклад тесту"
-              description="Тест має дати, час проходження, питання і optional samples."
-              code={snippets.test}
-              copiedId={copiedId}
-              onCopy={handleCopy}
-            />
-            <CodeExample
-              id="bundle"
-              title="Приклад bundle-файлу"
-              description="Формат для імпорту або експорту декількох елементів."
-              code={snippets.bundle}
-              copiedId={copiedId}
-              onCopy={handleCopy}
-            />
-          </div>
-        </>
-      )}
+        <aside className="faq-page__rail">
+          {RAIL.map((item) => (
+            <div className="faq-page__rail-item" key={item.title}>
+              <h2 className="faq-page__rail-title">{item.title}</h2>
+              <p className="faq-page__rail-text">{item.text}</p>
+            </div>
+          ))}
+          <KpiFootnote className="faq-page__rail-footnote" />
+        </aside>
+      </div>
     </div>
   );
 };

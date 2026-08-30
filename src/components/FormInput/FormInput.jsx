@@ -1,32 +1,32 @@
+import classNames from 'classnames';
 import './FormInput.scss';
 
+/**
+ * Label above the field and it stays there; the error goes beneath, so a
+ * student never loses track of which field they are in.
+ */
 const FormInput = (props) => {
   const { label, name, type = 'text', register, rules, errors } = props;
 
-  const hasError = !!errors[name];
+  const error = errors?.[name];
 
   return (
     <div className="form-input">
+      {label && (
+        <label className="form-input__label" htmlFor={name}>
+          {label}
+        </label>
+      )}
       <input
+        id={name}
         type={type}
-        placeholder=" "
         {...register(name, rules)}
-        className={
-          hasError
-            ? 'form-input__input form-input__input--error'
-            : 'form-input__input'
-        }
+        className={classNames('form-input__input', {
+          'form-input__input--error': !!error,
+        })}
+        aria-invalid={!!error}
       />
-
-      <label
-        className={
-          hasError
-            ? 'form-input__label form-input__label--error'
-            : 'form-input__label'
-        }
-      >
-        {hasError ? errors[name].message : label}
-      </label>
+      {error && <span className="form-input__error">{error.message}</span>}
     </div>
   );
 };
