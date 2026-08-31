@@ -61,7 +61,7 @@ const TestInfoPage = () => {
     }
   }, [testId, getFullTestById, navigate, getFinishedSessionsByTestId]);
 
-  const testLink = `${HTTP_PROTOCOL}://${IP}${FRONTEND_PORT}/${testId}`;
+  const testLink = `${HTTP_PROTOCOL}://${IP}${FRONTEND_PORT ? `:${FRONTEND_PORT}` : ''}/${testId}`;
 
   const handleCopyLink = async () => {
     try {

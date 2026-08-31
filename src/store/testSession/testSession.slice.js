@@ -33,6 +33,9 @@ const initialState = {
   isLoading: false,
   error: null,
   attemptError: null,
+  // HTTP status behind `attemptError`, so a caller can tell "this name is taken"
+  // (409) from "the network is down" (null) and give advice that actually helps.
+  attemptErrorStatus: null,
   isLoadingTestSession: false,
 };
 
@@ -51,6 +54,8 @@ const testSessionSlice = createSlice({
   reducers: {
     setStep: (state, action) => {
       state.step = action.payload;
+      state.attemptError = null;
+      state.attemptErrorStatus = null;
     },
     setCredentials: (state, action) => {
       state.credentials = action.payload;
@@ -58,6 +63,7 @@ const testSessionSlice = createSlice({
     },
     clearAttemptError: (state) => {
       state.attemptError = null;
+      state.attemptErrorStatus = null;
     },
     forceEndTestSession: (state, action) => {
       endAttempt(state, action.payload);
@@ -84,6 +90,7 @@ const testSessionSlice = createSlice({
       })
       .addCase(startTestSession.pending, (state) => {
         state.attemptError = null;
+        state.attemptErrorStatus = null;
         state.isLoadingTestSession = true;
       })
       .addMatcher(
@@ -94,6 +101,7 @@ const testSessionSlice = createSlice({
           state.currentQuestion = currentQuestion;
           state.isLoadingTestSession = false;
           state.attemptError = null;
+          state.attemptErrorStatus = null;
           if (sessionKey) state.sessionKey = sessionKey;
           if (endsAt) state.endsAt = endsAt;
         },
@@ -109,6 +117,7 @@ const testSessionSlice = createSlice({
           const { status, message } = action.payload ?? {};
           state.isLoadingTestSession = false;
           state.attemptError = message ?? null;
+          state.attemptErrorStatus = status ?? null;
 
           // The token is unusable — there is nothing to resume, so send the
           // student back to the start screen.

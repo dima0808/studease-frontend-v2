@@ -17,7 +17,8 @@ const STUDENT_NAME_PATTERN = new RegExp(
 );
 
 const TestUserForm = ({ name }) => {
-  const { credentials } = useSelector((state) => state.testSession);
+  const { credentials, attemptError, attemptErrorStatus, isLoadingTestSession } =
+    useSelector((state) => state.testSession);
   const { testId } = useParams();
 
   const {
@@ -33,8 +34,12 @@ const TestUserForm = ({ name }) => {
   const handleStart = (data) => {
     setCredentials(data);
     startTestSession({ testId, credentials: data });
-    setStep(3);
   };
+
+  const startError =
+    attemptErrorStatus === 409
+      ? `${attemptError}. Цю спробу вже розпочато на цьому пристрої або в іншій вкладці — поверніться до неї. Якщо це не ви, зверніться до викладача.`
+      : attemptError;
 
   return (
     <>
@@ -96,13 +101,25 @@ const TestUserForm = ({ name }) => {
         </div>
       </div>
 
+          {startError && (
+            <p className="test-user-form__error" role="alert">
+              {startError}
+            </p>
+          )}
+
           <div className="test-intro__actions">
-            <Button onClick={() => setStep(1)} text="Back" size="lg" />
+            <Button
+              onClick={() => setStep(1)}
+              text="Back"
+              size="lg"
+              disabled={isLoadingTestSession}
+            />
             <Button
               theme="primary"
               size="lg"
-              text="Start the attempt"
+              text={isLoadingTestSession ? 'Starting…' : 'Start the attempt'}
               type="submit"
+              disabled={isLoadingTestSession}
             />
           </div>
         </Motion.form>
