@@ -1,8 +1,10 @@
 import classNames from 'classnames';
 import { ArrowRight } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const AuthButton = (props) => {
   const { title, isLoading } = props;
+  const { t } = useTranslation();
 
   return (
     <button
@@ -12,7 +14,7 @@ const AuthButton = (props) => {
         'auth-form__button--loading': isLoading,
       })}
     >
-      <span>{isLoading ? 'One moment' : title}</span>
+      <span>{isLoading ? t('common.oneMoment') : title}</span>
       <ArrowRight size={18} strokeWidth={2.5} />
     </button>
   );

@@ -4,6 +4,7 @@ import Navigation from './Navigation';
 import SignOutButton from '@/layout/Sidebar/SignOutButton';
 import Lockup from '@/components/Lockup';
 import KpiFootnote from '@/components/KpiFootnote';
+import LanguageSwitcher from '@/components/LanguageSwitcher';
 import classNames from 'classnames';
 import './Sidebar.scss';
 import { useSelector } from 'react-redux';
@@ -35,6 +36,10 @@ const Sidebar = () => {
             setIsCollapsed={setIsCollapsed}
           />
         </div>
+
+        {!isCollapsed && (
+          <LanguageSwitcher className="sidebar__language" />
+        )}
 
         {!isCollapsed && <KpiFootnote className="sidebar__footnote" />}
       </div>

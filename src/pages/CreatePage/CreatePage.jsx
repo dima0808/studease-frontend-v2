@@ -3,6 +3,7 @@ import SidebarCreate from '@/layout/SidebarCreate';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import { useActions } from '@/hooks/useActions';
+import { useTranslation } from 'react-i18next';
 import { useFieldArray, useForm } from 'react-hook-form';
 import FormInput from '@/components/FormInput';
 import QuestionBlock from '@/components/QuestionBlock';
@@ -49,6 +50,7 @@ const CreatePage = () => {
     createCollection,
   } = useActions();
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [errorMessage, setErrorMessage] = useState('');
   const [showAIGenerationBlock, setShowAIGenerationBlock] = useState(false);
   const location = useLocation();
@@ -90,7 +92,7 @@ const CreatePage = () => {
     const expectedKind = isTest ? 'test' : 'collection';
 
     if (importedKind !== expectedKind) {
-      setErrorMessage(`Imported file is not a ${expectedKind}`);
+      setErrorMessage(t(`create.importWrongKind_${expectedKind}`));
       navigate(pathname, { replace: true, state: null });
       return;
     }
@@ -100,7 +102,7 @@ const CreatePage = () => {
       ...importedData,
     });
     navigate(pathname, { replace: true, state: null });
-  }, [isTest, location.state, navigate, pathname, reset]);
+  }, [isTest, location.state, navigate, pathname, reset, t]);
 
   useEffect(() => {
     if (!cloneId) return;
@@ -140,7 +142,7 @@ const CreatePage = () => {
         const newData = {
           ...defaultValues,
           ...filteredData,
-          name: (filteredData.name || '') + ' (Copy)',
+          name: (filteredData.name || '') + t('create.copySuffix'),
         };
 
         reset(newData);
@@ -150,7 +152,7 @@ const CreatePage = () => {
     };
 
     fetchData();
-  }, [cloneId, isTest, getFullTestById, getFullCollectionById, reset]);
+  }, [cloneId, isTest, getFullTestById, getFullCollectionById, reset, t]);
 
   useEffect(() => {
     (async () => {
@@ -195,66 +197,61 @@ const CreatePage = () => {
             {isTest ? (
               <>
                 <FormInput
-                  label="Test Name"
+                  label={t('create.fields.testName')}
                   name="name"
                   type="text"
-                  placeholder="Java Basics Test 9"
                   register={register}
                   errors={errors}
-                  rules={{ required: 'Name is required' }}
+                  rules={{ required: t('create.errors.nameRequired') }}
                 />
 
                 <FormInput
-                  label="Open Date: 20.09.2025 12:00"
+                  label={t('create.fields.openDate')}
                   name="openDate"
                   type="text"
-                  placeholder="20.09.2025 12:00"
                   register={register}
                   errors={errors}
                   rules={{
-                    required: 'Open date is required',
+                    required: t('create.errors.openDateRequired'),
                     pattern: {
                       value: /^\d{2}\.\d{2}\.\d{4} \d{2}:\d{2}$/,
-                      message: 'Date must be in format DD.MM.YYYY HH:mm',
+                      message: t('create.errors.dateFormat'),
                     },
                   }}
                 />
 
                 <FormInput
-                  label="Deadline: 30.09.2025 12:00"
+                  label={t('create.fields.deadline')}
                   name="deadline"
                   type="text"
-                  placeholder="30.09.2025 12:00"
                   register={register}
                   errors={errors}
                   rules={{
-                    required: 'Deadline is required',
+                    required: t('create.errors.deadlineRequired'),
                     pattern: {
                       value: /^\d{2}\.\d{2}\.\d{4} \d{2}:\d{2}$/,
-                      message: 'Date must be in format DD.MM.YYYY HH:mm',
+                      message: t('create.errors.dateFormat'),
                     },
                   }}
                 />
 
                 <FormInput
-                  label="Minutes to Complete"
+                  label={t('create.fields.minutesToComplete')}
                   name="minutesToComplete"
                   type="number"
-                  placeholder="30"
                   register={register}
                   errors={errors}
                   rules={{
-                    required: 'Minutes to complete is required',
-                    min: { value: 1, message: 'Must be at least 1 minute' },
+                    required: t('create.errors.minutesRequired'),
+                    min: { value: 1, message: t('create.errors.minMinutes') },
                     valueAsNumber: true,
                   }}
                 />
 
                 <FormInput
-                  label="Maximum Score"
+                  label={t('create.fields.maximumScore')}
                   name="maximumScore"
                   type="number"
-                  placeholder="Not required. Calculated automatically if left empty"
                   register={register}
                   errors={errors}
                   rules={{
@@ -264,20 +261,19 @@ const CreatePage = () => {
               </>
             ) : (
               <FormInput
-                label="Collection Name"
+                label={t('create.fields.collectionName')}
                 name="name"
                 type="text"
-                placeholder="Enter collection name"
                 register={register}
                 errors={errors}
-                rules={{ required: 'Name is required' }}
+                rules={{ required: t('create.errors.nameRequired') }}
               />
             )}
           </div>
 
-          <h3 className="test-form__title">Questions</h3>
+          <h3 className="test-form__title">{t('create.questionsTitle')}</h3>
           {fields.length === 0 && (
-            <p className="test-form__empty">No questions added yet.</p>
+            <p className="test-form__empty">{t('create.questionsEmpty')}</p>
           )}
 
           <AnimatePresence>
@@ -303,7 +299,9 @@ const CreatePage = () => {
           </AnimatePresence>
 
           {collectionFields.length > 0 && (
-            <h3 className="test-form__title">Collections</h3>
+            <h3 className="test-form__title">
+              {t('create.collectionsTitle')}
+            </h3>
           )}
 
           <AnimatePresence>
@@ -327,7 +325,7 @@ const CreatePage = () => {
           </AnimatePresence>
 
           <button className="test-form__submit" type="submit">
-            {isTest ? 'Create Test' : 'Create Collection'}
+            {isTest ? t('create.submitTest') : t('create.submitCollection')}
           </button>
         </form>
       </div>

@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { AnimatePresence } from 'framer-motion';
 import Loading from '@/components/Loading';
 import ErrorComponent from '@/components/ErrorComponent';
@@ -19,6 +20,7 @@ const GenericListPage = ({
   const { viewMode, search, sortBy } = useSelector((state) => state.filter);
   const { data, isLoading, error } = useSelector(selector);
   const { selectedItems } = useSelector((state) => state.selection);
+  const { t } = useTranslation();
 
   useEffect(() => {
     getAllAction();
@@ -26,7 +28,7 @@ const GenericListPage = ({
 
   const filteredData = filterArr(data, { search, ...(hasSort && { sortBy }) });
 
-  if (isLoading) return <Loading text={name} />;
+  if (isLoading) return <Loading text={t(`entities.${name}`)} />;
   if (error)
     return <ErrorComponent description={error} onRetry={getAllAction} />;
   if (filteredData.length === 0) return <EmptyData name={name} />;

@@ -2,6 +2,7 @@ import './CollectionBlock.scss';
 import FormInput from '@/components/FormInput';
 import { Trash2 } from 'lucide-react';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 const CollectionBlock = ({
   register,
@@ -10,10 +11,14 @@ const CollectionBlock = ({
   errors,
   delCollection,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <div className="collection">
       <div className="collection__header">
-        <h3 className="collection__title">Collection #{index + 1}</h3>
+        <h3 className="collection__title">
+          {t('create.collectionBlock.title', { number: index + 1 })}
+        </h3>
 
         <button
           type="button"
@@ -25,22 +30,27 @@ const CollectionBlock = ({
       </div>
 
       <div className="collection__field">
-        <label className="collection__label">Collection Name</label>
+        <label className="collection__label">
+          {t('create.collectionBlock.name')}
+        </label>
 
         <select
           className="collection__select"
           defaultValue=""
           {...register(`samples.${index}.collectionId`, {
-            required: 'Collection is required',
+            required: t('create.collectionBlock.required'),
           })}
         >
           <option value="" disabled>
-            Select a collection
+            {t('create.collectionBlock.selectPlaceholder')}
           </option>
 
           {collections.map((collection) => (
             <option key={collection.id} value={collection.id}>
-              {collection.name} (Questions: {collection.questionsCount})
+              {t('create.collectionBlock.option', {
+                name: collection.name,
+                count: collection.questionsCount,
+              })}
             </option>
           ))}
         </select>
@@ -56,29 +66,30 @@ const CollectionBlock = ({
 
       {/* Points */}
       <FormInput
-        label="Points"
+        label={t('create.collectionBlock.points')}
         name={`samples.${index}.points`}
         type="number"
-        placeholder="Points for completing the collection"
         register={register}
         errors={errors}
         rules={{
-          required: 'Points are required',
-          min: { value: 1, message: 'Must be at least 1 point' },
+          required: t('create.collectionBlock.pointsRequired'),
+          min: { value: 1, message: t('create.collectionBlock.minPoints') },
           valueAsNumber: true,
         }}
       />
 
       <FormInput
-        label="Questions Count"
+        label={t('create.collectionBlock.questionsCount')}
         name={`samples.${index}.questionsCount`}
         type="number"
-        placeholder="Number of questions to take from collection"
         register={register}
         errors={errors}
         rules={{
-          required: 'Questions count is required',
-          min: { value: 1, message: 'Must be at least 1 question' },
+          required: t('create.collectionBlock.questionsCountRequired'),
+          min: {
+            value: 1,
+            message: t('create.collectionBlock.minQuestions'),
+          },
           valueAsNumber: true,
         }}
       />

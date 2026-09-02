@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import api from '@/api/axios';
+import i18n from '@/i18n/config';
 import { parseDate } from '@/utils/parseDate';
 
 export const getAllTests = createAsyncThunk(
@@ -19,7 +20,7 @@ export const getAllTests = createAsyncThunk(
         };
       });
     } catch {
-      return rejectWithValue('Failed to fetch tests');
+      return rejectWithValue(i18n.t('errors.fetchTests'));
     }
   },
 );
@@ -31,7 +32,7 @@ export const getTestById = createAsyncThunk(
       const { data } = await api.get('/admin/tests/' + testId);
       return data;
     } catch {
-      return rejectWithValue('Failed to fetch test');
+      return rejectWithValue(i18n.t('errors.fetchTest'));
     }
   },
 );
@@ -43,7 +44,7 @@ export const getQuestionsByTestId = createAsyncThunk(
       const { data } = await api.get('/admin/questions/by-test/' + testId);
       return data;
     } catch {
-      return rejectWithValue('Failed to fetch questions');
+      return rejectWithValue(i18n.t('errors.fetchQuestions'));
     }
   },
 );
@@ -55,7 +56,7 @@ export const getSamplesByTestId = createAsyncThunk(
       const { data } = await api.get('/admin/samples/' + testId);
       return data;
     } catch {
-      return rejectWithValue('Failed to fetch samples');
+      return rejectWithValue(i18n.t('errors.fetchSamples'));
     }
   },
 );
@@ -77,7 +78,7 @@ export const getFinishedSessionsByTestId = createAsyncThunk(
     } catch (error) {
       console.log(error.response.data.message);
       return rejectWithValue(
-        error.response.data.message || 'Failed to load session details',
+        error.response.data.message || i18n.t('errors.fetchSessionDetails'),
       );
     }
   },
@@ -97,7 +98,7 @@ export const getFullTestById = createAsyncThunk(
         ...samples,
       };
     } catch {
-      return rejectWithValue('Failed to fetch full test');
+      return rejectWithValue(i18n.t('errors.fetchFullTest'));
     }
   },
 );
@@ -110,7 +111,7 @@ export const createTest = createAsyncThunk(
       return data;
     } catch (error) {
       return rejectWithValue(
-        error.response.data.message || 'Failed to create test',
+        error.response.data.message || i18n.t('errors.createTest'),
       );
     }
   },
@@ -128,7 +129,7 @@ export const generateQuestionsByAI = createAsyncThunk(
       );
       return data;
     } catch {
-      return rejectWithValue('Failed to generate questions');
+      return rejectWithValue(i18n.t('errors.generateQuestions'));
     }
   },
 );
@@ -141,7 +142,7 @@ export const deleteTestById = createAsyncThunk(
       return testId;
     } catch (error) {
       return rejectWithValue(
-        error.response.data.message || 'Failed to delete test',
+        error.response.data.message || i18n.t('errors.deleteTest'),
       );
     }
   },
@@ -159,7 +160,7 @@ export const deleteTestsByIds = createAsyncThunk(
       return tests;
     } catch (error) {
       return rejectWithValue(
-        error.response.data.message || 'Failed to delete test',
+        error.response.data.message || i18n.t('errors.deleteTest'),
       );
     }
   },

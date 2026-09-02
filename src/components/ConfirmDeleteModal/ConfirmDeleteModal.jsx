@@ -4,8 +4,10 @@ import { useEffect } from 'react';
 import './ConfirmDeleteModal.scss';
 import Button from '@/components/Button';
 import { Trash2 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
-const ConfirmDeleteModal = ({ isOpen, onClose, onConfirm, title, data }) => {
+const ConfirmDeleteModal = ({ isOpen, onClose, onConfirm, kind, data }) => {
+  const { t } = useTranslation();
   useEffect(() => {
     if (!isOpen) return;
 
@@ -50,11 +52,11 @@ const ConfirmDeleteModal = ({ isOpen, onClose, onConfirm, title, data }) => {
             onClick={(e) => e.stopPropagation()}
           >
             <h2 className="modal-title">
-              {data.length > 1
-                ? `Oops! Delete these ${title}?`
-                : `Delete this ${title.slice(0, -1)}?`}
+              {t(
+                `confirmDelete.${data.length > 1 ? 'titleMany' : 'titleOne'}_${kind}`,
+              )}
             </h2>
-            <p className="modal-text">Once deleted, there is no going back.</p>
+            <p className="modal-text">{t('confirmDelete.text')}</p>
 
             <ul className="modal-list">
               {data.map((item) => (
@@ -65,9 +67,9 @@ const ConfirmDeleteModal = ({ isOpen, onClose, onConfirm, title, data }) => {
             </ul>
 
             <div className="modal-actions">
-              <Button text="Cancel" onClick={onClose} />
+              <Button text={t('confirmDelete.cancel')} onClick={onClose} />
               <Button
-                text="Delete"
+                text={t('confirmDelete.delete')}
                 icon={Trash2}
                 onClick={onConfirm}
                 theme="danger"

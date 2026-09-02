@@ -3,12 +3,14 @@ import './UserInfo.scss';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { useActions } from '@/hooks/useActions';
+import { useTranslation } from 'react-i18next';
 
 import { Link } from 'react-router-dom';
 
 const UserInfo = ({ isCollapsed }) => {
   const { user, error } = useSelector((state) => state.auth);
   const { getCurrentUser } = useActions();
+  const { t } = useTranslation();
 
   useEffect(() => {
     getCurrentUser();
@@ -24,7 +26,7 @@ const UserInfo = ({ isCollapsed }) => {
 
         {!isCollapsed && (
           <Link className="user-info__error-link" to="/">
-            Go to the sign-in page
+            {t('sidebar.goToSignIn')}
           </Link>
         )}
       </div>

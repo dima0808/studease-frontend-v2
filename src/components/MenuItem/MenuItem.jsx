@@ -2,14 +2,17 @@ import './MenuItem.scss';
 import classNames from 'classnames';
 import { NavLink } from 'react-router-dom';
 import { motion as Motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 const MenuItem = (props) => {
   const { className, icon: Icon, title, href, isCollapsed, count, flag } =
     props;
+  const { t } = useTranslation();
+  const label = title ? t(title) : title;
 
   return (
     <NavLink
-      title={isCollapsed ? title : undefined}
+      title={isCollapsed ? label : undefined}
       to={href}
       className={({ isActive }) =>
         classNames('menu-item', className, { 'menu-item--active': isActive })
@@ -24,10 +27,12 @@ const MenuItem = (props) => {
           transition={{ duration: 0.8, ease: 'easeOut' }}
           className="menu-item__title"
         >
-          {title}
+          {label}
         </Motion.span>
       )}
-      {!isCollapsed && flag && <span className="menu-item__flag">{flag}</span>}
+      {!isCollapsed && flag && (
+        <span className="menu-item__flag">{t(flag)}</span>
+      )}
       {!isCollapsed && count !== undefined && count !== null && (
         <span className="menu-item__count">{count}</span>
       )}

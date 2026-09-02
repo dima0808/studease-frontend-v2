@@ -1,6 +1,8 @@
-import { useEffect } from 'react';
+import { Fragment, useEffect } from 'react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import { useTranslation } from 'react-i18next';
+import LanguageSwitcher from '@/components/LanguageSwitcher';
 import { useActions } from '@/hooks/useActions';
 import Lockup from '@/components/Lockup';
 import KpiFootnote from '@/components/KpiFootnote';
@@ -11,7 +13,16 @@ const AuthLayout = () => {
   const { pathname } = useLocation();
   const isLoginPage = pathname === '/';
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { clearError } = useActions();
+
+  const renderMultiline = (value) =>
+    value.split('\n').map((line, index, lines) => (
+      <Fragment key={line + index}>
+        {line}
+        {index < lines.length - 1 && <br />}
+      </Fragment>
+    ));
 
   // A token already in hand means there is nothing to sign in for. Go, without
   // three seconds of splash screen in between.
@@ -29,29 +40,12 @@ const AuthLayout = () => {
         <div className="auth-page__grid">
           <div className="auth-page__pitch">
             <h1 className="auth-page__title">
-              {isLoginPage ? (
-                <>
-                  Sit down.
-                  <br />
-                  Sign in.
-                  <br />
-                  Begin.
-                </>
-              ) : (
-                <>
-                  One account.
-                  <br />
-                  Every attempt
-                  <br />
-                  you make.
-                </>
+              {renderMultiline(
+                isLoginPage ? t('auth.loginTitle') : t('auth.registerTitle'),
               )}
             </h1>
             <hr className="auth-page__rule" />
-            <p className="auth-page__lede">
-              Your tests, your attempts, your record — kept in one place and
-              nowhere else.
-            </p>
+            <p className="auth-page__lede">{t('auth.lede')}</p>
           </div>
 
           <div className="auth-page__form">
@@ -59,19 +53,21 @@ const AuthLayout = () => {
 
             {isLoginPage ? (
               <p className="auth-page__link">
-                First time here?{' '}
+                {t('auth.firstTime')}{' '}
                 <Link to="/register" onClick={() => clearError()}>
-                  Register with your student ID
+                  {t('auth.registerLink')}
                 </Link>
               </p>
             ) : (
               <p className="auth-page__link">
-                Already have an account?{' '}
+                {t('auth.haveAccount')}{' '}
                 <Link to="/" onClick={() => clearError()}>
-                  Sign in
+                  {t('auth.signInLink')}
                 </Link>
               </p>
             )}
+
+            <LanguageSwitcher className="auth-page__language" />
           </div>
         </div>
       </div>

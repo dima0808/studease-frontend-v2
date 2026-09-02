@@ -160,7 +160,7 @@ const CardActions = (props) => {
 
       <ConfirmDeleteModal
         isOpen={isModalOpen}
-        title={isCollectionsPage ? 'collections' : 'tests'}
+        kind={isCollectionsPage ? 'collection' : 'test'}
         onClose={() => setIsModalOpen(false)}
         onConfirm={confirmDelete}
         data={[{ id, name }]}

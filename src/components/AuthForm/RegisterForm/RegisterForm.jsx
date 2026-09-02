@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import AuthButton from '@/components/AuthForm/AuthButton';
 import AuthInput from '@/components/AuthForm/AuthInput';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { useActions } from '@/hooks/useActions';
 import '../AuthForm.scss';
 import { ROUTES } from '@/constants/routes';
@@ -17,6 +18,7 @@ const RegisterForm = () => {
 
   const { registerUser } = useActions();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const { isLoading, error } = useSelector((state) => state.auth);
 
@@ -29,14 +31,14 @@ const RegisterForm = () => {
     <form className="auth-form" onSubmit={handleSubmit(handleRegister)}>
       <AuthInput
         id="email"
-        label="University email"
+        label={t('auth.email')}
         type="text"
         register={(name) =>
           register(name, {
-            required: 'Email is required',
+            required: t('auth.errors.emailRequired'),
             pattern: {
               value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-              message: 'Invalid email address',
+              message: t('auth.errors.emailInvalid'),
             },
           })
         }
@@ -45,11 +47,11 @@ const RegisterForm = () => {
 
       <AuthInput
         id="firstName"
-        label="First name"
+        label={t('auth.firstName')}
         type="text"
         register={(name) =>
           register(name, {
-            required: 'First name is required',
+            required: t('auth.errors.firstNameRequired'),
           })
         }
         error={errors.firstName}
@@ -57,11 +59,11 @@ const RegisterForm = () => {
 
       <AuthInput
         id="lastName"
-        label="Last name"
+        label={t('auth.lastName')}
         type="text"
         register={(name) =>
           register(name, {
-            required: 'Last name is required',
+            required: t('auth.errors.lastNameRequired'),
           })
         }
         error={errors.lastName}
@@ -69,7 +71,7 @@ const RegisterForm = () => {
 
       <AuthInput
         id="password"
-        label="Password"
+        label={t('auth.password')}
         type="password"
         register={register}
         error={errors.password}
@@ -79,20 +81,21 @@ const RegisterForm = () => {
 
       <AuthInput
         id="repeatPassword"
-        label="Repeat password"
+        label={t('auth.repeatPassword')}
         type="password"
         register={(name) =>
           register(name, {
-            required: 'Please repeat your password',
+            required: t('auth.errors.repeatRequired'),
             validate: (value) =>
-              value === watch('password') || 'Passwords do not match',
+              value === watch('password') ||
+              t('auth.errors.passwordsMismatch'),
           })
         }
         error={errors.repeatPassword}
         watch={watch}
       />
 
-      <AuthButton isLoading={isLoading} title="Sign up" />
+      <AuthButton isLoading={isLoading} title={t('auth.signUp')} />
       {error && <p className="auth-form__error-description">{error}</p>}
     </form>
   );

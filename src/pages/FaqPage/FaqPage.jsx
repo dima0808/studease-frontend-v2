@@ -5,15 +5,11 @@ import Lockup from '@/components/Lockup';
 import KpiFootnote from '@/components/KpiFootnote';
 import classNames from 'classnames';
 import { useNavigate } from 'react-router-dom';
+import { Trans, useTranslation } from 'react-i18next';
 import { ArrowLeft, Check, ChevronDown, Clipboard } from 'lucide-react';
-import { faqQuestions } from './faqQuestions.data';
 import { snippets } from './jsonSnippets.data';
-import { guideCards, questionTypes, RAIL } from './transferGuide.data';
 
-const SECTIONS = [
-  { value: 'general', label: 'Taking a test' },
-  { value: 'transfer', label: 'Import & export' },
-];
+const SECTION_VALUES = ['general', 'transfer'];
 
 /** Renders `**bold**` runs — the words a student is hunting for on screen. */
 const RichText = ({ text }) => (
@@ -24,33 +20,44 @@ const RichText = ({ text }) => (
   </>
 );
 
-const CodeExample = ({ id, title, description, code, copiedId, onCopy }) => (
-  <section className="faq-page__example">
-    <div className="faq-page__example-header">
-      <div>
-        <h3>{title}</h3>
-        <p>{description}</p>
+const CodeExample = ({ id, title, description, code, copiedId, onCopy }) => {
+  const { t } = useTranslation();
+
+  return (
+    <section className="faq-page__example">
+      <div className="faq-page__example-header">
+        <div>
+          <h3>{title}</h3>
+          <p>{description}</p>
+        </div>
+        <button
+          type="button"
+          className="faq-page__copy"
+          onClick={() => onCopy(id, code)}
+          title={t('faq.copyJson')}
+        >
+          {copiedId === id ? <Check size={16} /> : <Clipboard size={16} />}
+        </button>
       </div>
-      <button
-        type="button"
-        className="faq-page__copy"
-        onClick={() => onCopy(id, code)}
-        title="Copy JSON"
-      >
-        {copiedId === id ? <Check size={16} /> : <Clipboard size={16} />}
-      </button>
-    </div>
-    <pre className="faq-page__code">
-      <code>{code}</code>
-    </pre>
-  </section>
-);
+      <pre className="faq-page__code">
+        <code>{code}</code>
+      </pre>
+    </section>
+  );
+};
 
 const Faq = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [copiedId, setCopiedId] = useState(null);
   const [activeSection, setActiveSection] = useState('general');
   const [openQuestion, setOpenQuestion] = useState(0);
+
+  const faqQuestions = t('faq.questions', { returnObjects: true });
+  const guideCards = t('faq.transfer.guideCards', { returnObjects: true });
+  const questionTypes = t('faq.transfer.questionTypes', { returnObjects: true });
+  const rail = t('faq.rail', { returnObjects: true });
+  const examples = t('faq.transfer.examples', { returnObjects: true });
 
   const handleCopy = async (id, code) => {
     try {
@@ -67,7 +74,7 @@ const Faq = () => {
       <div className="faq-page__bar">
         <Lockup />
         <Button
-          text="Back"
+          text={t('faq.back')}
           icon={ArrowLeft}
           iconSize={16}
           onClick={() => navigate(-1)}
@@ -76,20 +83,20 @@ const Faq = () => {
 
       <div className="faq-page__body">
         <div className="faq-page__main">
-          <p className="faq-page__kicker">Help</p>
-          <h1 className="faq-page__title">Before you ask</h1>
+          <p className="faq-page__kicker">{t('faq.kicker')}</p>
+          <h1 className="faq-page__title">{t('faq.title')}</h1>
 
           <div className="faq-page__tabs">
-            {SECTIONS.map((section) => (
+            {SECTION_VALUES.map((section) => (
               <button
-                key={section.value}
+                key={section}
                 type="button"
                 className={classNames('faq-page__tab', {
-                  'faq-page__tab--active': activeSection === section.value,
+                  'faq-page__tab--active': activeSection === section,
                 })}
-                onClick={() => setActiveSection(section.value)}
+                onClick={() => setActiveSection(section)}
               >
-                {section.label}
+                {t(`faq.sections.${section}`)}
               </button>
             ))}
           </div>
@@ -130,10 +137,10 @@ const Faq = () => {
           {activeSection === 'transfer' && (
             <div className="faq-page__transfer">
               <p className="faq-page__lede">
-                StudEase expects <code>schemaVersion: 1</code>, a{' '}
-                <code>kind</code>, and the payload in <code>data</code> or{' '}
-                <code>items</code>. Old ids, session counts and anything the
-                server computes are not needed — it creates fresh records.
+                <Trans
+                  i18nKey="faq.transfer.lede"
+                  components={{ code: <code /> }}
+                />
               </p>
 
               <div className="faq-page__list">
@@ -152,7 +159,9 @@ const Faq = () => {
                 ))}
               </div>
 
-              <h2 className="faq-page__heading">Question types in JSON</h2>
+              <h2 className="faq-page__heading">
+                {t('faq.transfer.typesHeading')}
+              </h2>
               <div className="faq-page__list">
                 {questionTypes.map((item) => (
                   <div className="faq-page__item" key={item.type}>
@@ -164,28 +173,30 @@ const Faq = () => {
                 ))}
               </div>
 
-              <h2 className="faq-page__heading">Files, in full</h2>
+              <h2 className="faq-page__heading">
+                {t('faq.transfer.filesHeading')}
+              </h2>
               <div className="faq-page__examples">
                 <CodeExample
                   id="collection"
-                  title="A collection"
-                  description="Carries every supported question type."
+                  title={examples.collectionTitle}
+                  description={examples.collectionDescription}
                   code={snippets.collection}
                   copiedId={copiedId}
                   onCopy={handleCopy}
                 />
                 <CodeExample
                   id="test"
-                  title="A test"
-                  description="Dates, minutes to complete, questions, optional samples."
+                  title={examples.testTitle}
+                  description={examples.testDescription}
                   code={snippets.test}
                   copiedId={copiedId}
                   onCopy={handleCopy}
                 />
                 <CodeExample
                   id="bundle"
-                  title="A bundle"
-                  description="The shape for importing or exporting several items."
+                  title={examples.bundleTitle}
+                  description={examples.bundleDescription}
                   code={snippets.bundle}
                   copiedId={copiedId}
                   onCopy={handleCopy}
@@ -196,7 +207,7 @@ const Faq = () => {
         </div>
 
         <aside className="faq-page__rail">
-          {RAIL.map((item) => (
+          {rail.map((item) => (
             <div className="faq-page__rail-item" key={item.title}>
               <h2 className="faq-page__rail-title">{item.title}</h2>
               <p className="faq-page__rail-text">{item.text}</p>

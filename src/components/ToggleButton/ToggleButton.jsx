@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 import { isString } from '@/utils/isString';
 import './ToggleButton.scss';
 
@@ -7,6 +8,8 @@ import './ToggleButton.scss';
  * a 1px rule, the selected option filled accent. No gaps, no per-option border.
  */
 const ToggleButton = ({ options = [], mode, setMode }) => {
+  const { t } = useTranslation();
+
   return (
     <div className="toggle-button">
       {options.map((option, index) => {
@@ -16,7 +19,7 @@ const ToggleButton = ({ options = [], mode, setMode }) => {
         return (
           <button
             key={option.value ?? index}
-            title={option.dataTitle}
+            title={option.dataTitle ? t(option.dataTitle) : undefined}
             className={classNames('toggle-button__option', {
               'toggle-button__option--active': mode === option.value,
               'toggle-button__option--text': isText,
@@ -25,7 +28,7 @@ const ToggleButton = ({ options = [], mode, setMode }) => {
             aria-pressed={mode === option.value}
             onClick={() => setMode(option.value)}
           >
-            {Icon ? <Icon size={15} /> : option.content}
+            {Icon ? <Icon size={15} /> : t(option.content)}
           </button>
         );
       })}

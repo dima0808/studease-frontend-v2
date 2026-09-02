@@ -19,26 +19,26 @@ export const ROUTES = {
 export const ROUTES_NAV = {
   TESTS: {
     href: '/tests',
-    title: 'Tests',
+    title: 'nav.tests',
     icon: FileText,
   },
   COLLECTIONS: {
     href: '/collections',
-    title: 'Collections',
+    title: 'nav.collections',
     icon: Layers,
   },
   COURSEBOARDS: {
     href: '/courseboards',
-    title: 'Courseboards',
+    title: 'nav.courseboards',
     icon: LayoutDashboard,
-    flag: 'Soon',
+    flag: 'common.soon',
   },
 };
 
 export const ROUTES_NAV_SECONDARY = {
   FAQ: {
     href: '/faq',
-    title: 'Help & FAQ',
+    title: 'nav.faq',
     icon: HelpCircle,
   },
 };

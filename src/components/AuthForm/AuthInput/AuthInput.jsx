@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 const AuthInput = ({
   id,
@@ -14,6 +15,7 @@ const AuthInput = ({
   error,
 }) => {
   const [showPassword, setShowPassword] = useState(false);
+  const { t } = useTranslation();
 
   const isPassword = type === 'password';
   const inputType = isPassword && showPassword ? 'text' : type;
@@ -43,8 +45,12 @@ const AuthInput = ({
           type="button"
           className="auth-form__toggle"
           onClick={() => setShowPassword((prev) => !prev)}
-          aria-label={showPassword ? 'Hide password' : 'Show password'}
-          title={showPassword ? 'Hide password' : 'Show password'}
+          aria-label={
+            showPassword ? t('auth.hidePassword') : t('auth.showPassword')
+          }
+          title={
+            showPassword ? t('auth.hidePassword') : t('auth.showPassword')
+          }
         >
           {showPassword ? <EyeOff size={17} /> : <Eye size={17} />}
         </button>
@@ -52,7 +58,7 @@ const AuthInput = ({
 
       {error && (
         <p className="auth-form__error">
-          {error.message || `${label} is required`}
+          {error.message || t('auth.errors.fieldRequired', { field: label })}
         </p>
       )}
     </div>

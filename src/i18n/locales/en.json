@@ -1,0 +1,373 @@
+{
+  "language": {
+    "label": "Language",
+    "english": "English",
+    "ukrainian": "Українська"
+  },
+  "brand": {
+    "institution": "Igor Sikorsky Kyiv Polytechnic Institute"
+  },
+  "common": {
+    "soon": "Soon",
+    "back": "Back",
+    "tryAgain": "Try again",
+    "oneMoment": "One moment",
+    "starting": "Starting…",
+    "loading": "Loading {{item}}",
+    "selectedCount_one": "{{count}} selected",
+    "selectedCount_other": "{{count}} selected"
+  },
+  "entities": {
+    "tests": "tests",
+    "collections": "collections",
+    "test": "test",
+    "collection": "collection"
+  },
+  "nav": {
+    "tests": "Tests",
+    "collections": "Collections",
+    "courseboards": "Courseboards",
+    "faq": "Help & FAQ"
+  },
+  "sidebar": {
+    "signOut": "Sign out",
+    "expand": "Expand the sidebar",
+    "collapse": "Collapse the sidebar",
+    "goToSignIn": "Go to the sign-in page"
+  },
+  "sidebarCreate": {
+    "addQuestion": "Add Question",
+    "addCollection": "Add Collection",
+    "aiGenerate": "AI Generate",
+    "hint": "You can add questions, collections, or use AI to generate"
+  },
+  "header": {
+    "tests": { "kicker": "Your library", "title": "Tests" },
+    "collections": { "kicker": "Question banks", "title": "Collections" },
+    "selectAll": "Select all",
+    "unselectAll": "Unselect all",
+    "export": "Export",
+    "import": "Import",
+    "delete": "Delete",
+    "searchTests": "Search tests",
+    "searchCollections": "Search collections",
+    "createTest": "Create a test",
+    "createCollection": "Create a collection",
+    "notify": {
+      "exportedTests_one": "{{count}} test exported successfully!",
+      "exportedTests_other": "{{count}} tests exported successfully!",
+      "exportedCollections_one": "{{count}} collection exported successfully!",
+      "exportedCollections_other": "{{count}} collections exported successfully!",
+      "importedTests_one": "{{count}} test imported successfully!",
+      "importedTests_other": "{{count}} tests imported successfully!",
+      "importedCollections_one": "{{count}} collection imported successfully!",
+      "importedCollections_other": "{{count}} collections imported successfully!",
+      "exportError": "Error exporting selected data!",
+      "importError": "Error importing file!"
+    }
+  },
+  "filters": {
+    "all": "All",
+    "open": "Open",
+    "closed": "Closed",
+    "inUse": "In use",
+    "unused": "Unused",
+    "hint": {
+      "allTests": "All tests",
+      "openTests": "Open tests",
+      "closedTests": "Closed tests",
+      "allCollections": "All collections",
+      "collectionsInUse": "Collections in use",
+      "collectionsNotInUse": "Collections not in use"
+    }
+  },
+  "view": {
+    "table": "Table view",
+    "grid": "Grid view",
+    "view": "View",
+    "select": "Select",
+    "viewHint": "View action",
+    "selectHint": "Select action"
+  },
+  "columns": {
+    "test": "Test",
+    "opens": "Opens",
+    "closes": "Closes",
+    "takingNow": "Taking now",
+    "status": "Status",
+    "collection": "Collection",
+    "questions": "Questions",
+    "usedInTests": "Used in tests"
+  },
+  "confirmDelete": {
+    "titleOne_test": "Delete this test?",
+    "titleOne_collection": "Delete this collection?",
+    "titleMany_test": "Oops! Delete these tests?",
+    "titleMany_collection": "Oops! Delete these collections?",
+    "text": "Once deleted, there is no going back.",
+    "cancel": "Cancel",
+    "delete": "Delete"
+  },
+  "empty": {
+    "kicker": "Nothing to show",
+    "title": "Nothing here<1></1>matches this view.",
+    "text_test": "Either the filters are too narrow or there is nothing here yet. Clear the search, switch tabs, or start a new test.",
+    "text_collection": "Either the filters are too narrow or there is nothing here yet. Clear the search, switch tabs, or start a new collection.",
+    "create_test": "Create a test",
+    "create_collection": "Create a collection"
+  },
+  "error": {
+    "kicker": "Could not load",
+    "text": "The server did not answer. Nothing you have done is lost — try again in a moment, and tell your instructor if it keeps happening."
+  },
+  "auth": {
+    "loginTitle": "Sit down.\nSign in.\nBegin.",
+    "registerTitle": "One account.\nEvery attempt\nyou make.",
+    "lede": "Your tests, your attempts, your record — kept in one place and nowhere else.",
+    "firstTime": "First time here?",
+    "registerLink": "Register with your student ID",
+    "haveAccount": "Already have an account?",
+    "signInLink": "Sign in",
+    "signIn": "Sign in",
+    "signUp": "Sign up",
+    "email": "University email",
+    "password": "Password",
+    "repeatPassword": "Repeat password",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password",
+    "errors": {
+      "emailRequired": "Email is required",
+      "emailInvalid": "Invalid email address",
+      "firstNameRequired": "First name is required",
+      "lastNameRequired": "Last name is required",
+      "repeatRequired": "Please repeat your password",
+      "passwordsMismatch": "Passwords do not match",
+      "fieldRequired": "{{field}} is required"
+    },
+    "serverErrors": {
+      "registerFailed": "Registration failed. Please try again.",
+      "loginFailed": "Login failed. Please try again.",
+      "fetchUser": "Failed to fetch user data."
+    }
+  },
+  "errors": {
+    "fetchTests": "Failed to fetch tests",
+    "fetchTest": "Failed to fetch test",
+    "fetchQuestions": "Failed to fetch questions",
+    "fetchSamples": "Failed to fetch samples",
+    "fetchSessionDetails": "Failed to load session details",
+    "fetchFullTest": "Failed to fetch full test",
+    "createTest": "Failed to create test",
+    "generateQuestions": "Failed to generate questions",
+    "deleteTest": "Failed to delete test",
+    "fetchCollections": "Failed to fetch collections",
+    "fetchCollection": "Failed to fetch collection",
+    "fetchFullCollection": "Failed to fetch full collection",
+    "createCollection": "Failed to create collection",
+    "deleteCollection": "Failed to delete collection"
+  },
+  "create": {
+    "questionsTitle": "Questions",
+    "questionsEmpty": "No questions added yet.",
+    "collectionsTitle": "Collections",
+    "submitTest": "Create Test",
+    "submitCollection": "Create Collection",
+    "copySuffix": " (Copy)",
+    "importWrongKind_test": "Imported file is not a test",
+    "importWrongKind_collection": "Imported file is not a collection",
+    "fields": {
+      "testName": "Test Name",
+      "openDate": "Open Date: 20.09.2025 12:00",
+      "deadline": "Deadline: 30.09.2025 12:00",
+      "minutesToComplete": "Minutes to Complete",
+      "maximumScore": "Maximum Score",
+      "collectionName": "Collection Name"
+    },
+    "errors": {
+      "nameRequired": "Name is required",
+      "openDateRequired": "Open date is required",
+      "deadlineRequired": "Deadline is required",
+      "dateFormat": "Date must be in format DD.MM.YYYY HH:mm",
+      "minutesRequired": "Minutes to complete is required",
+      "minMinutes": "Must be at least 1 minute"
+    },
+    "questionTypes": {
+      "single_choice": "Single Choice",
+      "multiple_choices": "Multiple Choices",
+      "essay": "Essay",
+      "matching": "Matching"
+    },
+    "question": {
+      "title": "Question {{number}}",
+      "text": "Question Text",
+      "textRequired": "Question is required",
+      "points": "Points",
+      "pointsRequired": "Points are required",
+      "minPointsShort": "Min 1",
+      "type": "Type",
+      "answers": "Answers",
+      "answersEmpty": "No answers added yet.",
+      "answerPlaceholder": "Answer text",
+      "addAnswer": "Add Answer",
+      "essayNote": "Essay type – student writes a text response.",
+      "matchingPairs": "Matching Pairs",
+      "left": "Left",
+      "right": "Right",
+      "addPair": "Add Pair"
+    },
+    "collectionBlock": {
+      "title": "Collection #{{number}}",
+      "name": "Collection Name",
+      "selectPlaceholder": "Select a collection",
+      "option": "{{name}} (Questions: {{count}})",
+      "required": "Collection is required",
+      "points": "Points",
+      "pointsRequired": "Points are required",
+      "minPoints": "Must be at least 1 point",
+      "questionsCount": "Questions Count",
+      "questionsCountRequired": "Questions count is required",
+      "minQuestions": "Must be at least 1 question"
+    },
+    "ai": {
+      "title": "AI Question Generator",
+      "theme": "Theme",
+      "themeRequired": "Theme is required",
+      "themeMin": "Must be at least 3 characters",
+      "themeMax": "Must be at most 100 characters",
+      "type": "Type",
+      "typeRequired": "Question type is required",
+      "points": "Points",
+      "pointsRequired": "Points are required",
+      "minPoints": "Must be at least 1 point",
+      "questionsCount": "Questions Count",
+      "questionsCountRequired": "Questions count is required",
+      "minQuestions": "Must be at least 1 question",
+      "maxQuestions": "Max 20 questions per request",
+      "generate": "Generate Questions"
+    }
+  },
+  "courseboards": {
+    "kicker": "Not built yet",
+    "title": "Courseboards\nare on the way.",
+    "text": "One page per course: every test in it, who has taken what, and the marks in one table. Nothing to see here until then — your tests and collections work as usual.",
+    "back": "Back to tests",
+    "contact": "Tell us what you need from it"
+  },
+  "faq": {
+    "back": "Back",
+    "kicker": "Help",
+    "title": "Before you ask",
+    "copyJson": "Copy JSON",
+    "sections": {
+      "general": "Taking a test",
+      "transfer": "Import & export"
+    },
+    "questions": [
+      {
+        "question": "How does an attempt actually work?",
+        "answer": "Questions come one at a time. Answer, press **Next** — **Finish** on the last one — and the server keeps each answer as you go. Nothing is lost if the tab closes."
+      },
+      {
+        "question": "What should I take a test on?",
+        "answer": "A laptop or desktop with a current Chrome, Edge or Firefox. Phones and tablets work, but a small screen can make long questions harder to read."
+      },
+      {
+        "question": "The page froze or will not open.",
+        "answer": "Check your connection and reload. If it persists, clear the browser cache or try another device — your attempt is on the server, not in the tab."
+      },
+      {
+        "question": "Which question types can appear?",
+        "answer": "Single choice, multiple choice, essay, and matching pairs."
+      },
+      {
+        "question": "Can I go back to a previous question?",
+        "answer": "Usually not. Check your answer before you press **Next**."
+      },
+      {
+        "question": "What happens when the time runs out?",
+        "answer": "The attempt closes itself. Everything you had already answered is kept."
+      },
+      {
+        "question": "Can I retake a test?",
+        "answer": "Only if your instructor or an administrator opens a new attempt for you."
+      },
+      {
+        "question": "Why can I not see my mark?",
+        "answer": "Marks appear only if your instructor turned that on. Otherwise you see your own answers without scoring."
+      },
+      {
+        "question": "What can I see after I finish?",
+        "answer": "Your own answers, always. Correct answers and a mark only if your instructor allows it."
+      },
+      {
+        "question": "An error appeared when the test started.",
+        "answer": "Reload the page. The session is restored from the server, and the clock has not been running against you in the meantime."
+      },
+      {
+        "question": "How is my attempt monitored?",
+        "answer": "Tab switches, copy events and disconnects are logged and sent with your result. Nothing else about your device is recorded."
+      }
+    ],
+    "transfer": {
+      "lede": "StudEase expects <code>schemaVersion: 1</code>, a <code>kind</code>, and the payload in <code>data</code> or <code>items</code>. Old ids, session counts and anything the server computes are not needed — it creates fresh records.",
+      "typesHeading": "Question types in JSON",
+      "filesHeading": "Files, in full",
+      "guideCards": [
+        {
+          "title": "Export one test or collection",
+          "text": "Open Tests or Collections, use the actions on the row or card, and choose Export. StudEase downloads a JSON file you can import back later."
+        },
+        {
+          "title": "Export several at once",
+          "text": "Switch the second segmented control to Select, tick what you need, and press Export. You get one bundle file with an items array."
+        },
+        {
+          "title": "Import a single item",
+          "text": "Press Import on Tests or Collections and choose the JSON. A file with one item opens the create form with the fields already filled in."
+        },
+        {
+          "title": "Import a bundle",
+          "text": "A file with several items is created straight away. Import a bundle of tests from Tests, and a bundle of collections from Collections."
+        }
+      ],
+      "questionTypes": [
+        {
+          "type": "single_choice",
+          "description": "One right answer: exactly one object in answers carries isCorrect: true."
+        },
+        {
+          "type": "multiple_choices",
+          "description": "Several right answers: every correct option carries isCorrect: true."
+        },
+        {
+          "type": "essay",
+          "description": "An open question. Leave answers as an empty array."
+        },
+        {
+          "type": "matching",
+          "description": "Pairs to match. leftOption and rightOption are enough — wrong pairs are not needed."
+        }
+      ],
+      "examples": {
+        "collectionTitle": "A collection",
+        "collectionDescription": "Carries every supported question type.",
+        "testTitle": "A test",
+        "testDescription": "Dates, minutes to complete, questions, optional samples.",
+        "bundleTitle": "A bundle",
+        "bundleDescription": "The shape for importing or exporting several items."
+      }
+    },
+    "rail": [
+      {
+        "title": "Still stuck",
+        "text": "Write to your instructor first — most problems with an attempt are theirs to reopen, not ours."
+      },
+      {
+        "title": "Supported browsers",
+        "text": "Chrome · Edge · Firefox / Current versions, on a laptop or desktop."
+      }
+    ]
+  }
+}

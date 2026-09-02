@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import api from '@/api/axios';
+import i18n from '@/i18n/config';
 
 export const getAllCollections = createAsyncThunk(
   'collections/getAllCollections',
@@ -10,7 +11,7 @@ export const getAllCollections = createAsyncThunk(
         ...collection,
       }));
     } catch {
-      return rejectWithValue('Failed to fetch collections');
+      return rejectWithValue(i18n.t('errors.fetchCollections'));
     }
   },
 );
@@ -23,7 +24,7 @@ export const createCollection = createAsyncThunk(
       return data;
     } catch (error) {
       return rejectWithValue(
-        error.response.data.message || 'Failed to create test',
+        error.response.data.message || i18n.t('errors.createCollection'),
       );
     }
   },
@@ -36,7 +37,7 @@ export const getCollectionById = createAsyncThunk(
       const { data } = await api.get('/admin/collections/' + collectionId);
       return data;
     } catch {
-      return rejectWithValue('Failed to fetch collection');
+      return rejectWithValue(i18n.t('errors.fetchCollection'));
     }
   },
 );
@@ -50,7 +51,7 @@ export const getQuestionsByCollectionId = createAsyncThunk(
       );
       return data;
     } catch {
-      return rejectWithValue('Failed to fetch questions');
+      return rejectWithValue(i18n.t('errors.fetchQuestions'));
     }
   },
 );
@@ -71,7 +72,7 @@ export const getFullCollectionById = createAsyncThunk(
         ...questions,
       };
     } catch {
-      return rejectWithValue('Failed to fetch full collection');
+      return rejectWithValue(i18n.t('errors.fetchFullCollection'));
     }
   },
 );
@@ -84,7 +85,7 @@ export const deleteCollectionById = createAsyncThunk(
       return collectionId;
     } catch (error) {
       return rejectWithValue(
-        error.response.data.message || 'Failed to delete collection',
+        error.response.data.message || i18n.t('errors.deleteCollection'),
       );
     }
   },
@@ -102,7 +103,7 @@ export const deleteCollectionsByIds = createAsyncThunk(
       return collections;
     } catch (error) {
       return rejectWithValue(
-        error.response.data.message || 'Failed to delete collection',
+        error.response.data.message || i18n.t('errors.deleteCollection'),
       );
     }
   },

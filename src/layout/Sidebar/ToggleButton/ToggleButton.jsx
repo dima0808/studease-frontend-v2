@@ -1,15 +1,18 @@
 import { PanelLeftClose, PanelLeftOpen } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const ToggleButton = (props) => {
   const { isCollapsed, setIsCollapsed } = props;
+  const { t } = useTranslation();
   const Icon = isCollapsed ? PanelLeftOpen : PanelLeftClose;
+  const label = isCollapsed ? t('sidebar.expand') : t('sidebar.collapse');
 
   return (
     <button
       className="sidebar__toggle"
       type="button"
-      title={isCollapsed ? 'Expand the sidebar' : 'Collapse the sidebar'}
-      aria-label={isCollapsed ? 'Expand the sidebar' : 'Collapse the sidebar'}
+      title={label}
+      aria-label={label}
       onClick={() => setIsCollapsed(!isCollapsed)}
     >
       <Icon size={16} />

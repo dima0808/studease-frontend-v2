@@ -7,6 +7,7 @@ import Button from '@/components/Button';
 import { Download, Plus, Trash2, Upload } from 'lucide-react';
 import SearchInput from '@/components/SearchInput';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { useActions } from '@/hooks/useActions';
 import { filterArr } from '@/utils/filterArr';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -21,6 +22,7 @@ import {
 } from '@/utils/jsonTransfer';
 
 const Header = () => {
+  const { t } = useTranslation();
   const { viewMode, sortBy, search } = useSelector((state) => state.filter);
   const { actionMode, selectedItems } = useSelector((state) => state.selection);
   const { tests } = useSelector((state) => state.tests);
@@ -92,10 +94,17 @@ const Header = () => {
       const payload = createTransferBundlePayload(importKind, items);
 
       downloadTransferPayload(importKind, payload, `selected-${items.length}`);
-      showNotification(`${items.length} ${importKind}s exported successfully!`);
+      showNotification(
+        t(
+          isCollectionsPage
+            ? 'header.notify.exportedCollections'
+            : 'header.notify.exportedTests',
+          { count: items.length },
+        ),
+      );
     } catch (error) {
       console.error('Failed to export selected items:', error);
-      showNotification('Error exporting selected data!', 'error');
+      showNotification(t('header.notify.exportError'), 'error');
     }
   };
 
@@ -124,17 +133,25 @@ const Header = () => {
       await Promise.all(result.items.map((item) => createData(item).unwrap()));
       await refreshData();
       showNotification(
-        `${result.items.length} ${importKind}s imported successfully!`,
+        t(
+          isCollectionsPage
+            ? 'header.notify.importedCollections'
+            : 'header.notify.importedTests',
+          { count: result.items.length },
+        ),
       );
     } catch (error) {
       console.error('Failed to import file:', error);
-      showNotification(error.message || 'Error importing file!', 'error');
+      showNotification(error.message || t('header.notify.importError'), 'error');
     }
   };
 
-  const page = isCollectionsPage ? 'collections' : 'tests';
-  const kicker = isCollectionsPage ? 'Question banks' : 'Your library';
-  const title = isCollectionsPage ? 'Collections' : 'Tests';
+  const kicker = isCollectionsPage
+    ? t('header.collections.kicker')
+    : t('header.tests.kicker');
+  const title = isCollectionsPage
+    ? t('header.collections.title')
+    : t('header.tests.title');
 
   const counts = isCollectionsPage
     ? {
@@ -160,10 +177,14 @@ const Header = () => {
           {actionMode === 'select' ? (
             <>
               <span className="header__selected">
-                {selectedItems.length} selected
+                {t('common.selectedCount', { count: selectedItems.length })}
               </span>
               <Button
-                text={selectedItems.length > 0 ? 'Unselect all' : 'Select all'}
+                text={
+                  selectedItems.length > 0
+                    ? t('header.unselectAll')
+                    : t('header.selectAll')
+                }
                 onClick={() => {
                   if (selectedItems.length > 0) {
                     clearSelection();
@@ -174,7 +195,7 @@ const Header = () => {
               />
               <Button
                 disabled={selectedItems.length === 0}
-                text="Export"
+                text={t('header.export')}
                 onClick={handleExportSelected}
                 icon={Download}
               />
@@ -182,15 +203,21 @@ const Header = () => {
                 theme="danger"
                 disabled={selectedItems.length === 0}
                 onClick={() => setIsModalOpen(true)}
-                text="Delete"
+                text={t('header.delete')}
                 icon={Trash2}
               />
             </>
           ) : (
             <>
-              <SearchInput placeholder={`Search ${page}`} />
+              <SearchInput
+                placeholder={
+                  isCollectionsPage
+                    ? t('header.searchCollections')
+                    : t('header.searchTests')
+                }
+              />
               <Button
-                text="Import"
+                text={t('header.import')}
                 onClick={() => importInputRef.current?.click()}
                 icon={Upload}
               />
@@ -208,7 +235,11 @@ const Header = () => {
                   )
                 }
                 theme="primary"
-                text={`Create a ${isCollectionsPage ? 'collection' : 'test'}`}
+                text={
+                  isCollectionsPage
+                    ? t('header.createCollection')
+                    : t('header.createTest')
+                }
                 icon={Plus}
                 iconSize={16}
               />
@@ -239,7 +270,7 @@ const Header = () => {
       </div>
       <ConfirmDeleteModal
         isOpen={isModalOpen}
-        title={isCollectionsPage ? 'collections' : 'tests'}
+        kind={isCollectionsPage ? 'collection' : 'test'}
         onClose={() => setIsModalOpen(false)}
         onConfirm={handleDeleteSelected}
         data={selectedItems}
