@@ -1,44 +1,44 @@
 /*
   StudEase identity — direction 1b, "Quiet room".
   Source of truth for every colour, rule and type value in the app.
-  Five rules: zero radius · rules not cards · red is state · flush left ·
+  Five rules: zero radius · rules not cards · blue is state · flush left ·
   numbers are measurements. Nothing here has a radius or a shadow token,
   because the design has neither.
 */
 
 :root {
   /* ── Core palette ─────────────────────────────────────────────── */
-  --color-bg: #f3f2f2; // page ground
-  --color-surface: #eae9e9; // sidebar, cards, selected rows
-  --color-text: #201e1d; // ink — all body and heading text
-  --color-accent: #ec3013; // the one accent: state, never decoration
-  --color-divider: color-mix(in srgb, #201e1d 40%, transparent);
+  --color-bg: #ffffff; // page ground
+  --color-surface: #f4f7fb; // sidebar, cards, selected rows
+  --color-text: #292929; // ink — all body and heading text
+  --color-accent: #3b82f6; // the one accent: state, never decoration
+  --color-divider: color-mix(in srgb, #292929 18%, transparent);
 
   /* ── Neutral ramp ─────────────────────────────────────────────── */
-  --color-neutral-100: #f8f4f4;
-  --color-neutral-200: #eae7e7;
-  --color-neutral-300: #d7d3d3;
-  --color-neutral-400: #bab6b6;
-  --color-neutral-500: #9b9797;
-  --color-neutral-600: #7d7979;
-  --color-neutral-700: #605d5d;
-  --color-neutral-800: #444141;
-  --color-neutral-900: #2d2b2b;
+  --color-neutral-100: #f8fafc;
+  --color-neutral-200: #eef2f6;
+  --color-neutral-300: #d9e0e8;
+  --color-neutral-400: #b4bfcc;
+  --color-neutral-500: #8a97a6;
+  --color-neutral-600: #667180;
+  --color-neutral-700: #4a5563;
+  --color-neutral-800: #333c47;
+  --color-neutral-900: #232a33;
 
   /* ── Accent ramp ──────────────────────────────────────────────── */
   /* 100–300 tinted fills, hovers, subtle borders · 500 base ·
      700–900 text on a tinted fill and pressed states.
-     #ec3013 on the ground is ~3:1 — large type, icons and chrome only.
-     Body copy that must be red uses --color-accent-700. */
-  --color-accent-100: #fff2ef;
-  --color-accent-200: #ffe0d9;
-  --color-accent-300: #ffc4b8;
-  --color-accent-400: #ff9783;
-  --color-accent-500: #ff563c;
-  --color-accent-600: #dd2b0f; // primary button hover
-  --color-accent-700: #ae1800; // primary button pressed, red body copy
-  --color-accent-800: #7c1405;
-  --color-accent-900: #4d170e;
+     #3b82f6 on the ground is ~3:1 — large type, icons and chrome only.
+     Body copy that must be blue uses --color-accent-700. */
+  --color-accent-100: #eff6ff;
+  --color-accent-200: #dbeafe;
+  --color-accent-300: #bfdbfe;
+  --color-accent-400: #93c5fd;
+  --color-accent-500: #3b82f6;
+  --color-accent-600: #2563eb; // primary button hover
+  --color-accent-700: #1d4ed8; // primary button pressed, blue body copy
+  --color-accent-800: #1e40af;
+  --color-accent-900: #1e3a8a;
 
   /* ── Ink washes — the only hover fills ────────────────────────── */
   --wash-ink-4: color-mix(in srgb, var(--color-text) 4%, transparent); // table rows
