@@ -6,20 +6,27 @@ html {
 }
 
 body {
-  font-size: 18px;
+  background-color: var(--color-bg);
+  color: var(--color-text);
 
-  font-family:
-    'San Francisco',
-    -apple-system,
-    BlinkMacSystemFont,
-    Roboto,
-    'Segoe UI',
-    Helvetica,
-    Arial,
-    sans-serif,
-    'Apple Color Emoji',
-    'Segoe UI Emoji',
-    'Segoe UI Symbol';
+  font-family: var(--font-family-base);
+  font-size: 16px;
+  font-weight: var(--font-weight-regular);
+  line-height: 1.55;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: var(--font-weight-bold);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
 }
 
 main {
@@ -34,18 +41,37 @@ textarea,
 select,
 svg * {
   transition-duration: var(--transition-duration);
+  transition-property: background-color, border-color, color, opacity;
 }
 
 a {
   color: inherit;
 
   @include hover {
-    color: var(--color-red);
+    color: var(--color-accent);
   }
 
   &[class] {
     text-decoration: none;
   }
+}
+
+/* Numbers are measurements: digits must not jump as they tick. */
+.tabular {
+  @include tabular-nums;
+}
+
+/* Themed focus, never the browser default ring. */
+:focus {
+  outline: none;
+}
+
+:focus-visible {
+  @include focus-visible;
+}
+
+::selection {
+  background-color: color-mix(in srgb, var(--color-accent) 30%, transparent);
 }
 
 :has(.swiper) {
@@ -56,38 +82,23 @@ input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
-  -webkit-box-shadow: 0 0 0 1000px #fff inset;
-  box-shadow: 0 0 0 1000px #fff inset;
-  -webkit-text-fill-color: #000;
+  -webkit-box-shadow: 0 0 0 1000px var(--color-bg) inset;
+  box-shadow: 0 0 0 1000px var(--color-bg) inset;
+  -webkit-text-fill-color: var(--color-text);
   transition: background-color 5000s ease-in-out 0s;
 }
 
 .fade-in {
   opacity: 0;
-  transform: translateY(20px);
   animation: fadeIn 0.5s ease forwards;
 }
 
 @keyframes fadeIn {
   0% {
     opacity: 0;
-    transform: translateY(20px);
   }
   100% {
     opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes gradient-move {
-  0% {
-    background-position: 0 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0 50%;
   }
 }
 
@@ -104,23 +115,40 @@ input:-webkit-autofill:active {
   }
 
   .display-question-block,
-  .display-choice-item.selected,
   .display-matchpairs__row,
   .display-essay__answer {
-    background-color: inherit !important;
-    color: inherit !important;
+    background-color: transparent !important;
+    color: var(--color-text) !important;
     -webkit-print-color-adjust: exact !important;
   }
 
-  .display-choice-item.selected {
+  .display-choice-item.is-selected {
     font-weight: 700;
-    font-size: 18px;
   }
 
-  .checkbox-indicator,
-  .radio-indicator,
-  .arrow {
+  .choice-letter,
+  .test-finished__row-points,
+  .test-finished__row-index {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
+  }
+
+  /* A receipt is the result, not the chrome around it. */
+  .attempt__bar,
+  .test-finished__footer,
+  .test-finished__toggle {
+    display: none !important;
+  }
+}
+
+/* Nothing here needs to move. Honour a request for less of it. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

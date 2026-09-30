@@ -3,7 +3,9 @@ import { motion as Motion } from 'framer-motion';
 import AuthInput from '@/components/AuthForm/AuthInput';
 import { useActions } from '@/hooks/useActions';
 import Button from '@/components/Button';
+import AttemptBar from '@/pages/TestSessionPage/components/AttemptBar';
 import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 const UKRAINIAN_LETTERS = 'А-ЩЬЮЯЄІЇҐа-щьюяєіїґ';
 const GROUP_PATTERN = new RegExp(
@@ -15,7 +17,9 @@ const STUDENT_NAME_PATTERN = new RegExp(
 );
 
 const TestUserForm = ({ name }) => {
-  const { credentials, testInfo } = useSelector((state) => state.testSession);
+  const { credentials, attemptError, attemptErrorStatus, isLoadingTestSession } =
+    useSelector((state) => state.testSession);
+  const { testId } = useParams();
 
   const {
     register,
@@ -29,22 +33,27 @@ const TestUserForm = ({ name }) => {
 
   const handleStart = (data) => {
     setCredentials(data);
-    startTestSession({
-      testId: testInfo.id,
-      credentials: data,
-    });
-    setStep(3);
+    startTestSession({ testId, credentials: data });
   };
 
+  const startError =
+    attemptErrorStatus === 409
+      ? `${attemptError}. Цю спробу вже розпочато на цьому пристрої або в іншій вкладці — поверніться до неї. Якщо це не ви, зверніться до викладача.`
+      : attemptError;
+
   return (
-    <Motion.form
-      className="test-user-form"
-      onSubmit={handleSubmit(handleStart)}
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, ease: 'easeOut' }}
-    >
-      <h1 className="test-intro__title">{name}</h1>
+    <>
+      <AttemptBar />
+      <div className="attempt__body">
+        <Motion.form
+          className="test-user-form"
+          onSubmit={handleSubmit(handleStart)}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: 'easeOut' }}
+        >
+          <p className="attempt__kicker">Who is taking this attempt</p>
+          <h1 className="test-intro__title">{name}</h1>
 
       <div className="test-user-form__content">
         <div className="test-user-form__example">
@@ -64,8 +73,7 @@ const TestUserForm = ({ name }) => {
                 setValueAs: (value) => value.trim(),
                 pattern: {
                   value: GROUP_PATTERN,
-                  message:
-                    'Формат групи: ІО-25, ІО-25з або ІО-м25і',
+                  message: 'Формат групи: ІО-25, ІО-25з або ІО-м25і',
                 },
               })
             }
@@ -93,11 +101,30 @@ const TestUserForm = ({ name }) => {
         </div>
       </div>
 
-      <div className="test-intro__actions">
-        <Button onClick={() => setStep(1)} text="Back" />
-        <Button theme="primary" text="Start" type="submit" />
+          {startError && (
+            <p className="test-user-form__error" role="alert">
+              {startError}
+            </p>
+          )}
+
+          <div className="test-intro__actions">
+            <Button
+              onClick={() => setStep(1)}
+              text="Back"
+              size="lg"
+              disabled={isLoadingTestSession}
+            />
+            <Button
+              theme="primary"
+              size="lg"
+              text={isLoadingTestSession ? 'Starting…' : 'Start the attempt'}
+              type="submit"
+              disabled={isLoadingTestSession}
+            />
+          </div>
+        </Motion.form>
       </div>
-    </Motion.form>
+    </>
   );
 };
 

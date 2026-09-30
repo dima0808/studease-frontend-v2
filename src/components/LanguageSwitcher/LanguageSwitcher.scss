@@ -1,0 +1,41 @@
+.language-switcher {
+  display: inline-flex;
+  border: var(--border);
+
+  &__option {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 44px;
+    padding: 6px 10px;
+    border: none;
+    background-color: transparent;
+    color: var(--color-text);
+
+    font-family: var(--font-family-base);
+    font-size: 12px;
+    font-weight: var(--font-weight-medium);
+    letter-spacing: 0.04em;
+    cursor: pointer;
+
+    transition:
+      background-color var(--transition-duration),
+      color var(--transition-duration);
+
+    & + & {
+      border-left: var(--border);
+    }
+
+    @include hover {
+      background-color: var(--wash-ink-7);
+    }
+
+    &--active,
+    &--active:hover {
+      background-color: var(--color-accent);
+      color: var(--color-bg);
+      font-weight: var(--font-weight-bold);
+    }
+  }
+}

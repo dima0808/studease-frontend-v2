@@ -1,21 +1,23 @@
-import SingOutIcon from '@/components/icons/SingOutIcon';
+import { LogOut } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useActions } from '@/hooks/useActions';
 import { motion as Motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 const SignOutButton = (props) => {
   const { isCollapsed } = props;
   const { logout } = useActions();
+  const { t } = useTranslation();
 
   return (
     <Link
       to="/"
       onClick={() => logout()}
-      title={isCollapsed && 'Sign out'}
+      title={isCollapsed ? t('sidebar.signOut') : undefined}
       className="sidebar__button"
       type="button"
     >
-      <SingOutIcon />
+      <LogOut size={16} />
       {!isCollapsed && (
         <Motion.span
           initial={{ opacity: 0, x: -20 }}
@@ -23,7 +25,7 @@ const SignOutButton = (props) => {
           exit={{ opacity: 0, x: -20 }}
           transition={{ duration: 0.8, ease: 'easeOut' }}
         >
-          Sign out
+          {t('sidebar.signOut')}
         </Motion.span>
       )}
     </Link>

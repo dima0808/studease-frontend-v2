@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import api from '@/api/axios';
+import i18n from '@/i18n/config';
 
 export const registerUser = createAsyncThunk(
   'auth/register',
@@ -8,7 +9,7 @@ export const registerUser = createAsyncThunk(
       const { data } = await api.post('/auth/register', bodyData);
       return data.token;
     } catch {
-      return rejectWithValue('Registration failed. Please try again.');
+      return rejectWithValue(i18n.t('auth.serverErrors.registerFailed'));
     }
   },
 );
@@ -20,7 +21,7 @@ export const loginUser = createAsyncThunk(
       const { data } = await api.post('/auth/login', bodyData);
       return data.token;
     } catch {
-      return rejectWithValue('Login failed. Please try again.');
+      return rejectWithValue(i18n.t('auth.serverErrors.loginFailed'));
     }
   },
 );
@@ -33,7 +34,7 @@ export const getCurrentUser = createAsyncThunk(
       return data;
     } catch (error) {
       return rejectWithValue(
-        error.response.data.message || 'Failed to fetch user data.',
+        error.response.data.message || i18n.t('auth.serverErrors.fetchUser'),
       );
     }
   },

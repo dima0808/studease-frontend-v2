@@ -1,4 +1,5 @@
 import { useFormContext } from 'react-hook-form';
+import { answerLetter } from '@/utils/answerLetter';
 import './Choice.scss';
 
 const SingleChoice = ({ question }) => {
@@ -8,7 +9,7 @@ const SingleChoice = ({ question }) => {
   return (
     <div className="question-block">
       <ul className="choice-list">
-        {question.answers.map((answer) => (
+        {question.answers.map((answer, index) => (
           <li
             key={answer.id}
             className={`choice-item ${selected === String(answer.id) ? 'active' : ''}`}
@@ -19,7 +20,7 @@ const SingleChoice = ({ question }) => {
                 value={answer.id}
                 {...register('answers', { required: true })}
               />
-              <span className="checkmark"></span>
+              <span className="choice-letter">{answerLetter(index)}</span>
               <span className="label-text">{answer.content}</span>
             </label>
           </li>

@@ -1,4 +1,5 @@
 import { useFieldArray } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import FormInput from '@/components/FormInput';
 import { typeQuestion } from '@/utils/typeQuestion';
 import { Trash2, Plus, XCircle, Check, ListChecks } from 'lucide-react';
@@ -14,6 +15,7 @@ const QuestionBlock = ({
   remove,
   setValue,
 }) => {
+  const { t } = useTranslation();
   const type = watch(`questions.${index}.type`);
 
   const {
@@ -28,7 +30,9 @@ const QuestionBlock = ({
   return (
     <div className="question">
       <div className="question__header">
-        <h3 className="question__title">Question {index + 1}</h3>
+        <h3 className="question__title">
+          {t('create.question.title', { number: index + 1 })}
+        </h3>
 
         <button
           type="button"
@@ -40,57 +44,63 @@ const QuestionBlock = ({
       </div>
 
       <FormInput
-        label="Question Text"
+        label={t('create.question.text')}
         name={`questions.${index}.content`}
         type="text"
-        placeholder="Enter question text"
         register={register}
         errors={errors}
-        rules={{ required: 'Question is required' }}
+        rules={{ required: t('create.question.textRequired') }}
       />
 
       <FormInput
-        label="Points"
+        label={t('create.question.points')}
         name={`questions.${index}.points`}
         type="number"
-        placeholder="1"
         register={register}
         errors={errors}
         rules={{
-          required: 'Points are required',
-          min: { value: 1, message: 'Min 1' },
+          required: t('create.question.pointsRequired'),
+          min: { value: 1, message: t('create.question.minPointsShort') },
           valueAsNumber: true,
         }}
       />
 
       <div className="question__field">
-        <label className="question__label">Type</label>
+        <label className="question__label">{t('create.question.type')}</label>
         <select
           className="question__select"
           {...register(`questions.${index}.type`)}
         >
-          <option value="single_choice">Single Choice</option>
-          <option value="multiple_choices">Multiple Choices</option>
-          <option value="essay">Essay</option>
-          <option value="matching">Matching</option>
+          <option value="single_choice">
+            {t('create.questionTypes.single_choice')}
+          </option>
+          <option value="multiple_choices">
+            {t('create.questionTypes.multiple_choices')}
+          </option>
+          <option value="essay">{t('create.questionTypes.essay')}</option>
+          <option value="matching">
+            {t('create.questionTypes.matching')}
+          </option>
         </select>
       </div>
 
       {(type === 'single_choice' || type === 'multiple_choices') && (
         <div className="answers">
           <div className="answers__header">
-            <h4>Answers</h4>
+            <h4>{t('create.question.answers')}</h4>
           </div>
 
           {answerFields.length === 0 && (
-            <p className="answers__empty">No answers added yet.</p>
+            <p className="answers__empty">
+              {t('create.question.answersEmpty')}
+            </p>
           )}
 
           {answerFields.map((a, aIndex) => (
             <div key={a.id} className="answer-item">
               <input
                 type="text"
-                placeholder="Answer text"
+                placeholder={t('create.question.answerPlaceholder')}
                 className="answer-item__text"
                 {...register(`questions.${index}.answers.${aIndex}.content`)}
               />
@@ -141,32 +151,30 @@ const QuestionBlock = ({
             className="answers__add"
             onClick={() => appendAnswer(typeQuestion('default'))}
           >
-            <Plus size={18} /> Add Answer
+            <Plus size={18} /> {t('create.question.addAnswer')}
           </button>
         </div>
       )}
 
       {type === 'essay' && (
-        <p className="question__note">
-          Essay type – student writes a text response.
-        </p>
+        <p className="question__note">{t('create.question.essayNote')}</p>
       )}
 
       {type === 'matching' && (
         <div className="matching">
-          <h4>Matching Pairs</h4>
+          <h4>{t('create.question.matchingPairs')}</h4>
 
           {answerFields.map((a, aIndex) => (
             <div key={a.id} className="matching__row">
               <input
                 type="text"
-                placeholder="Left"
+                placeholder={t('create.question.left')}
                 className="matching__input"
                 {...register(`questions.${index}.answers.${aIndex}.leftOption`)}
               />
               <input
                 type="text"
-                placeholder="Right"
+                placeholder={t('create.question.right')}
                 className="matching__input"
                 {...register(
                   `questions.${index}.answers.${aIndex}.rightOption`,
@@ -188,7 +196,7 @@ const QuestionBlock = ({
             className="matching__add"
             onClick={() => appendAnswer(typeQuestion('matching'))}
           >
-            <Plus size={18} /> Add Pair
+            <Plus size={18} /> {t('create.question.addPair')}
           </button>
         </div>
       )}

@@ -1,3 +1,10 @@
+import {
+  FileText,
+  HelpCircle,
+  Layers,
+  LayoutDashboard,
+} from 'lucide-react';
+
 export const ROUTES = {
   DEFAULT: '/',
   REGISTER: 'register',
@@ -12,25 +19,26 @@ export const ROUTES = {
 export const ROUTES_NAV = {
   TESTS: {
     href: '/tests',
-    title: 'Tests',
-    iconName: 'TestIcon',
+    title: 'nav.tests',
+    icon: FileText,
   },
   COLLECTIONS: {
     href: '/collections',
-    title: 'Collections',
-    iconName: 'CollectionIcon',
+    title: 'nav.collections',
+    icon: Layers,
   },
   COURSEBOARDS: {
     href: '/courseboards',
-    title: 'Courseboards',
-    iconName: 'DashboardIcon',
+    title: 'nav.courseboards',
+    icon: LayoutDashboard,
+    flag: 'common.soon',
   },
 };
 
 export const ROUTES_NAV_SECONDARY = {
   FAQ: {
     href: '/faq',
-    title: 'FAQ',
-    iconName: 'FaqIcon',
+    title: 'nav.faq',
+    icon: HelpCircle,
   },
 };

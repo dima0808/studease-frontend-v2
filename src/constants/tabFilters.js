@@ -1,15 +1,32 @@
+// `content` and `dataTitle` hold i18n keys; TabsFilter resolves them with t().
 export const TAB_FILTERS = [
-  { value: 'all', content: 'All', dataTitle: 'All tests' },
-  { value: 'active', content: 'Active', dataTitle: 'Active tests' },
-  { value: 'unactive', content: 'Unactive', dataTitle: 'Unactive tests' },
+  { value: 'all', content: 'filters.all', dataTitle: 'filters.hint.allTests' },
+  {
+    value: 'active',
+    content: 'filters.open',
+    dataTitle: 'filters.hint.openTests',
+  },
+  {
+    value: 'unactive',
+    content: 'filters.closed',
+    dataTitle: 'filters.hint.closedTests',
+  },
 ];
 
 export const COLLECTIONS_TAB_FILTERS = [
-  { value: 'all', content: 'All', dataTitle: 'All collections' },
-  { value: 'inuse', content: 'In use', dataTitle: 'Collections in use' },
+  {
+    value: 'all',
+    content: 'filters.all',
+    dataTitle: 'filters.hint.allCollections',
+  },
+  {
+    value: 'inuse',
+    content: 'filters.inUse',
+    dataTitle: 'filters.hint.collectionsInUse',
+  },
   {
     value: 'notinuse',
-    content: 'Not in use',
-    dataTitle: 'Collections not in use',
+    content: 'filters.unused',
+    dataTitle: 'filters.hint.collectionsNotInUse',
   },
 ];

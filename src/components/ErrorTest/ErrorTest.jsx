@@ -29,7 +29,7 @@ const ErrorBlock = ({
 
       <p className="error-test__message">{message}</p>
 
-      {onReload && <Button onClick={onReload} text={buttonText} theme="red" />}
+      {onReload && <Button onClick={onReload} text={buttonText} theme="primary" />}
     </Motion.div>
   );
 };

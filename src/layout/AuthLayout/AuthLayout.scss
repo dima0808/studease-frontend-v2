@@ -1,40 +1,97 @@
 .auth-page {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  position: relative;
-  width: 100%;
+  min-height: 100vh;
+  padding: 48px var(--gutter-page);
+
+  @include mobile {
+    padding: 28px var(--gutter-tight);
+  }
+
+  &__body {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    padding-block: 48px;
+  }
+
+  &__grid {
+    width: 100%;
+    max-width: 1040px;
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    column-gap: 120px;
+    align-items: start;
+
+    @include laptop {
+      column-gap: 64px;
+    }
+
+    @include tablet {
+      grid-template-columns: 1fr;
+      row-gap: 48px;
+      max-width: 560px;
+    }
+  }
 
   &__title {
-    text-align: center;
-    font-size: 40px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-    background: linear-gradient(270deg, #2d96ff 4.4%, #00e2a6 92.9%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin-bottom: 5px;
+    margin: 0;
+    font-size: 76px;
+    font-weight: var(--font-weight-bold);
+    letter-spacing: -0.045em;
+    line-height: 0.98;
+    color: var(--color-text);
+
+    @include laptop {
+      font-size: 62px;
+    }
+
+    @include mobile {
+      font-size: 44px;
+      letter-spacing: -0.04em;
+    }
+  }
+
+  &__rule {
+    width: 96px;
+    height: 2px;
+    margin: 34px 0 26px;
+    border: 0;
+    background-color: var(--color-accent);
+  }
+
+  &__lede {
+    margin: 0;
+    max-width: 34ch;
+    font-size: 19px;
+    line-height: 1.55;
+    color: var(--color-neutral-800);
+
+    @include mobile {
+      font-size: 17px;
+    }
+  }
+
+  &__form {
+    padding-top: 12px;
+  }
+
+  &__language {
+    margin-top: 24px;
   }
 
   &__link {
-    margin-top: 10px;
-    color: #292929;
-    text-align: center;
-    font-size: 16px;
-    font-weight: 600;
+    margin: 20px 0 0;
+    font-size: 14px;
+    color: var(--color-neutral-700);
 
-    @include hover {
-      opacity: 0.8;
-    }
+    a {
+      font-weight: var(--font-weight-medium);
+      color: var(--color-accent-600);
 
-    span {
-      color: #0051ff;
-      font-weight: 600;
-      margin-left: 5px;
+      @include hover {
+        color: var(--color-accent-700);
+      }
     }
   }
 }

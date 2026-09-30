@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import ActionIcon from '@/components/icons/ActionIcon';
+import { Copy, Download, Info, Link2, MoreHorizontal, Trash2 } from 'lucide-react';
 import Button from '@/components/Button';
 import { motion as Motion, AnimatePresence } from 'framer-motion';
 import { dropdownVariants } from '@/constants/motionVariants';
@@ -80,7 +80,7 @@ const ActionMenu = (props) => {
         type="button"
         onClick={() => setOpen((prev) => !prev)}
       >
-        <ActionIcon />
+        <MoreHorizontal size={16} />
       </button>
 
       <AnimatePresence>
@@ -104,7 +104,9 @@ const ActionMenu = (props) => {
                 navigateToInfo();
                 setOpen(false);
               }}
-              iconName="InfoIcon"
+              icon={Info}
+              iconSize={15}
+              block
             />
             {pathname === ROUTES_NAV.TESTS.href && (
               <Button
@@ -113,7 +115,9 @@ const ActionMenu = (props) => {
                   handleCopyLink();
                   setOpen(false);
                 }}
-                iconName="LinkIcon"
+                icon={Link2}
+                iconSize={15}
+                block
               />
             )}
             <Button
@@ -122,7 +126,9 @@ const ActionMenu = (props) => {
                 navigateToClone();
                 setOpen(false);
               }}
-              iconName="CloneIcon"
+              icon={Copy}
+              iconSize={15}
+              block
             />
             <Button
               text="Export"
@@ -130,12 +136,17 @@ const ActionMenu = (props) => {
                 handleExport();
                 setOpen(false);
               }}
-              iconName="ExportIcon"
+              icon={Download}
+              iconSize={15}
+              block
             />
             <Button
               onClick={handleDelete}
               text="Delete"
-              iconName="RemoveIcon"
+              icon={Trash2}
+              iconSize={15}
+              block
+              className="item-card__action--destructive"
             />
           </Motion.div>
         )}

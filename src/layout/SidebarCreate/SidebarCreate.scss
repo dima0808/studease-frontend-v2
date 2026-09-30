@@ -1,6 +1,4 @@
 .sidebar-create {
-  --border: 1px solid #cecece;
-
   position: sticky;
   top: 0;
   max-width: 333px;
@@ -9,24 +7,17 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background-color: #f8f8f8;
-  outline: var(--border);
-  padding: 72px 26px 67px 26px;
-  border-radius: 0 var(--border-radius-large) var(--border-radius-large) 0;
+  background-color: var(--color-surface);
+  border-right: var(--border-strong);
+  padding: 26px 22px 22px;
   transition:
     max-width 0.3s ease,
     padding 0.3s ease;
 
   &__title {
-    text-align: center;
-    text-wrap: nowrap;
-    font-size: 48px;
-    font-weight: 700;
-    background: linear-gradient(270deg, #2d96ff 4.4%, #00e2a6 92.9%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    transition: opacity 0.3s ease;
+    display: flex;
+    padding-bottom: 22px;
+    border-bottom: var(--border-strong);
   }
 
   &__nav {
@@ -50,12 +41,11 @@
     align-items: center;
     column-gap: 10px;
     padding: 18px 21px;
-    border-radius: var(--border-radius-large);
     font-weight: 600;
     transition:
       background-color 0.3s ease,
       color 0.3s ease;
-    color: var(--color-text-black);
+    color: var(--color-text);
 
     &--back {
       width: 100%;
@@ -66,8 +56,8 @@
     }
 
     @include hover {
-      background-color: #eceff5;
-      color: var(--color-blue);
+      background-color: var(--wash-ink-7);
+      color: var(--color-accent);
     }
 
     &__icon {
@@ -78,16 +68,15 @@
     &--primary {
       width: 100%;
       margin-top: 10px;
-      background: #2d96ff;
-      color: #fff;
+      background: var(--color-accent);
+      color: var(--color-bg);
       padding: 12px 14px;
-      border-radius: 8px;
       justify-content: center;
     }
   }
 
   &__hint {
-    color: #4a4a4a;
+    color: var(--color-neutral-700);
     font-size: 15px;
     margin-bottom: 20px;
   }
@@ -98,16 +87,15 @@
     right: 0;
     width: 40px;
     height: 40px;
-    background-color: var(--color-white);
-    border: 1px solid #cecece;
-    border-radius: var(--border-radius-small);
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-divider);
     display: inline-flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
 
     &:hover {
-      background-color: #eceff5;
+      background-color: var(--wash-ink-7);
     }
 
     &--right {
@@ -121,11 +109,11 @@
 
     .sidebar-create__button--primary {
       background-color: transparent;
-      color: var(--color-text-black);
+      color: var(--color-text);
 
       @include hover {
-        background-color: #eceff5;
-        color: var(--color-blue);
+        background-color: var(--wash-ink-7);
+        color: var(--color-accent);
       }
     }
 

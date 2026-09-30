@@ -5,7 +5,7 @@ import TestUserForm from '@/pages/TestSessionPage/components/TestUserForm';
 import TestQuestions from '@/pages/TestSessionPage/components/TestQuestions';
 import TestSessionLayout from '@/layout/TestSessionLayout';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useActions } from '@/hooks/useActions';
 import Loading from '@/components/Loading';
 import { AnimatePresence } from 'framer-motion';
@@ -13,25 +13,36 @@ import TestFinished from '@/pages/TestSessionPage/components/TestFinished.jsx';
 import ErrorTest from '@/components/ErrorTest';
 import image from '@/assets/icons/error.svg';
 import { ROUTES } from '@/constants/routes';
+import { hasAttempt } from '@/utils/attemptToken';
+import { STEP } from '@/store/testSession/testSession.slice';
 
 const TestSessionPage = () => {
-  const { step, isLoading, error, testInfo, credentials } = useSelector(
+  const { step, isLoading, error, testInfo } = useSelector(
     (state) => state.testSession,
   );
   const { testId } = useParams();
   const { getTestSessionById, getCurrentQuestion } = useActions();
   const navigate = useNavigate();
 
+  // An attempt token in `sessionStorage` means this tab was mid-attempt and the
+  // student reloaded — resume rather than showing the intro.
+  const [isResuming, setIsResuming] = useState(() => hasAttempt(testId));
+
   useEffect(() => {
     getTestSessionById(testId);
-    if (credentials.studentGroup !== '' && credentials.studentName !== '') {
-      getCurrentQuestion({ testId, credentials });
+
+    if (!hasAttempt(testId)) {
+      setIsResuming(false);
+      return;
     }
-  }, []);
+
+    setIsResuming(true);
+    getCurrentQuestion({ testId }).finally(() => setIsResuming(false));
+  }, [testId, getTestSessionById, getCurrentQuestion]);
 
   return (
     <TestSessionLayout>
-      {isLoading && <Loading text="test" />}
+      {(isLoading || isResuming) && <Loading text="test" />}
       {error && (
         <ErrorTest
           onReload={() => {
@@ -42,12 +53,12 @@ const TestSessionPage = () => {
           buttonText="Go to home"
         />
       )}
-      {!isLoading && !error && (
+      {!isLoading && !isResuming && !error && (
         <AnimatePresence mode="wait">
-          {step === 1 && <TestIntro {...testInfo} key="intro" />}
-          {step === 2 && <TestUserForm {...testInfo} key="form" />}
-          {step === 3 && <TestQuestions key="questions" />}
-          {step === 4 && <TestFinished key="finished" />}
+          {step === STEP.INTRO && <TestIntro {...testInfo} key="intro" />}
+          {step === STEP.FORM && <TestUserForm {...testInfo} key="form" />}
+          {step === STEP.QUESTIONS && <TestQuestions key="questions" />}
+          {step === STEP.FINISHED && <TestFinished key="finished" />}
         </AnimatePresence>
       )}
     </TestSessionLayout>

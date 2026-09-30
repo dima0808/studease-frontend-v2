@@ -1,46 +1,76 @@
+/*
+  StudEase identity — direction 1b, "Quiet room".
+  Source of truth for every colour, rule and type value in the app.
+  Five rules: zero radius · rules not cards · blue is state · flush left ·
+  numbers are measurements. Nothing here has a radius or a shadow token,
+  because the design has neither.
+*/
+
 :root {
-  --color-white: #ffffff;
-  --color-white-light: #e7e7e7;
-  --color-white-dark: #f8f8f8;
-  --color-black: #000000;
+  /* ── Core palette ─────────────────────────────────────────────── */
+  --color-bg: #ffffff; // page ground
+  --color-surface: #f4f7fb; // sidebar, cards, selected rows
+  --color-text: #292929; // ink — all body and heading text
+  --color-accent: #3b82f6; // the one accent: state, never decoration
+  --color-divider: color-mix(in srgb, #292929 18%, transparent);
 
-  --color-text-black: #292929;
-  --color-text-gray: #5c5c5c;
+  /* ── Neutral ramp ─────────────────────────────────────────────── */
+  --color-neutral-100: #f8fafc;
+  --color-neutral-200: #eef2f6;
+  --color-neutral-300: #d9e0e8;
+  --color-neutral-400: #b4bfcc;
+  --color-neutral-500: #8a97a6;
+  --color-neutral-600: #667180;
+  --color-neutral-700: #4a5563;
+  --color-neutral-800: #333c47;
+  --color-neutral-900: #232a33;
 
-  --color-purple: #808899;
+  /* ── Accent ramp ──────────────────────────────────────────────── */
+  /* 100–300 tinted fills, hovers, subtle borders · 500 base ·
+     700–900 text on a tinted fill and pressed states.
+     #3b82f6 on the ground is ~3:1 — large type, icons and chrome only.
+     Body copy that must be blue uses --color-accent-700. */
+  --color-accent-100: #eff6ff;
+  --color-accent-200: #dbeafe;
+  --color-accent-300: #bfdbfe;
+  --color-accent-400: #93c5fd;
+  --color-accent-500: #3b82f6;
+  --color-accent-600: #2563eb; // primary button hover
+  --color-accent-700: #1d4ed8; // primary button pressed, blue body copy
+  --color-accent-800: #1e40af;
+  --color-accent-900: #1e3a8a;
 
-  --color-green-light: #dff3e7;
-  --color-green-dark: #32be6a;
+  /* ── Ink washes — the only hover fills ────────────────────────── */
+  --wash-ink-4: color-mix(in srgb, var(--color-text) 4%, transparent); // table rows
+  --wash-ink-5: color-mix(in srgb, var(--color-text) 5%, transparent); // ghost, rows
+  --wash-ink-7: color-mix(in srgb, var(--color-text) 7%, transparent); // secondary, nav
 
-  --color-red-light: #ffeaea;
-  --color-red-dark: #ff4343;
+  /* ── Rules ────────────────────────────────────────────────────── */
+  /* 2px between major zones, 1px between rows. There is no third weight. */
+  --border: 1px solid var(--color-divider);
+  --border-strong: 2px solid var(--color-divider);
 
-  --color-blue: #3b82f6; //  #0088FF
-  --color-light-blue: #66ccff4d;
+  /* ── Type ─────────────────────────────────────────────────────── */
+  --font-family-base: 'Archivo', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-weight-regular: 400;
+  --font-weight-medium: 600;
+  --font-weight-bold: 800;
 
-  --color-blue-light: #c3cafa;
+  /* ── Spacing ──────────────────────────────────────────────────── */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
 
-  --color-border: #ebe6e6;
-  --color-border-medium: #bebebe;
-  --color-border-strong: #b2b2b2;
+  /* Page gutters: attempt and FAQ · list-page content · sidebar and mobile */
+  --gutter-page: 64px;
+  --gutter-content: 40px;
+  --gutter-tight: 22px;
 
-  --border-radius-large: 20px;
-  --border-radius-medium: 15px;
-  --border-radius-small: 8px;
-
-  --border: 1px solid var(--color-border);
-  --border-medium: 1px solid var(--color-border-medium);
-  --border-strong: 1px solid var(--color-border-strong);
-
-  --font-family-base: 'Manrope', sans-serif;
-  --container-width: #{fluid-to-laptop(
-      $container-desktop-width,
-      $container-laptop-width
-    )};
-  --container-padding-x: 16px;
-
-  --section-padding-y: #{fluid(75, 40)};
-
+  /* ── Motion ───────────────────────────────────────────────────── */
+  /* background-color, color and opacity only — never transform. */
   --transition-duration: 0.2s;
   --transition-duration-longer: 0.4s;
 }

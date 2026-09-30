@@ -68,12 +68,33 @@
 }
 
 @mixin focus-visible {
-  outline: 2px dashed var(--color-black);
-  outline-offset: 4px;
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
   transition-duration: 0s !important;
 }
 
 @mixin disabled {
-  opacity: 0.5;
+  opacity: 0.45;
   cursor: not-allowed;
+}
+
+/* Numbers a student reads — clock, index, score, counts, dates.
+   Archivo 800 with locked digit widths so nothing shifts as it ticks. */
+@mixin tabular-nums {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+}
+
+/* Selection is drawn inward so it never changes an element's size. */
+@mixin selected-outline {
+  outline: 2px solid var(--color-accent);
+  outline-offset: -2px;
+}
+
+/* 12px/800/0.12em uppercase — the line above a page title. */
+@mixin kicker {
+  font-size: 12px;
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }

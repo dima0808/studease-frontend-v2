@@ -1,39 +1,43 @@
 .toggle-button {
-  display: flex;
-  align-items: center;
-  height: 40px;
-  gap: 2px;
-  padding: 2px;
-  border: var(--border-strong);
-  border-radius: var(--border-radius-small);
+  display: inline-flex;
+  border: var(--border);
 
   &__option {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-width: 35px;
-    height: 100%;
-    border-radius: var(--border-radius-small);
-    border: var(--border-medium);
-    background-color: var(--color-white-dark);
-    color: #5c5c5c;
-    font-size: 16px;
-    font-weight: 500;
 
-    @include hover {
-      background-color: #eceff5;
+    padding: 8px 11px;
+    border: none;
+    background-color: transparent;
+    color: var(--color-text);
+
+    font-family: var(--font-family-base);
+    font-size: 13px;
+    font-weight: var(--font-weight-medium);
+    cursor: pointer;
+
+    transition:
+      background-color var(--transition-duration),
+      color var(--transition-duration);
+
+    & + & {
+      border-left: var(--border);
     }
 
     &--text {
-      padding-inline: 35px;
+      padding: 8px 14px;
     }
 
-    &--active {
-      background-color: var(--color-blue);
-      color: var(--color-white);
-      border: none;
-      cursor: none;
-      pointer-events: none;
+    @include hover {
+      background-color: var(--wash-ink-7);
+    }
+
+    &--active,
+    &--active:hover {
+      background-color: var(--color-accent);
+      color: var(--color-bg);
+      font-weight: 700;
     }
   }
 }

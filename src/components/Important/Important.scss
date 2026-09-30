@@ -1,12 +1,18 @@
 .important {
-  padding: 4px 8px;
-  border: 1px solid var(--color-red-dark);
-  background-color: var(--color-red-light);
-  color: var(--color-red-dark);
-  border-radius: 9px;
   display: flex;
-  align-items: center;
-  column-gap: 4px;
-  font-size: 12px;
-  font-weight: 500;
+  align-items: baseline;
+  column-gap: 10px;
+  margin: 0;
+
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--color-accent-700);
+
+  &__mark {
+    flex: none;
+    width: 8px;
+    height: 8px;
+    background-color: var(--color-accent);
+    translate: 0 -1px;
+  }
 }

@@ -14,7 +14,7 @@ import {
 
 import { Link } from 'react-router-dom';
 
-import { Eye } from 'lucide-react';
+import { Download, Eye, Link2 } from 'lucide-react';
 import { FaArrowLeft } from 'react-icons/fa';
 import { motion as Motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
@@ -61,7 +61,7 @@ const TestInfoPage = () => {
     }
   }, [testId, getFullTestById, navigate, getFinishedSessionsByTestId]);
 
-  const testLink = `${HTTP_PROTOCOL}://${IP}${FRONTEND_PORT}/${testId}`;
+  const testLink = `${HTTP_PROTOCOL}://${IP}${FRONTEND_PORT ? `:${FRONTEND_PORT}` : ''}/${testId}`;
 
   const handleCopyLink = async () => {
     try {
@@ -160,20 +160,20 @@ const TestInfoPage = () => {
             className="info-layout-page__copy-link-button"
             text={copied ? 'Copied!' : 'Copy Test Link'}
             onClick={handleCopyLink}
-            iconName="LinkIcon"
+            icon={Link2}
           />
           <Button
             className="info-layout-page__copy-link-button"
             text="Export CSV"
             onClick={handleExportResultsCsv}
-            iconName="ExportIcon"
+            icon={Download}
             disabled={sortedSessions.length === 0}
           />
           <Button
             className="info-layout-page__copy-link-button"
             text="Export XLS"
             onClick={handleExportResultsExcel}
-            iconName="ExportIcon"
+            icon={Download}
             disabled={sortedSessions.length === 0}
           />
         </div>

@@ -1,11 +1,12 @@
 import GenericListPage from '@/components/GenericListPage';
 import { useActions } from '@/hooks/useActions';
+import { useTranslation } from 'react-i18next';
 import CollectionCard from '@/components/CollectionCard';
-import './CollectionsPage.scss';
 import { selectCollections } from '@/store/collections/collections.slice';
 
 const CollectionsPage = () => {
   const { getAllCollections } = useActions();
+  const { t } = useTranslation();
   return (
     <GenericListPage
       name="collections"
@@ -20,6 +21,13 @@ const CollectionsPage = () => {
           {...collection}
         />
       )}
+      columns={[
+        t('columns.collection'),
+        t('columns.questions'),
+        t('columns.usedInTests'),
+        t('columns.status'),
+        '',
+      ]}
       hasSort
     />
   );

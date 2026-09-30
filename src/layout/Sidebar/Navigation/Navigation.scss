@@ -1,0 +1,20 @@
+.sidebar {
+  &__nav {
+    display: flex;
+    flex-direction: column;
+
+    &-main,
+    &-secondary {
+      display: flex;
+      flex-direction: column;
+    }
+
+    &-rule {
+      height: 1px;
+      width: 100%;
+      margin: 16px 0;
+      border: 0;
+      background-color: var(--color-divider);
+    }
+  }
+}

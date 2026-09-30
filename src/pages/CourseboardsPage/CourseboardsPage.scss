@@ -1,21 +1,61 @@
 .courseboards-page {
-  width: 100%;
-  min-height: 70vh;
   display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   justify-content: center;
-  align-items: center;
 
-  &__content {
-    text-align: center;
-    padding: 2rem;
-    background: #f8f9fa;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  flex: 1;
+  max-width: 620px;
+  padding: 60px var(--gutter-content);
 
-    p {
-      font-size: 1.1rem;
-      opacity: 0.8;
-      font-weight: 500;
+  &__kicker {
+    @include kicker;
+    margin: 0;
+    color: var(--color-neutral-700);
+  }
+
+  &__title {
+    margin: 16px 0 0;
+    font-size: 62px;
+    font-weight: var(--font-weight-bold);
+    letter-spacing: -0.045em;
+    line-height: 1;
+
+    @include mobile {
+      font-size: 40px;
+    }
+  }
+
+  &__rule {
+    width: 96px;
+    height: 2px;
+    margin: 34px 0 26px;
+    border: 0;
+    background-color: var(--color-accent);
+  }
+
+  &__text {
+    margin: 0;
+    max-width: 52ch;
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--color-neutral-800);
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    column-gap: 22px;
+    margin-top: 36px;
+  }
+
+  &__link {
+    font-size: 15px;
+    font-weight: var(--font-weight-medium);
+    color: var(--color-neutral-700);
+
+    @include hover {
+      color: var(--color-accent);
     }
   }
 }

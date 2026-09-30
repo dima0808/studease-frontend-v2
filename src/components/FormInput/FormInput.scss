@@ -1,70 +1,49 @@
 .form-input {
-  position: relative;
+  display: flex;
+  flex-direction: column;
   width: 100%;
-  margin-bottom: 10px;
+  margin-bottom: 16px;
+
+  &__label {
+    margin-bottom: 8px;
+    font-size: 13px;
+    font-weight: var(--font-weight-medium);
+    color: var(--color-neutral-700);
+  }
 
   &__input {
     width: 100%;
-    padding: 10px 18px;
-    border: 1px solid #b2b2b2;
-    border-radius: 12px;
-    outline: none;
-    background: #fff;
-    color: #292929;
+    min-height: 44px;
+    padding: 10px 12px;
+
+    border: var(--border);
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    caret-color: var(--color-accent);
+
+    font-family: var(--font-family-base);
     font-size: 15px;
-    font-weight: 500;
+
+    &::placeholder {
+      color: var(--color-neutral-500);
+    }
 
     &:focus {
-      border-color: #007bff;
+      border-color: var(--color-accent);
     }
 
-    &:not(:placeholder-shown) {
-      border-color: #007bff;
-    }
-
-    &:focus + .form-input__label,
-    &:not(:placeholder-shown) + .form-input__label {
-      top: 0;
-      left: 14px;
-      font-size: 12px;
-      color: #007bff;
-      background: #fff;
-      padding: 0 4px;
+    &:focus-visible {
+      outline-offset: 0;
     }
 
     &--error {
-      border-color: var(--color-red-dark) !important;
-
-      &:focus {
-        border-color: var(--color-red-dark) !important;
-      }
-
-      & + .form-input__label {
-        color: var(--color-red-dark) !important;
-      }
-    }
-  }
-
-  &__label {
-    position: absolute;
-    top: 50%;
-    left: 16px;
-    transform: translateY(-50%);
-    font-size: 15px;
-    font-weight: 500;
-    color: #b2b2b2;
-    pointer-events: none;
-    background: transparent;
-    transition: all 0.2s ease-in-out;
-
-    &--error {
-      color: var(--color-red-dark) !important;
+      border-color: var(--color-accent);
     }
   }
 
   &__error {
-    color: var(--color-red-dark);
-    font-size: 12px;
-    margin-top: 4px;
+    margin-top: 6px;
+    font-size: 13px;
+    color: var(--color-accent-700);
   }
 }

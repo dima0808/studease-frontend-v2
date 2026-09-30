@@ -1,79 +1,122 @@
 .button {
   display: inline-flex;
   align-items: center;
-  column-gap: 8px;
-  color: var(--color-black);
-  padding-inline: 26px;
-  font-size: 18px;
-  font-weight: 500;
-  border-radius: 12px;
-  height: 40px;
-  background-color: var(--color-white);
-  border: var(--border-strong);
-  transition:
-    background-color 0.2s ease,
-    color 0.2s ease;
+  justify-content: center;
+  column-gap: 9px;
 
-  @include mobile {
-    padding-block: 26px;
-  }
+  height: 42px;
+  padding-inline: 16px;
+
+  border: 1px solid transparent;
+  background-color: transparent;
+  color: var(--color-text);
+
+  font-family: var(--font-family-base);
+  font-size: 14px;
+  font-weight: var(--font-weight-bold);
+  line-height: 1.2;
+  cursor: pointer;
+
+  transition:
+    background-color var(--transition-duration),
+    color var(--transition-duration),
+    opacity var(--transition-duration);
 
   &:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
+    @include disabled;
+  }
+
+  &__icon {
+    flex: none;
+  }
+
+  // ── themes ──────────────────────────────────────────────────────────
+  &--secondary {
+    border-color: var(--color-divider);
 
     @include hover {
-      background-color: var(--color-white);
+      background-color: var(--wash-ink-7);
+    }
+
+    &:active:not(:disabled) {
+      background-color: color-mix(in srgb, var(--color-text) 14%, transparent);
     }
   }
 
-  @include hover {
-    background-color: #eceff5;
+  &--primary,
+  &--danger {
+    background-color: var(--color-accent);
+    color: var(--color-bg);
+
+    @include hover {
+      background-color: var(--color-accent-600);
+    }
+
+    &:active:not(:disabled) {
+      background-color: var(--color-accent-700);
+    }
   }
 
-  &--action {
-    justify-content: center;
-    padding: 2px;
-    height: 42px;
+  &--ink {
+    background-color: var(--color-text);
+    color: var(--color-bg);
+
+    @include hover {
+      background-color: var(--color-neutral-800);
+    }
+  }
+
+  &--ghost {
+    color: var(--color-accent);
+    padding-inline: 4px;
+
+    @include hover {
+      background-color: color-mix(in srgb, var(--color-accent) 10%, transparent);
+    }
+  }
+
+  // ── sizes ───────────────────────────────────────────────────────────
+  &--sm {
+    height: 34px;
+    padding-inline: 12px;
+    font-size: 13px;
+  }
+
+  &--lg {
+    height: 50px;
+    padding-inline: 22px;
+    font-size: 16px;
+  }
+
+  &--xl {
+    height: 56px;
+    padding-inline: 26px;
+    font-size: 17px;
+  }
+
+  // ── shapes ──────────────────────────────────────────────────────────
+  &--icon {
     width: 42px;
-  }
+    padding-inline: 0;
+    column-gap: 0;
 
-  &--primary {
-    background: var(--color-blue);
-    color: var(--color-white);
-    border: none;
+    &.button--sm {
+      width: 34px;
+    }
 
-    @include hover {
-      background: #2563eb;
+    &.button--lg {
+      width: 50px;
+    }
+
+    &.button--xl {
+      width: 56px;
     }
   }
 
-  &--red {
-    background-color: var(--color-red-dark);
-    color: var(--color-white);
-    border: none;
-
-    &:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-
-      @include hover {
-        background-color: var(--color-red-dark);
-      }
-    }
-
-    @include hover {
-      background-color: #dc2626;
-    }
-  }
-
-  &--dark {
-    background-color: var(--color-black);
-    color: var(--color-white);
-
-    @include hover {
-      opacity: 0.7;
-      background-color: var(--color-black);
-    }
+  // Flush left: the label starts at the padding edge, the icon is pushed right.
+  &--block {
+    width: 100%;
+    justify-content: space-between;
+    text-align: left;
   }
 }

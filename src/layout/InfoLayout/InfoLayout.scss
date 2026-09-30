@@ -42,7 +42,7 @@
 
   &__title {
     font-size: 40px;
-    color: #292929;
+    color: var(--color-text);
     font-weight: 700;
 
     @include mobile {
@@ -78,12 +78,12 @@
       align-items: center;
       gap: 8px;
       font-size: 16px;
-      font-weight: 500;
-      color: var(--color-text-gray);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-neutral-700);
     }
 
     &__icon {
-      color: var(--color-purple);
+      color: var(--color-neutral-600);
       font-size: 18px;
       flex-shrink: 0;
     }
@@ -92,21 +92,19 @@
   &__list {
     display: flex;
     flex-direction: column;
-    border: 1px solid #e3e3e3;
-    border-radius: 12px;
+    border: 1px solid var(--color-divider);
     overflow: hidden;
-    background: #fff;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    background: var(--color-surface);
   }
 
   &__list-header {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
-    background: #f9fafb;
+    background: var(--color-surface);
     font-weight: 600;
-    color: #333;
+    color: var(--color-text);
     padding: 12px 16px;
-    border-bottom: 1px solid #e3e3e3;
+    border-bottom: 1px solid var(--color-divider);
 
     &-item {
       display: flex;
@@ -116,7 +114,7 @@
       cursor: pointer;
       transition: color 0.2s ease;
       &:hover {
-        color: #007bff;
+        color: var(--color-accent);
       }
       svg {
         font-size: 16px;
@@ -133,11 +131,11 @@
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     padding: 10px 16px;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--color-divider);
     transition: background 0.2s ease;
 
     &:hover {
-      background: #f6f8fa;
+      background: var(--color-surface);
     }
 
     &:last-child {
@@ -166,20 +164,19 @@
 
 .info-layout-page__search-input {
   padding: 8px 12px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+  border: 1px solid var(--color-divider);
   font-size: 15px;
-  color: #333;
-  background-color: #fff;
-  transition: all 0.25s ease;
+  color: var(--color-text);
+  background-color: var(--color-surface);
+  transition: background-color var(--transition-duration), color var(--transition-duration);
   width: 300px;
 
   &::placeholder {
-    color: #aaa;
+    color: var(--color-neutral-500);
   }
 
   &:focus {
-    border-color: var(--color-purple);
+    border-color: var(--color-neutral-600);
     outline: none;
   }
 }
@@ -187,10 +184,10 @@
 .info-layout-page__list-cell--icon {
   display: flex;
   align-items: center;
-  color: var(--color-text-black);
+  color: var(--color-text);
   transition: color 0.3s ease;
 
   @include hover {
-    color: var(--color-blue);
+    color: var(--color-accent);
   }
 }

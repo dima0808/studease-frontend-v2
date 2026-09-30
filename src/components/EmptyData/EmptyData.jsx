@@ -1,33 +1,35 @@
 import Button from '@/components/Button';
-import { MdOutlineSearchOff } from 'react-icons/md';
+import { Plus } from 'lucide-react';
 import './EmptyData.scss';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { Trans, useTranslation } from 'react-i18next';
 import { ROUTES, ROUTES_NAV } from '@/constants/routes';
 
-const EmptyData = ({ name }) => {
+const EmptyData = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { pathname } = useLocation();
   const isCollectionsPage = pathname === ROUTES_NAV.COLLECTIONS.href;
+  const singularKey = isCollectionsPage ? 'collection' : 'test';
 
   return (
     <div className="empty-data">
-      <div className="empty-data__icon">
-        <MdOutlineSearchOff size={60} />
-      </div>
-      <h2 className="empty-data__title">No {name} found</h2>
-      <p className="empty-data__text">
-        Try adjusting your filters or create a new {name.slice(0, -1)} right now
-        🚀
-      </p>
+      <p className="empty-data__kicker">{t('empty.kicker')}</p>
+      <h2 className="empty-data__title">
+        <Trans i18nKey="empty.title" components={{ 1: <br /> }} />
+      </h2>
+      <hr className="empty-data__rule" />
+      <p className="empty-data__text">{t(`empty.text_${singularKey}`)}</p>
       <Button
         onClick={() =>
           navigate(
             `/${isCollectionsPage ? ROUTES.CREATE_COLLECTION : ROUTES.CREATE_TEST}`,
           )
         }
-        iconName="CreateIcon"
-        text={`Create a ${name.slice(0, -1)}`}
+        icon={Plus}
+        text={t(`empty.create_${singularKey}`)}
         theme="primary"
+        size="lg"
         className="empty-data__btn"
       />
     </div>

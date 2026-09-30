@@ -2,43 +2,58 @@ import ItemCard from '@/components/ItemCard';
 import Info from '@/components/ItemCard/components/Info';
 import CardActions from '@/components/ItemCard/components/CardActions';
 import Status from '@/components/ItemCard/components/Status';
-import CountIcon from '@/components/icons/CountIcon';
-import UsedIcon from '@/components/icons/UsedIcon';
+import classNames from 'classnames';
 
 const CollectionCard = (props) => {
-  const { id, index, name, questionsCount, wide, selectedItems, usedInTests } =
-    props;
+  const {
+    id,
+    index,
+    name,
+    questionsCount = 0,
+    wide,
+    selectedItems,
+    usedInTests = 0,
+  } = props;
+
+  const isUsed = usedInTests > 0;
+
   return (
     <ItemCard
       id={id}
       index={index}
       name={name}
       wide={wide}
+      isOpen={isUsed}
+      className="item-card--collections"
       selectedItems={selectedItems}
+      statusLine={isUsed ? `In use · ${usedInTests} tests` : 'Unused'}
+      meta={`${questionsCount} questions`}
       extraContent={
         <>
           <Info
-            title="Questions count"
+            title="Questions"
             description={questionsCount}
-            icon={CountIcon}
+            className={classNames('item-card__info--count', {
+              'item-card__info--zero': !questionsCount,
+            })}
           />
           <Info
-            title="Used in the tests"
+            title="Used in tests"
             description={usedInTests}
-            icon={UsedIcon}
+            className={classNames('item-card__info--count', {
+              'item-card__info--zero': !isUsed,
+            })}
           />
         </>
       }
+      status={<Status isActive={isUsed} params={['In use', 'Unused']} />}
       actions={
-        <>
-          <Status isActive={usedInTests > 0} params={['In use', 'Not use']} />
-          <CardActions
-            isSelected={selectedItems.some((i) => i.id === id)}
-            name={name}
-            wide={wide}
-            id={id}
-          />
-        </>
+        <CardActions
+          isSelected={selectedItems.some((i) => i.id === id)}
+          name={name}
+          wide={wide}
+          id={id}
+        />
       }
     />
   );

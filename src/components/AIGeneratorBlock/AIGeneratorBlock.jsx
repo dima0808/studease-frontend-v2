@@ -2,6 +2,7 @@ import './AIGeneratorBlock.scss';
 import { motion as Motion, AnimatePresence } from 'framer-motion';
 import { X, Loader2 } from 'lucide-react';
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import FormInput from '@/components/FormInput';
 import React, { useState } from 'react';
 import { useActions } from '@/hooks/useActions';
@@ -25,6 +26,7 @@ const AIGeneratorBlock = ({
   });
 
   const { generateQuestionsByAI } = useActions();
+  const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = async (data) => {
@@ -62,7 +64,7 @@ const AIGeneratorBlock = ({
             transition={{ duration: 0.2 }}
           >
             <div className="ai-modal__header">
-              <h3>AI Question Generator</h3>
+              <h3>{t('create.ai.title')}</h3>
               <button
                 type="button"
                 className="ai-modal__close"
@@ -75,37 +77,44 @@ const AIGeneratorBlock = ({
 
             <form onSubmit={handleSubmit(onSubmit)} className="ai-modal__form">
               <FormInput
-                label="Theme"
+                label={t('create.ai.theme')}
                 name="theme"
                 type="text"
-                placeholder="E.g., Mathematics, History, Science"
                 register={register}
                 errors={errors}
                 rules={{
-                  required: 'Theme is required',
+                  required: t('create.ai.themeRequired'),
                   minLength: {
                     value: 3,
-                    message: 'Must be at least 3 characters',
+                    message: t('create.ai.themeMin'),
                   },
                   maxLength: {
                     value: 100,
-                    message: 'Must be at most 100 characters',
+                    message: t('create.ai.themeMax'),
                   },
                 }}
               />
 
               <div className="form-select">
-                <label>Type</label>
+                <label>{t('create.ai.type')}</label>
                 <select
                   {...register('questionType', {
-                    required: 'Question type is required',
+                    required: t('create.ai.typeRequired'),
                   })}
                   disabled={isLoading}
                 >
-                  <option value="single_choice">Single Choice</option>
-                  <option value="multiple_choices">Multiple Choices</option>
-                  <option value="essay">Essay</option>
-                  <option value="matching">Matching</option>
+                  <option value="single_choice">
+                    {t('create.questionTypes.single_choice')}
+                  </option>
+                  <option value="multiple_choices">
+                    {t('create.questionTypes.multiple_choices')}
+                  </option>
+                  <option value="essay">
+                    {t('create.questionTypes.essay')}
+                  </option>
+                  <option value="matching">
+                    {t('create.questionTypes.matching')}
+                  </option>
                 </select>
                 {errors.questionType && (
                   <p className="error-msg">{errors.questionType.message}</p>
@@ -113,30 +122,28 @@ const AIGeneratorBlock = ({
               </div>
 
               <FormInput
-                label="Points"
+                label={t('create.ai.points')}
                 name="points"
                 type="number"
-                placeholder="Points for the question"
                 register={register}
                 errors={errors}
                 rules={{
-                  required: 'Points are required',
-                  min: { value: 1, message: 'Must be at least 1 point' },
+                  required: t('create.ai.pointsRequired'),
+                  min: { value: 1, message: t('create.ai.minPoints') },
                   valueAsNumber: true,
                 }}
               />
 
               <FormInput
-                label="Questions Count"
+                label={t('create.ai.questionsCount')}
                 name="questionsCount"
                 type="number"
-                placeholder="Number of questions to generate"
                 register={register}
                 errors={errors}
                 rules={{
-                  required: 'Questions count is required',
-                  min: { value: 1, message: 'Must be at least 1 question' },
-                  max: { value: 20, message: 'Max 20 questions per request' },
+                  required: t('create.ai.questionsCountRequired'),
+                  min: { value: 1, message: t('create.ai.minQuestions') },
+                  max: { value: 20, message: t('create.ai.maxQuestions') },
                   valueAsNumber: true,
                 }}
               />
@@ -149,7 +156,7 @@ const AIGeneratorBlock = ({
                 {isLoading ? (
                   <Loader2 className="spin" size={18} />
                 ) : (
-                  'Generate Questions'
+                  t('create.ai.generate')
                 )}
               </button>
             </form>

@@ -1,22 +1,22 @@
-import { MdErrorOutline } from 'react-icons/md';
+import { RotateCw } from 'lucide-react';
 import Button from '@/components/Button';
+import { useTranslation } from 'react-i18next';
 import './ErrorComponent.scss';
 
 const ErrorComponent = ({ onRetry, description }) => {
+  const { t } = useTranslation();
+
   return (
     <div className="error-component">
-      <div className="error-component__icon">
-        <MdErrorOutline size={60} />
-      </div>
+      <p className="error-component__kicker">{t('error.kicker')}</p>
       <h2 className="error-component__title">{description}</h2>
-      <p className="error-component__text">
-        Something went wrong while fetching data from the server. <br />
-        Please try again in a moment ⚡
-      </p>
+      <hr className="error-component__rule" />
+      <p className="error-component__text">{t('error.text')}</p>
       <Button
-        iconName="RetryIcon"
-        text="Retry"
+        icon={RotateCw}
+        text={t('common.tryAgain')}
         theme="primary"
+        size="lg"
         className="error-component__btn"
         onClick={onRetry}
       />

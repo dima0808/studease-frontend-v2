@@ -1,11 +1,12 @@
 import GenericListPage from '@/components/GenericListPage';
 import TestCard from '@/components/TestCard';
 import { useActions } from '@/hooks/useActions';
-import './TestsPage.scss';
+import { useTranslation } from 'react-i18next';
 import { selectTests } from '@/store/tests/tests.slice';
 
 const TestsPage = () => {
   const { getAllTests } = useActions();
+  const { t } = useTranslation();
 
   return (
     <GenericListPage
@@ -21,6 +22,14 @@ const TestsPage = () => {
           {...test}
         />
       )}
+      columns={[
+        t('columns.test'),
+        t('columns.opens'),
+        t('columns.closes'),
+        t('columns.takingNow'),
+        t('columns.status'),
+        '',
+      ]}
       hasSort
     />
   );

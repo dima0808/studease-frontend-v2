@@ -1,54 +1,47 @@
-import { motion as Motion, AnimatePresence } from 'framer-motion';
 import UserInfo from '@/components/UserInfo';
-import ToggleButton from '@/layout/Sidebar/ToggleButton';
+import CollapseButton from '@/layout/Sidebar/ToggleButton';
 import Navigation from './Navigation';
 import SignOutButton from '@/layout/Sidebar/SignOutButton';
+import Lockup from '@/components/Lockup';
+import KpiFootnote from '@/components/KpiFootnote';
+import LanguageSwitcher from '@/components/LanguageSwitcher';
 import classNames from 'classnames';
 import './Sidebar.scss';
 import { useSelector } from 'react-redux';
 import { useActions } from '@/hooks/useActions';
-import { AlertCircle } from 'lucide-react';
 
 const Sidebar = () => {
   const { isCollapsed } = useSelector((state) => state.filter);
-  const { error } = useSelector((state) => state.auth);
   const { setIsCollapsed } = useActions();
 
   return (
     <header
       className={classNames('sidebar', { 'sidebar--collapsed': isCollapsed })}
     >
-      <h1 className="sidebar__title">StudEase</h1>
+      <Lockup markOnly={isCollapsed} className="sidebar__lockup" />
+
+      <hr className="sidebar__rule sidebar__rule--strong sidebar__rule--lockup" />
 
       <Navigation isCollapsed={isCollapsed} />
 
-      <AnimatePresence mode="wait">
-        {!isCollapsed && (
-          <Motion.div
-            key="user-info"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20, transition: { duration: 0.2 } }}
-            transition={{ duration: 0.8, ease: 'easeOut' }}
-          >
-            <UserInfo />
-          </Motion.div>
-        )}
-        {error && isCollapsed && (
-          <div className="user-info__error">
-            <div className="user-info__error-header">
-              <AlertCircle className="error-icon" size={20} />
-            </div>
-          </div>
-        )}
-      </AnimatePresence>
+      <div className="sidebar__foot">
+        <hr className="sidebar__rule sidebar__rule--strong" />
 
-      <div className="sidebar__actions">
-        <SignOutButton isCollapsed={isCollapsed} />
-        <ToggleButton
-          isCollapsed={isCollapsed}
-          setIsCollapsed={setIsCollapsed}
-        />
+        <UserInfo isCollapsed={isCollapsed} />
+
+        <div className="sidebar__actions">
+          <SignOutButton isCollapsed={isCollapsed} />
+          <CollapseButton
+            isCollapsed={isCollapsed}
+            setIsCollapsed={setIsCollapsed}
+          />
+        </div>
+
+        {!isCollapsed && (
+          <LanguageSwitcher className="sidebar__language" />
+        )}
+
+        {!isCollapsed && <KpiFootnote className="sidebar__footnote" />}
       </div>
     </header>
   );

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import Lockup from '@/components/Lockup';
 import { motion as Motion, AnimatePresence } from 'framer-motion';
 import classNames from 'classnames';
 import './SidebarCreate.scss';
@@ -12,17 +12,18 @@ import {
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { useActions } from '@/hooks/useActions';
 
 const SidebarCreate = ({
   addQuestion,
   addCollection,
   showAIGenerationBlock,
-  onCreate,
   isTest,
 }) => {
   const { isCollapsed } = useSelector((state) => state.filter);
   const { setIsCollapsed } = useActions();
+  const { t } = useTranslation();
 
   const navigate = useNavigate();
 
@@ -32,12 +33,12 @@ const SidebarCreate = ({
         'sidebar-create--collapsed': isCollapsed,
       })}
     >
-      <h1 className="sidebar-create__title">StudEase</h1>
+      <Lockup className="sidebar-create__title" />
 
       <nav className="sidebar-create__nav">
         <div className="sidebar-create__nav-main">
           <button
-            title={isCollapsed && 'Add question'}
+            title={isCollapsed ? t('sidebarCreate.addQuestion') : undefined}
             className="sidebar-create__button"
             onClick={addQuestion}
           >
@@ -49,14 +50,16 @@ const SidebarCreate = ({
                 exit={{ opacity: 0, x: -20 }}
                 transition={{ duration: 0.8, ease: 'easeOut' }}
               >
-                Add Question
+                {t('sidebarCreate.addQuestion')}
               </Motion.span>
             )}
           </button>
 
           {isTest && (
             <button
-              title={isCollapsed && 'Add collection'}
+              title={
+                isCollapsed ? t('sidebarCreate.addCollection') : undefined
+              }
               className="sidebar-create__button"
               onClick={addCollection}
             >
@@ -68,14 +71,14 @@ const SidebarCreate = ({
                   exit={{ opacity: 0, x: -20 }}
                   transition={{ duration: 0.8, ease: 'easeOut' }}
                 >
-                  Add Collection
+                  {t('sidebarCreate.addCollection')}
                 </Motion.span>
               )}
             </button>
           )}
 
           <button
-            title={isCollapsed && 'AI Generate'}
+            title={isCollapsed ? t('sidebarCreate.aiGenerate') : undefined}
             className="sidebar-create__button"
             onClick={showAIGenerationBlock}
           >
@@ -87,7 +90,7 @@ const SidebarCreate = ({
                 exit={{ opacity: 0, x: -20 }}
                 transition={{ duration: 0.8, ease: 'easeOut' }}
               >
-                AI Generate
+                {t('sidebarCreate.aiGenerate')}
               </Motion.span>
             )}
           </button>
@@ -103,9 +106,7 @@ const SidebarCreate = ({
             exit={{ opacity: 0, y: 18, transition: { duration: 0.1 } }}
             transition={{ duration: 0.5, ease: 'easeOut' }}
           >
-            <p className="sidebar-create__hint">
-              You can add questions, collections, or use AI to generate
-            </p>
+            <p className="sidebar-create__hint">{t('sidebarCreate.hint')}</p>
           </Motion.div>
         )}
       </AnimatePresence>
@@ -127,7 +128,7 @@ const SidebarCreate = ({
         </button>
         }*/}
         <button
-          title={isCollapsed && 'Back'}
+          title={isCollapsed ? t('common.back') : undefined}
           className="sidebar-create__button sidebar-create__button--back"
           onClick={() => navigate(-1)}
         >
@@ -139,7 +140,7 @@ const SidebarCreate = ({
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.8, ease: 'easeOut' }}
             >
-              Back
+              {t('common.back')}
             </Motion.span>
           )}
         </button>

@@ -13,9 +13,7 @@
   max-width: 1200px;
   margin: 30px auto;
   padding: 20px 28px;
-  background: #fff;
-  border-radius: 18px;
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+  background: var(--color-surface);
 
   display: flex;
   flex-direction: column;
@@ -31,11 +29,11 @@
     margin: 10px 0 5px;
     font-size: 20px;
     font-weight: 600;
-    color: #292929;
+    color: var(--color-text);
   }
 
   &__empty {
-    color: #7a7a7a;
+    color: var(--color-neutral-600);
     font-style: italic;
     margin-bottom: 10px;
   }
@@ -45,10 +43,9 @@
     width: 200px;
     align-self: flex-start;
 
-    background: #292929;
+    background: var(--color-text);
     color: white;
     border: none;
-    border-radius: 12px;
 
     font-size: 18px;
     font-weight: 600;
@@ -57,7 +54,7 @@
     transition: background 0.2s ease-in-out;
 
     &:hover {
-      background: #007bff;
+      background: var(--color-accent);
     }
 
     &:active {
@@ -68,10 +65,8 @@
 
 .question {
   padding: 20px;
-  background: #fff;
-  border-radius: 16px;
-  border: 1px solid #e4e4e4;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  background: var(--color-surface);
+  border: 1px solid var(--color-divider);
   margin-bottom: 25px;
 
   &__header {
@@ -90,10 +85,10 @@
     background: transparent;
     border: none;
     cursor: pointer;
-    color: #d9534f;
+    color: var(--color-accent);
 
     &:hover {
-      color: #c53d39;
+      color: var(--color-accent-700);
     }
   }
 
@@ -109,21 +104,19 @@
     .question__select {
       width: 100%;
       padding: 10px 14px;
-      border-radius: 8px;
-      border: 1px solid #d5d5d5;
+      border: 1px solid var(--color-divider);
       outline: none;
 
       &:focus {
-        border-color: #4a7dff;
+        border-color: var(--color-accent);
       }
     }
   }
 
   &__note {
-    color: #555;
-    background: #f6f6f6;
+    color: var(--color-neutral-700);
+    background: var(--color-surface);
     padding: 12px;
-    border-radius: 10px;
     margin-top: 12px;
   }
 }
@@ -137,7 +130,7 @@
 
   &__empty {
     font-style: italic;
-    color: #777;
+    color: var(--color-neutral-600);
   }
 
   &__add {
@@ -146,15 +139,14 @@
     align-items: center;
     gap: 6px;
     padding: 8px 16px;
-    background: #4a7dff;
+    background: var(--color-accent);
     border: none;
-    border-radius: 10px;
     color: white;
     cursor: pointer;
     transition: 0.2s;
 
     &:hover {
-      background: #3568e2;
+      background: var(--color-accent-600);
     }
   }
 }
@@ -168,11 +160,10 @@
   &__text {
     flex: 1;
     padding: 10px 14px;
-    border-radius: 10px;
-    border: 1px solid #d5d5d5;
+    border: 1px solid var(--color-divider);
 
     &:focus {
-      border-color: #4a7dff;
+      border-color: var(--color-accent);
     }
   }
 
@@ -193,11 +184,11 @@
 
     background: transparent;
     border: none;
-    color: #d9534f;
+    color: var(--color-accent);
     cursor: pointer;
 
     &:hover {
-      color: #c53d39;
+      color: var(--color-accent-700);
     }
   }
 }
@@ -214,18 +205,17 @@
   &__input {
     flex: 1;
     padding: 10px 14px;
-    border-radius: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--color-divider);
 
     &:focus {
-      border-color: #4a7dff;
+      border-color: var(--color-accent);
     }
   }
 
   &__remove {
     background: transparent;
     border: none;
-    color: #d9534f;
+    color: var(--color-accent);
     cursor: pointer;
   }
 
@@ -235,14 +225,13 @@
     align-items: center;
     gap: 6px;
     padding: 8px 16px;
-    background: #4a7dff;
+    background: var(--color-accent);
     border: none;
-    border-radius: 10px;
-    color: #fff;
+    color: var(--color-bg);
     cursor: pointer;
 
     &:hover {
-      background: #3568e2;
+      background: var(--color-accent-600);
     }
   }
 }

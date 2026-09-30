@@ -1,82 +1,59 @@
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 999;
-}
+  padding: 16px;
 
-.modal-test-name {
-  font-weight: bold;
-  color: var(--color-blue);
-}
-
-.modal-list {
-  margin: 16px 0;
-  padding-left: 20px;
-  max-height: 200px;
-  overflow-y: auto;
-  list-style: disc;
-
-  &__item {
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--color-blue);
-    margin-bottom: 6px;
-  }
+  background: color-mix(in srgb, var(--color-text) 55%, transparent);
 }
 
 .modal-content {
-  background: #fff;
-  padding: 2rem;
-  border-radius: 1rem;
-  max-width: 450px;
-  width: 90%;
-  text-align: center;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  width: min(460px, 100%);
+  padding: 26px;
+  background: var(--color-surface);
+  border: var(--border-strong);
+  text-align: left;
 }
 
 .modal-title {
-  font-size: 1.3rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
+  margin: 0;
+  font-size: 22px;
+  font-weight: var(--font-weight-bold);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
 }
 
 .modal-text {
-  font-size: 1rem;
-  color: #555;
+  margin: 10px 0 0;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--color-neutral-800);
+}
+
+.modal-list {
+  margin: 20px 0;
+  padding: 0;
+  max-height: 220px;
+  overflow-y: auto;
+  list-style: none;
+  border-top: var(--border);
+
+  &__item {
+    padding: 11px 0;
+    border-bottom: var(--border);
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--color-text);
+  }
 }
 
 .modal-actions {
   display: flex;
-  justify-content: center;
-  gap: 1rem;
-
-  .btn {
-    padding: 0.6rem 1.2rem;
-    border-radius: 0.6rem;
-    border: none;
-    cursor: pointer;
-    font-weight: 500;
-    transition: background 0.2s ease;
-
-    &.cancel {
-      background: #e5e7eb;
-      color: #111;
-      &:hover {
-        background: #d1d5db;
-      }
-    }
-
-    &.delete {
-      background: #dc2626;
-      color: #fff;
-
-      @include hover {
-        background: #b91c1c;
-      }
-    }
-  }
+  justify-content: flex-end;
+  column-gap: 10px;
+  margin-top: 8px;
 }
