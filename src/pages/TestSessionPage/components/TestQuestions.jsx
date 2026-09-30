@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { useActions } from '@/hooks/useActions.js';
 import { Client } from '@stomp/stompjs';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { WS_URL } from '@/constants/config.js';
 import { useForm, FormProvider } from 'react-hook-form';
 import MultipleChoices from '../components/MultipleChoices';
@@ -22,6 +22,7 @@ import Loading from '@/components/Loading';
 import { readAttempt } from '@/utils/attemptToken';
 import { useAttemptCountdown } from '@/hooks/useAttemptCountdown';
 import NotificationErrorMessage from '@/components/NotificationErrorMessage';
+import { STEP } from '@/store/testSession/testSession.slice';
 
 const QUESTION_TYPE_LABEL = {
   single_choice: 'Single choice',
@@ -34,6 +35,7 @@ const pad = (value) => String(value).padStart(2, '0');
 
 const TestQuestions = () => {
   const {
+    step,
     currentQuestion,
     testInfo,
     sessionKey,
@@ -53,6 +55,17 @@ const TestQuestions = () => {
   // by, so the two must not be allowed to drift apart.
   const { testId } = useParams();
 
+  // Finishing clears `currentQuestion` while this component is still mounted
+  // for its exit animation. Without the snapshot that empty render would be
+  // read as a failed start and flash the error screen over a saved result.
+  const lastQuestionRef = useRef(null);
+  if (currentQuestion) {
+    lastQuestionRef.current = currentQuestion;
+  }
+  const shownQuestion =
+    currentQuestion ??
+    (step === STEP.FINISHED ? lastQuestionRef.current : null);
+
   const methods = useForm({ defaultValues: { answers: [] } });
   const {
     handleSubmit,
@@ -60,10 +73,10 @@ const TestQuestions = () => {
     formState: { errors },
   } = methods;
 
-  const question = currentQuestion?.question;
-  const questionNumber = currentQuestion?.questionNumber ?? 0;
+  const question = shownQuestion?.question;
+  const questionNumber = shownQuestion?.questionNumber ?? 0;
   const totalQuestions =
-    currentQuestion?.totalQuestions ?? testInfo?.questionsCount ?? 0;
+    shownQuestion?.totalQuestions ?? testInfo?.questionsCount ?? 0;
   const isLastQuestion = questionNumber >= totalQuestions;
 
   useEffect(() => {
@@ -125,7 +138,7 @@ const TestQuestions = () => {
     return <Loading text="test" />;
   }
 
-  if (!currentQuestion) {
+  if (!shownQuestion) {
     const reloadPage = () => window.location.reload();
 
     return (
@@ -154,7 +167,7 @@ const TestQuestions = () => {
       testId,
       // Binds the answer to the question it was written for, so a retried or
       // double-submitted request updates it instead of sliding onto the next.
-      responseEntryId: currentQuestion.responseEntryId,
+      responseEntryId: shownQuestion.responseEntryId,
       answerIds,
       answerContent,
     };
@@ -173,7 +186,7 @@ const TestQuestions = () => {
     setIsSubmitting(true);
     getNextQuestion({
       testId,
-      responseEntryId: currentQuestion.responseEntryId,
+      responseEntryId: shownQuestion.responseEntryId,
       answerIds: [],
       answerContent: null,
     }).finally(() => setIsSubmitting(false));
@@ -231,7 +244,7 @@ const TestQuestions = () => {
               }}
             >
               <Motion.div
-                key={currentQuestion.responseEntryId}
+                key={shownQuestion.responseEntryId}
                 initial={{ opacity: 0, x: 100 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -100 }}

@@ -5,11 +5,11 @@ import en from './locales/en.json';
 import uk from './locales/uk.json';
 
 export const LANGUAGES = [
-  { code: 'en', label: 'English', short: 'EN' },
   { code: 'uk', label: 'Українська', short: 'УКР' },
+  { code: 'en', label: 'English', short: 'EN' },
 ];
 
-export const DEFAULT_LANGUAGE = 'en';
+export const DEFAULT_LANGUAGE = 'uk';
 const STORAGE_KEY = 'studease-language';
 
 i18n
@@ -25,7 +25,10 @@ i18n
     load: 'languageOnly',
     interpolation: { escapeValue: false },
     detection: {
-      order: ['localStorage', 'navigator', 'htmlTag'],
+      // Only an explicit choice overrides Ukrainian — the browser locale is
+      // deliberately not consulted, so an English-locale browser still opens
+      // the app in Ukrainian.
+      order: ['localStorage'],
       lookupLocalStorage: STORAGE_KEY,
       caches: ['localStorage'],
     },
