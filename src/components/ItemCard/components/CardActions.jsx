@@ -13,6 +13,7 @@ import {
   createTransferPayload,
   downloadTransferPayload,
 } from '@/utils/jsonTransfer';
+import { copyToClipboard } from '@/utils/copyToClipboard';
 
 const CardActions = (props) => {
   const { id, name, isSelected, wide } = props;
@@ -59,14 +60,12 @@ const CardActions = (props) => {
     setIsModalOpen(false);
   };
 
-  const testLink = `${HTTP_PROTOCOL}://${IP}${FRONTEND_PORT}/${id}`;
+  const testLink = `${HTTP_PROTOCOL}://${IP}${FRONTEND_PORT ? `:${FRONTEND_PORT}` : ''}/${id}`;
 
   const handleCopyLink = async () => {
-    try {
-      await navigator.clipboard.writeText(testLink);
+    if (await copyToClipboard(testLink)) {
       setNotification(`Link to test "${name}" copied successfully!`);
-    } catch (err) {
-      console.error('Failed to copy link:', err);
+    } else {
       setNotification('Error copying link!');
     }
   };

@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { Trans, useTranslation } from 'react-i18next';
 import { ArrowLeft, Check, ChevronDown, Clipboard } from 'lucide-react';
 import { snippets } from './jsonSnippets.data';
+import { copyToClipboard } from '@/utils/copyToClipboard';
 
 const SECTION_VALUES = ['general', 'transfer'];
 
@@ -60,13 +61,10 @@ const Faq = () => {
   const examples = t('faq.transfer.examples', { returnObjects: true });
 
   const handleCopy = async (id, code) => {
-    try {
-      await navigator.clipboard.writeText(code);
-      setCopiedId(id);
-      setTimeout(() => setCopiedId(null), 1800);
-    } catch (error) {
-      console.error('Failed to copy FAQ snippet:', error);
-    }
+    if (!(await copyToClipboard(code))) return;
+
+    setCopiedId(id);
+    setTimeout(() => setCopiedId(null), 1800);
   };
 
   return (

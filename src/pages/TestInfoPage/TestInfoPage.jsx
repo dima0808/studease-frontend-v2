@@ -29,6 +29,7 @@ import {
   exportTestResultsCsv,
   exportTestResultsExcel,
 } from '@/utils/exportTestResults';
+import { copyToClipboard } from '@/utils/copyToClipboard';
 
 const TestInfoPage = () => {
   const { testId } = useParams();
@@ -64,13 +65,10 @@ const TestInfoPage = () => {
   const testLink = `${HTTP_PROTOCOL}://${IP}${FRONTEND_PORT ? `:${FRONTEND_PORT}` : ''}/${testId}`;
 
   const handleCopyLink = async () => {
-    try {
-      await navigator.clipboard.writeText(testLink);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch (err) {
-      console.error('Failed to copy link:', err);
-    }
+    if (!(await copyToClipboard(testLink))) return;
+
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
   const [sortField, setSortField] = useState(null);
